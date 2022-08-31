@@ -1,0 +1,16 @@
+.lite_workspace.lua
+yarn.lock
+package-lock.json
+*.AppImage
+
+/bin
+/dist
+/bundle
+/node_modules
+/repository/**/*.xcf
+
+neutralino.js
+
+.storage
+.tmp
+*.log

@@ -1,0 +1,369 @@
+# Splash window
+splash:
+  title: Launcher betöltése
+  phrases:
+    - Fontos dolgok csinálása...
+    - Paimon bosszantása...
+    - Yae húzások folyamatban...
+    - Alapanyagok farmolása...
+    - Abyss végigjátszása...
+    - Achievementek összeszedése...
+    - Phys Qiqi build megcsinálása...
+    - Áldozatok hozása 5*-ért...
+    - Barátok találása co-ophoz...
+
+# Launcher window
+launcher:
+  # Progress bar
+  progress:
+    pause: Megállítás
+    resume: Folytatás
+
+    # Game installation
+    game:
+      downloading: Játék letöltése folyamatban...
+      unpacking: Játék kibontása folyamatban...
+      applying_changes: Változások alkalmazása...
+      deleting_outdated: Lejárt fájlok kitörlése...
+      integrity_check: Fájlok ellenőrzése…
+      download_mismatch_files: Hibás fájlok újratöltése…
+
+    # Voice packages installation
+    voice:
+      deleting: Hangcsomagok eltávolítása...
+      downloading: '{voice} hangcsomag letöltése folyamatban...'
+      unpacking: '{voice} hangcsomag kibontása folyamatban...'
+
+  # Launcher states
+  states:
+    # When the game should be installed or updated
+    installation:
+      install_wine: Wine telepítése
+      install_dxvk: DXVK telepítése
+      install: Telepítés
+      update: Frissítés
+      
+      apply_changes:
+        title: Változások alkalmazása
+        hint: Hdiff változások alkalmazása a játékfájlokra
+
+      remove_outdated:
+        title: Elavultak törlése
+        hint: Elavult játékfájlok törlése
+
+    # When the game should be patched
+    patching:
+      # Patch unavailable
+      unavailable:
+        title: Patch nem elérhető
+        hint: Ennek a játékverziónak még nincs anti-cheat patch-e.
+              Kérlek, várj egy pár napot ameddig kijön egy teszt vagy stabil verzió
+      
+      # Patch is in testing
+      test:
+        title: Teszt patch alkalmazása
+        hint: Elérhető egy tesztelés alatti patch ehhez a játékverzióhoz.
+              Használd saját felelősségedre vagy várj egy pár napot ameddig stabil lesz!
+
+      # Patch is stable
+      stable: Patch alkalmazása
+
+    # When the game is ready for playing
+    ready:
+      launch: Indítás
+      predownload: Frissítés előtöltése
+
+# Settings window
+settings:
+  # General
+  general:
+    title: Általános
+    items:
+      # Language selection
+      lang:
+        # Launcher language
+        launcher:
+          title: Launcher
+          items:
+            en-us: English (US)
+            ru-ru: Русский
+            es-es: Español
+            de-de: Deutsch
+            fr-fr: Français
+            it-it: Italiano
+            ja-jp: 日本語
+            hu-hu: Magyar
+            id-id: Bahasa Indonesia
+            nb-no: Norsk
+            zh-cn: 简体中文
+            uwu: Engwish
+
+        # Game voice pack language
+        voice:
+          title: Hangcsomag
+          tooltip: A kért hangcsomagot a játékban is manuálisan ki kell választanod
+          items:
+            en-us: English (US)
+            ja-jp: Japanese
+            ko-kr: Korean
+            zh-cn: Chinese
+
+      # Launcher theme
+      theme:
+        title: Téma
+        items:
+          system: Rendszerbeállítás
+          light: Világos
+          dark: Sötét
+      
+      # Discord RPC
+      discord:
+        title: Discord RPC
+        settings:
+          title: Discord RPC beállítások
+          items:
+            timer: Becsült futó időhossz mutatása
+            in-launcher: Launcher szöveg
+            in-game: In-game szöveg
+            selectIcon: Ikon kiválasztása
+
+      # Some buttons
+      buttons:
+        winetricks: winetricks
+        winecfg: winecfg
+        launcher: launcher mappa
+        game: játékmappa
+        repair_game: Játékfájlok javítása
+        clear_cache: gyorsítótár törlése
+
+      # Patch-related settings
+      patch:
+        title: Patch
+        items:
+          patch_version: 'Patch verzió:'
+          updating_info: 'Patch információk frissítése…'
+          buttons:
+            revert_patch: patch visszaállítása
+            apply_patch: patch alkalmazása
+            reapply_patch: patch újratelepítése
+
+  # Enhancements
+  enhancements:
+    title: Fejlesztések
+
+    # Enhancements related to the wine
+    wine:
+      title: Wine
+      items:
+        # HUD
+        hud:
+          title: HUD
+          items:
+            none: Nincs
+            dxvk: DXVK
+            mangohud: MangoHUD
+
+        # Wine synchronization
+        winesync:
+          title: Wine szinkronizáció
+          tooltip: Az ESync egy többszálú műveleteket szinkronizáló mechanizmus. Javíthatja a játék teljesítményét.
+                   Az FSync az ESync egy továbbfejlesztett változata, amely csak bizonyos kernelverziókon működik 
+          items:
+            none: Nincs
+            esync: ESync
+            fsync: FSync
+            futex2: Futex2
+
+        # AMD FSR
+        fsr:
+          title: AMD FSR használata
+          tooltip: Ez az opció bekapcsolja az AMD FidelityFX Super Resolution (FSR)-t
+                   amely emeli a játékod felbontását FPS vesztése nélkül
+
+        # Wine Virtual Desktop
+        winevd:
+          title: Virtuális Asztal
+          settings:
+            title: Virtuális Asztal beállításai
+            items:
+              width: Szélesség
+              height: Magasság
+
+    # Enhancements related to the game
+    game:
+      title: Játék
+      items:
+        # GameMode
+        gamemode:
+          title: GameMode használata
+          tooltip:
+            enabled: Egy program amely javíthatja a játék teljesítményét
+            disabled: ⚠️ Nincs telepítve a gamemode csomag
+
+        # Borderless Window
+        borderless_window:
+          title: Kerettelen ablak bekapcsolása
+          tooltip: Kikapcsolja az ablak keretét ablakos módban.
+                   Ha teljesképernyős kerettelen ablakban szeretnél játszani, nyomd meg az alt+enter-t teljesképernyős játék közben.
+
+        # Unlock FPS
+        fps_unlocker:
+          title: FPS limit kikapcsolása
+          tooltip: Ez az opció kikapcsolja a 60 fps-es játéklimitet
+
+        # Use separate terminal window to run the game
+        use_terminal:
+          title: Terminal használata
+          tooltip: Ezzel az opcióval a launcher a wine parancsot egy külön terminal ablakban fogja futtatni
+
+    # Enhancements related to the launcher
+    launcher:
+      title: Launcher
+      items:
+        # Delete logs
+        purge_logs:
+          # Game logs (DXVK)
+          game:
+            title: DXVK logok törlése
+            tooltip: Ezzel az opcióval a launcher autómatikusan
+                    törölni fogja a DXVK logfájlokat
+
+          # Launcher logs
+          launcher:
+            title: Launcher logok törlése
+            tooltip: Mennyi idő után törölje a launcher a régi logfájlokat
+            items:
+              1d: 1 nap
+              3d: 3 nap
+              5d: 5 nap
+              7d: 1 hét
+              14d: 2 hét
+              never: Soha
+
+  # Runners
+  runners:
+    title: Wine verzió
+    items:
+      recommended:
+        title: Csak az ajánlottak mutatása
+        tooltip: Ez az opció elrejti a játszhatatlan wine verziókat
+
+  # DXVKs
+  dxvks:
+    title: DXVK
+    items:
+      recommended:
+        title: Csak az ajánlottak mutatása
+        tooltip: Ez az opció elrejti a játszhatatlan DXVK verziókat
+
+  # Shaders
+  shaders:
+    title: Shader-ek
+    items:
+      shaders:
+        title: Shader-ek
+        tooltip: A Home gomb-bal tudod játékon belül ki/be kapcsolni a shader-eket
+        items:
+          none: Nincs
+          custom: Egyedi
+      
+      author: 'Szerző: {author}'
+      no_images: Nincs kép hozzáadva
+      not_installed: Nem telepítetted a vkBasalt és reshade-shaders könyvtárakat
+
+  # Environmantal variables manager
+  environment:
+    title: Környezet
+    items:
+      # Table rows
+      table:
+        name: Név
+        value: Érték
+      
+      # Table buttons
+      buttons:
+        add: Hozzáadás
+        delete: Törlés
+
+# Notifications
+notifications:
+  # Launcher update
+  launcher_update_available:
+    title: 'Launcher frissítés elérhető: {from} -> {to}'
+    body: 'Újabb launcher verziót tudsz telepíteni a projekt adattárjából itt: {repository}'
+
+  # Before telemetry check when iputils is not downloaded
+  iputils_package_required:
+    title: An Anime Game Launcher
+    body: Telepítened kell az iputils csomagot a telemetria-ellenőrzés miatt
+
+  # When telemetry servers are not disabled
+  telemetry_not_disabled:
+    title: An Anime Game Launcher
+    body: Telemetria-szerverek nincsenek kikapcsolva
+
+  # Before patch applying when xdelta3 package is not downloaded
+  xdelta3_package_required:
+    title: An Anime Game Launcher
+    body: Telepítened kell az xdelta3 csomagot a patch alkalmazásához
+
+  # If patch wasn't applied because of some error
+  patch_applying_error:
+    title: An Anime Game Launcher
+    body: A patch alkalmazása sikertelen. Kérlek, nézd meg a logfájlodat az ok felderítése érdekében, vagy kérdezz meg valakit a discord szerverünkön
+
+  # Patch repositories are not available
+  patch_repos_unavailable:
+    title: An Anime Game Launcher
+    body: A patch adattárjai nem elérhetőek. Eltudod indítani a játékot, de a launcher nem tudja meghatározni hogy patch-elve van-e
+
+  # HDiffPatch couldn't successfully apply game files changes
+  game_changes_applying_error:
+    title: Hiba történt a játék frissítése közben
+    body: '{files} fájlt nem lehetett frissíteni a hdiff patch-el'
+
+# ToS violation warning window
+tos_violation:
+  title: Felhasználói feltételek megsértése
+  heading: ⚠️ Figyelem
+  body: 'A launcher nem hivatalos eszköz, semmi köze ezekhez: {company} és {company_alterego}.
+        Ez az eszköz csak a {game} Linux-os futtatására van tervezve,
+        és kizárólag a játék egyszerű telepítésére és használatára lett fejlesztve.
+        Ezt a meglévő komponensek felhasználásával és a felhasználói élmény egyszerűsítésével teszi. 
+        Viszont, egy pár felhasznált komponens megszegi a {company} Felhasználói Feltételeit a következőhöz: {game}.
+        A launcher használatával a fiókod FF-megszegőként lehet azonosítva a következő cég(ek) által: {company}/{company_alterego}.  
+        Ha ez megtörténik, akkor hivatalosan is megszeged a FF-et és {company}/{company_alterego} azt tehet amit kíván. Akár ban-t is jelenthet!
+        Ha megérted a játék nem-hivatalos használatával járó kockázatokat, nyomd meg az OK-t, és menjünk felfedezni Teyvat-ot!'
+  buttons:
+    ok:
+      title: Megértem
+      tooltip: A fenti szöveget ajánlott elolvasnod. Tényleg fontos.
+    cancel: Mégse
+    discord: 'Discord szerverünk:'
+
+# Analytics window
+analytics:
+  title: Yanfei jussa...
+  header: Részvétel anoním adatgyűjtésben
+
+  body:
+    - Hogy számon tartsuk az aktív Linux felhasználók számát, Yanfei szeretné elkérni az IP-det minden játékfrissítésnél
+    - Az IP-d hashelve lesz biztonsági okokból
+
+  actions:
+    share_country:
+      title: Ország megosztása
+      hint: Engedély Yanfei-nek hogy tárolja az IP címed regisztrált országát, hogy részletesebbek lehessenek a statisztikák. Más adat nem lesz tárolva
+
+    participate: Részvétel
+    skip: Átugrás
+    skip_forever: Átugrás és többet ne kérdezd
+
+# Screenshots window
+screenshots:
+  heading: Screenshotok
+  info: Nyomj egy screenshot-ra hogy megtekintsd
+  buttons:
+    more: Több betöltése 
+    folder: Screenshot mappa megnyitása 
+  no_images: Nincsenek elérhető screenshotok

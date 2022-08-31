@@ -1,0 +1,269 @@
+# Splash window
+splash:
+  title: Loading launcher
+  phrases:
+    - Doing some important stuff...
+    - Bullying Paimon...
+    - Pulling for Yae...
+    - Farming materials...
+    - Passing Abyss...
+    - Collecting achievements...
+    - Building phys Qiqi...
+    - Making sacrifices for 5*...
+    - Finding friends for co-op...
+
+# Launcher window
+launcher:
+  # Progress bar
+  progress:
+    pause: Pause
+    resume: Resume
+
+    # Game installation
+    game:
+      downloading: Downloading game...
+      unpacking: Unpacking game...
+      integrity_check: Verifying files...
+      download_mismatch_files: Downloading mismatched files...
+
+  # Launcher states
+  states:
+    # When the game should be installed or updated
+    installation:
+      install_wine: Install Wine
+      install_dxvk: Install DXVK
+      install: Install
+      update: Update
+
+    # When the game is ready for playing
+    ready:
+      launch: Launch
+      predownload: Pre-download update
+
+# Settings window
+settings:
+  # General
+  general:
+    title: General
+    items:
+      # Language selection
+      lang:
+        # Launcher language
+        launcher:
+          title: Launcher
+          items:
+            en-us: English (US)
+            ru-ru: Русский
+            es-es: Español
+            de-de: Deutsch
+            fr-fr: Français
+            it-it: Italiano
+            ja-jp: 日本語
+            hu-hu: Magyar
+            id-id: Bahasa Indonesia
+            nb-no: Norsk
+            zh-cn: 简体中文
+            uwu: Engwish
+
+      # Launcher theme
+      theme:
+        title: Theme
+        items:
+          system: System
+          light: Light
+          dark: Dark
+      
+      # Discord RPC
+      discord:
+        title: Discord RPC
+        settings:
+          title: Discord RPC settings
+          items:
+            timer: Show estimated time spent
+            in-launcher: Launcher text
+            in-game: In-game text
+            selectIcon: Select icon
+            
+      # Some buttons
+      buttons:
+        winetricks: winetricks
+        winecfg: winecfg
+        launcher: launcher folder
+        game: game folder
+        repair_game: repair game files
+        clear_cache: clear cache
+
+  # Enhancements
+  enhancements:
+    title: Enhancements
+
+    # Enhancements related to the wine
+    wine:
+      title: Wine
+      items:
+        # HUD
+        hud:
+          title: HUD
+          items:
+            none: None
+            dxvk: DXVK
+            mangohud: MangoHUD
+
+        # Wine synchronization
+        winesync:
+          title: Wine synchronization
+          tooltip: ESync is a mechanism of synchronizing multi-thread operations. It can improve your game performance.
+                  FSync is an improved version of ESync that works on specific kernel versions
+          items:
+            none: None
+            esync: ESync
+            fsync: FSync
+            futex2: Futex2
+
+        # AMD FSR
+        fsr:
+          title: Enable AMD FSR
+          tooltip: This option enables AMD FidelityFX Super Resolution (FSR)
+                  which will scale your game resolution without losing FPS
+
+        # Wine Virtual Desktop
+        winevd:
+          title: Virtual Desktop
+          settings:
+            title: Virtual Desktop settings
+            items:
+              width: Width
+              height: Height
+
+    # Enhancements related to the game
+    game:
+      title: Game
+      items:
+        # GameMode
+        gamemode:
+          title: Use GameMode
+          tooltip:
+            enabled: It is a software that can improve the game performance
+            disabled: ⚠️ You don't have gamemode package installed
+
+        # Borderless Window
+        borderless_window:
+          title: Allow borderless window
+          tooltip: Removes the window borders when playing in windowed mode.
+                  To play in a fullscreen borderless window, press alt+enter when playing on fullscreen
+
+        # Use separate terminal window to run the game
+        use_terminal:
+          title: Use terminal
+          tooltip: With this option enabled launcher will run the wine command in a separate terminal window
+
+    # Enhancements related to the launcher
+    launcher:
+      title: Launcher
+      items:
+        # Delete logs
+        purge_logs:
+          # Game logs (DXVK)
+          game:
+            title: Delete DXVK logs
+            tooltip: With this option enabled your launcher will automatically
+                    delete DXVK log files
+
+          # Launcher logs
+          launcher:
+            title: Delete launcher logs
+            tooltip: Amount of time after which launcher will delete its old log files
+            items:
+              1d: 1 day
+              3d: 3 days
+              5d: 5 days
+              7d: 1 week
+              14d: 2 weeks
+              never: Never
+
+  # Runners
+  runners:
+    title: Wine version
+    items:
+      recommended:
+        title: Show recommended only
+        tooltip: This option will hide unplayable wine versions
+
+  # Shaders
+  shaders:
+    title: Shaders
+    items:
+      shaders:
+        title: Shaders
+        tooltip: Use Home button to toggle shaders in the game
+        items:
+          none: None
+          custom: Custom
+      
+      author: 'Author: {author}'
+      no_images: No images added
+      not_installed: You haven't installed vkBasalt and reshade-shaders library
+
+  # Environmantal variables manager
+  environment:
+    title: Environment
+    items:
+      # Table rows
+      table:
+        name: Name
+        value: Value
+      
+      # Table buttons
+      buttons:
+        add: Add
+        delete: Delete
+
+# Notifications
+notifications:
+  # Launcher update
+  launcher_update_available:
+    title: 'Launcher update available: {from} -> {to}'
+    body: You can download a new version of the launcher from the project's repository at {repository}
+
+  # Before telemetry check when iputils is not downloaded
+  iputils_package_required:
+    title: Honkers Launcher
+    body: You must have iputils installed for telemetry checking
+
+  # When telemetry servers are not disabled
+  telemetry_not_disabled:
+    title: Honkers Launcher
+    body: Telemetry servers are not disabled
+
+  # Before patch applying when xdelta3 package is not downloaded
+  xdelta3_package_required:
+    title: Honkers Launcher
+    body: You must download the xdelta3 package to apply the patch
+
+# ToS violation warning window
+tos_violation:
+  title: ToS violation warning
+  heading: ⚠️ Be warned
+  body: This launcher is an unofficial tool, in no way related to {company} nor {company_alterego}.
+        This tool is designed to facilitate playing {game} on Linux,
+        and was built with the sole purpose of installing and running the game with less hassle.
+        It does so by using existing components and making the experience simple for the user.
+        However, some components used here likely break the {company} Terms of Service for {game}.
+        If you are using this launcher, your player account could become identified as TOS-non-compliant by {company}/{company_alterego}.
+        If this happens, as your account would be disobeying TOS, {company}/{company_alterego} are free to do what they want. Including banning.
+        If you understand the risk of trying to play the game in an unofficial capacity, simply press OK
+  buttons:
+    ok:
+      title: I understand the risk
+      tooltip: You really should read this text above. It's important
+    cancel: Cancel
+    discord: Our discord server
+
+# Screenshots window
+screenshots:
+  heading: Screenshots
+  info: Click on a screenshot to open it up
+  buttons:
+    more: Load more
+    folder: Open screenshots
+  no_images: No screenshots available

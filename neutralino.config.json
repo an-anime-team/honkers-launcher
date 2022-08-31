@@ -1,0 +1,43 @@
+{
+  "applicationId": "moe.launcher.honkers-launcher",
+  "version": "1.0.0",
+  "defaultMode": "window",
+  "port": 0,
+  "documentRoot": "/bundle/",
+  "url": "/",
+  "enableServer": true,
+  "enableNativeAPI": true,
+  "exportAuthInfo": true,
+  "logging": {
+    "enabled": false,
+    "writeToLogFile": false
+  },
+  "nativeBlockList": [],
+  "globalVariables": {},
+  "modes": {
+    "window": {
+      "title": "Honkers Launcher",
+      "width": 1280,
+      "height": 700,
+      "fullScreen": false,
+      "alwaysOnTop": false,
+      "icon": "/public/icons/64x64.png",
+      "enableInspector": false,
+      "borderless": false,
+      "maximize": false,
+      "hidden": true,
+      "resizable": false,
+      "exitProcessOnClose": false
+    },
+    "browser": {},
+    "cloud": {}
+  },
+  "cli": {
+    "binaryName": "honkers-launcher",
+    "resourcesPath": "/bundle/",
+    "extensionsPath": "/extensions/",
+    "clientLibrary": "/public/neutralino.js",
+    "binaryVersion": "4.5.0",
+    "clientVersion": "3.4.0"
+  }
+}

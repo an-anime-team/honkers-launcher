@@ -1,0 +1,269 @@
+# Start Fenster
+splash:
+  title: Starte Launcher
+  phrases:
+    - Bruder, lass uns {game} spielen...
+    - Paimon am ärgern...
+    - Versuche Yae zu ziehen...
+    - Materialien farmen...
+    - Abyss bewältigen...
+    - Errungenschaften sammeln...
+    - Phys Qiqi erstellen...
+    - Opfer für 5* bringen...
+    - Freunde für Koop finden...
+
+# Launcher window
+launcher:
+  # Progress bar
+  progress:
+    pause: Pausieren
+    resume: Fortsetzen
+    
+    # Game installation
+    game:
+      downloading: Spiel ist am Herunterladen...
+      unpacking: Spiel wird entpackt...
+      integrity_check: Verifiziere Dateien...
+      download_mismatch_files: Lade nicht übereinstimmenden Dateien herunter...
+
+  # Launcher states
+  states:
+    # When the game should be installed or updated
+    installation:
+      install_wine: Wine installieren
+      install_dxvk: DXVK installieren
+      install: Installieren
+      update: Updaten
+
+    # When the game is ready for playing
+    ready:
+      launch: Starten
+      predownload: Update vorinstallieren
+
+# Einstellungs Fenster
+settings:
+  # General
+  general:
+    title: Allgemein
+    items:
+      # Sprach-Auswahl
+      lang:
+        # Launcher sprache
+        launcher:
+          title: Launcher
+          items:
+            en-us: English (US)
+            ru-ru: Русский
+            es-es: Español
+            de-de: Deutsch
+            fr-fr: Français
+            it-it: Italiano
+            ja-jp: 日本語
+            hu-hu: Magyar
+            id-id: Bahasa Indonesia
+            nb-no: Norsk
+            zh-cn: 简体中文
+            uwu: Engwish
+
+      # Launcher thema
+      theme:
+        title: Thema
+        items:
+          system: System
+          light: Hell
+          dark: Dunkel
+      
+      # Discord RPC
+      discord:
+        title: Discord RPC
+        settings:
+          title: Discord RPC Einstellung
+          items:
+            timer: Zeige geschätzte Zeit
+            in-launcher: Launcher text
+            in-game: im Spiel text
+            selectIcon: Icon auswählen
+
+      # Some buttons
+      buttons:
+        winetricks: winetricks
+        winecfg: winecfg
+        launcher: Launcher Ordner öffnen
+        game: Spiel Ordner öffnen
+        repair_game: Spieldaten reparieren
+        clear_cache: Cache leeren
+
+  # Verberssungen
+  enhancements:
+    title: Verbesserungen
+
+    # Enhancements related to the wine
+    wine:
+      title: Wine
+      items:
+        # HUD
+        hud:
+          title: HUD
+          items:
+            none: Aus
+            dxvk: DXVK
+            mangohud: MangoHUD
+
+        # Wine synchronization
+        winesync:
+          title: Wine Synchronisation
+          tooltip: Esync ist ein Mechanismus zur Synchronisierung von Multi-Thread-Operationen, womit die Leistung Ihres Spiels verbessert wird.
+                  Fsync ist eine verbesserte Version von Esync, die auf bestimmten Kernel-Versionen funktioniert.
+          items:
+            none: Aus
+            esync: Esync
+            fsync: Fsync
+            futex2: Futex2
+
+        # AMD FSR
+        fsr:
+          title: AMD FSR
+          tooltip: Diese Option aktiviert AMD FidelityFX Super Resolution (FSR),
+                  womit eine kleine Auflösung hochskaliert wird, um FPS-Verlust zu vermeiden.
+
+        # Wine Virtual Desktop
+        winevd:
+          title: Virtual Desktop
+          settings:
+            title: Virtual Desktop Einstellung
+            items:
+              width: Breite
+              height: Höhe
+
+    # Enhancements related to the game
+    game:
+      title: Spiel
+      items:
+        # GameMode
+        gamemode:
+          title: Benutze GameMode
+          tooltip:
+            enabled: GameMode ist ein Programm, welches die Leistung verbessert
+            disabled: ⚠️ Sie haben GameMode nicht installiert
+
+        # Borderless Window
+        borderless_window:
+          title: Als randloses Fenster starten
+          tooltip: Entfernt die Fensterränder beim Spielen im Fenstermodus.
+                   Um in einem randlosen Fenster im Vollbildmodus zu spielen, drücken Sie die Tastenkombination ALT+Enter.
+
+        # Use separate terminal window to run the game
+        use_terminal:
+          title: Terminal aktivieren
+          tooltip: Wenn diese Option aktiviert ist, führt der Launcher den Wine Befehl in einem separaten Terminalfenster aus
+
+    # Enhancements related to the launcher
+    launcher:
+      title: Launcher
+      items:
+        # Delete logs
+        purge_logs:
+          # Game logs (DXVK)
+          game:
+            title: DXVK Logs löschen
+            tooltip: Wenn diese Option aktiviert ist löscht
+                    der Launcher automatisch alle DXVK Logs
+
+          # Launcher logs
+          launcher:
+            title: Launcher Logs löschen
+            tooltip: Launcher Logs werden nach der angegebenen Zeit gelöscht
+            items:
+              1d: 1 Tag
+              3d: 3 Tage
+              5d: 5 Tage
+              7d: 1 Woche
+              14d: 2 Wochen
+              never: Niemals
+
+  # Runners
+  runners:
+    title: Wine Version
+    items:
+      recommended:
+        title: Nur empfohlene anzeigen
+        tooltip: Falls diese Option aktiviert ist, werden nur Wine Versionen angezeigt,
+                 die funktionieren.
+
+  # Shaders
+  shaders:
+    title: Shaders
+    items:
+      shaders:
+        title: Shaders
+        tooltip: Benutze die Home/POS1 Taste, um die Shader im Spiel zu togglen
+        items:
+          none: Aus
+          custom: Benutzerdefiniert
+
+      author: 'Autor: {author}'
+      no_images: Keine Bilder verfügbar
+      not_installed: Sie haben vkBasalt und Reshade-Shader nicht installiert
+
+  # Environmantal variables manager
+  environment:
+    title: Umgebungsvariablen
+    items:
+      # Table rows
+      table:
+        name: Name
+        value: Wert
+      
+      # Table buttons
+      buttons:
+        add: Hinzufügen
+        delete: Löschen
+
+# Notifications
+notifications:
+  # Launcher update
+  launcher_update_available:
+    title: 'Launcher Update verfügbar: {from} -> {to}'
+    body: Sie können das Update von {repository} herunterladen
+
+  # Before telemetry check when iputils is not downloaded
+  iputils_package_required:
+    title: Honkers Launcher
+    body: Sie müssen iputils für die Telemetrieüberprüfung installiert haben
+
+  # When telemetry servers are not disabled
+  telemetry_not_disabled:
+    title: Honkers Launcher
+    body: Telemetry Server sind nicht deaktiviert.
+
+  # Before patch applying when xdelta3 package is not downloaded
+  xdelta3_package_required:
+    title: Honkers Launcher
+    body: Sie müssen xdelta3/xdelta installiert haben, um den Patch anzuwenden
+
+# ToS violation warning window
+tos_violation:
+  title: ToS-Verletzungswarnung
+  heading: ⚠️ Sei gewarnt   
+  body: Dieser Launcher ist ein inoffizielles Tool, das in keiner Weise mit {company} oder {company_alterego} in Verbindung steht.
+        Dieses Tool wurde entwickelt, um das Spielen von {game} unter Linux zu erleichtern. Es wurde mit dem einzigen Ziel entwickelt, das Spiel mit weniger Aufwand zu installieren und zu starten.
+        Dies geschieht durch die Verwendung vorhandener Komponenten und vereinfacht die Erfahrung für den Benutzer.
+        Einige der hier verwendeten Komponenten verstoßen jedoch wahrscheinlich gegen die {company}-Nutzungsbedingungen für {game}.
+        Wenn Sie diesen Launcher verwenden, könnte ihr Spielerkonto von {company}/{company_alterego} als nicht TOS-konform identifiziert werden.
+        Wenn dies geschieht, kann {company}/{company_alterego} entscheiden, was mit Ihrem Konto passiert. Im schlimmsten Fall könnte dies in einem Ban enden.
+        Wenn Ihnen dieses Risiko bewusst ist, dass sie womöglich gegen die ToS verstoßen, drücken Sie einfach auf "Ich akzeptiere das Risiko"
+  buttons:
+    ok:
+      title: Ich akzeptiere das Risiko
+      tooltip: Sie sollten diesen Text wirklich lesen, er ist sehr wichtig.
+    cancel: Abbrechen
+    discord: Unser Discord Server
+
+# Screenshots window
+screenshots:
+  heading: Schnappschüsse
+  info: Klicken Sie auf einen Schnappschuss, um ihn zu öffnen.
+  buttons:
+    more: Mehr laden
+    folder: Öffne Schnappschüsse
+  no_images: Keine Schnappschüsse verfügbar

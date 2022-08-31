@@ -1,0 +1,368 @@
+# Splash window
+splash:
+  title: Caricando il launcher
+  phrases:
+    - Facendo attività molto importanti...
+    - Bullizzando Paimon...
+    - Pullando per Yae...
+    - Farmando materiali...
+    - Superando l'Abisso...
+    - Collezionando trofei...
+    - Buildando Qiqi fisica...
+    - Facendo sacrifici per un 5*...
+    - Cercando amici per co-op...
+
+# Launcher window
+launcher:
+  # Progress bar
+  progress:
+    pause: Pausa
+    resume: Riprendi
+
+    # Game installation
+    game:
+      downloading: Scaricando il gioco...
+      unpacking: Decomprimendo il gioco...
+      applying_changes: Applicando i cambiamenti...
+      deleting_outdated: Cancellando file vecchi...
+      integrity_check: Verficando file...
+      download_mismatch_files: Scaricando file mancanti...
+
+    # Voice packages installation
+    voice:
+      deleting: Cancellando pacchetto voci...
+      downloading: Scaricando pacchetto voci {voice}...
+      unpacking: Decomprimendo pacchetto voci {voice}...
+
+  # Launcher states
+  states:
+    # When the game should be installed or updated
+    installation:
+      install_wine: Installa Wine
+      install_dxvk: Installa DXVK
+      install: Installa
+      update: Aggiorna
+      
+      apply_changes:
+        title: Applica cambiamenti
+        hint: Applica i cambiamenti di hdiff ai file di gioco
+
+      remove_outdated:
+        title: Elimina file vecchi
+        hint: Elimina file di gioco vecchi
+
+    # When the game should be patched
+    patching:
+      # Patch unavailable
+      unavailable:
+        title: Patch non disponibile
+        hint: Questa versione del gioco non ha una patch per l'anti-cheat.
+              Per favore, aspetta qualche giorno finché non ci sia una versione di prova o stabile
+      
+      # Patch is in testing
+      test:
+        title: Applica patch di prova
+        hint: Questa versione del gioco ha una patch per l'anti-cheat sperimentale.
+              Puoi aspettare qualche giorno finché non sia stabile o applicarla a tuo rischio
+
+      # Patch is stable
+      stable: Applica patch
+
+    # When the game is ready for playing
+    ready:
+      launch: Avvia
+      predownload: Pre-scarica aggiornamento
+
+# Settings window
+settings:
+  # General
+  general:
+    title: Generale
+    items:
+      # Language selection
+      lang:
+        # Launcher language
+        launcher:
+          title: Launcher
+          items:
+            en-us: English (US)
+            ru-ru: Русский
+            es-es: Español
+            de-de: Deutsch
+            fr-fr: Français
+            it-it: Italiano
+            ja-jp: 日本語
+            hu-hu: Magyar
+            id-id: Bahasa Indonesia
+            nb-no: Norsk
+            zh-cn: 简体中文
+            uwu: Engwish
+
+        # Game voice pack language
+        voice:
+          title: Doppiaggio
+          tooltip: Dovrai configurare manualmente il voice pack in gioco
+          items:
+            en-us: Inglese (US)
+            ja-jp: Giapponese
+            ko-kr: Coreano
+            zh-cn: Cinese
+
+      # Launcher theme
+      theme:
+        title: Tema
+        items:
+          system: Sistema
+          light: Chiaro
+          dark: Scuro
+      
+      # Discord RPC
+      discord:
+        title: Integrazione Discord
+        settings:
+          title: Impostazioni di integrazione con Discord
+          items:
+            timer: Mostra il tempo di gioco
+            in-launcher: Testo nel launcher
+            in-game: Testo in gioco
+
+      # Some buttons
+      buttons:
+        winetricks: winetricks
+        winecfg: winecfg
+        launcher: Cartella del launcher
+        game: Cartella del gioco
+        repair_game: Ripara file di gioco
+        clear_cache: Cancella cache
+
+      # Patch-related settings
+      patch:
+        title: Patch
+        items:
+          patch_version: 'Versione della patch:'
+          updating_info: 'Aggiornando le informazioni della patch...'
+          buttons:
+            revert_patch: Annulla la patch
+            apply_patch: Applica la patch
+            reapply_patch: Riapplica la patch
+
+  # Enhancements
+  enhancements:
+    title: Miglioramenti
+
+    # Enhancements related to the wine
+    wine:
+      title: Wine
+      items:
+        # HUD
+        hud:
+          title: Interfaccia
+          items:
+            none: None
+            dxvk: DXVK
+            mangohud: MangoHUD
+
+        # Wine synchronization
+        winesync:
+          title: Sincronizzazione Wine
+          tooltip: ESync è un meccanismo di sincronizzazione per operazioni multi-thread. Può migliorare le performance di gioco.
+                  FSync è una versione migliorata di ESync che funziona su alcune versioni specifiche del kernel.
+          items:
+            none: Nessuno
+            esync: ESync
+            fsync: FSync
+            futex2: Futex2
+
+        # AMD FSR
+        fsr:
+          title: Attiva AMD FSR
+          tooltip: Questa opzione attiva AMD FidelityFX Super Resolution (FSR)
+                  che permetterà di scalare la risoluzione del gioco senza perdere FPS
+
+        # Wine Virtual Desktop
+        winevd:
+          title: Desktop virtuale
+          settings:
+            title: Impostazioni del desktop virtuale
+            items:
+              width: Larghezza
+              height: Altezza
+
+    # Enhancements related to the game
+    game:
+      title: Gioco
+      items:
+        # GameMode
+        gamemode:
+          title: Usa GameMode
+          tooltip:
+            enabled: È un software che può migliorare le prestazioni in gioco
+            disabled: ⚠️ Non hai il pacchetto gamemode installato
+
+        # Borderless Window
+        borderless_window:
+          title: Attiva il gioco senza bordi
+          tooltip: Rimuove i bordi quando giocato in modalità a finestra.
+                   Per giocare senza bordi in full screen, premi alt+enter mentre giochi full screen.
+
+        # Unlock FPS
+        fps_unlocker:
+          title: Sblocca gli FPS
+          tooltip: Questa opzione rimuoverà la limitazione di 60 FPS in gioco
+
+        # Use separate terminal window to run the game
+        use_terminal:
+          title: Usa il terminale
+          tooltip: Con questa opzione, il launcher avvierà il gioco con wine in un terminale separato
+
+    # Enhancements related to the launcher
+    launcher:
+      title: Launcher
+      items:
+        # Delete DXVK logs
+        purge_logs:
+          # Game logs (DXVK)
+          game:
+            title: Cancella i log DXVK
+            tooltip: Con questa opzione attiva, il launcher cancellerà automaticamente i file di log DXVK
+
+          # Launcher logs
+          launcher:
+            title: Cancella i log del launcher
+            tooltip: Quantità di tempo dopo cui il launcher eliminerà i vecchi file di log
+            items:
+              1d: 1 giorno
+              3d: 3 giorni
+              5d: 5 giorni
+              7d: 1 settimana
+              14d: 2 settimane
+              never: Mai
+
+  # Runners
+  runners:
+    title: Versione di Wine
+    items:
+      recommended:
+        title: Mostra solo le consigliate
+        tooltip: Questa opzione nasconderà le versioni di Wine non giocabili
+
+  # DXVKs
+  dxvks:
+    title: DXVK
+    items:
+      recommended:
+        title: Mostra solo le consigliate
+        tooltip: Questa opzione nasconderà le vecchie versioni di DXVK
+
+  # Shaders
+  shaders:
+    title: Shaders
+    items:
+      shaders:
+        title: Shaders
+        tooltip: Usa il bottone Home per attivare/disattivare le shaders in gioco
+        items:
+          none: None
+          custom: Custom
+
+      author: 'Autore: {author}'
+      no_images: Nessuna immagine aggiunta
+      not_installed: Non hai installato le librerie vkBasalt e reshade-shaders
+
+  # Environmantal variables manager
+  environment:
+    title: Environment
+    items:
+      # Table rows
+      table:
+        name: Name
+        value: Value
+      
+      # Table buttons
+      buttons:
+        add: Aggiungi
+        delete: Rimuovi
+
+# Notifications
+notifications:
+  # Launcher update
+  launcher_update_available:
+    title: 'Aggiornamento del launcher disponibile: {from} -> {to}'
+    body: Puoi scaricare una nuova versione del launcher dalla repository del progetto {repository}
+
+  # Before telemetry check when iputils is not downloaded
+  iputils_package_required:
+    title: An Anime Game Launcher
+    body: Devi avere iputils installato per controllare i servizi di telemetria
+
+  # When telemetry servers are not disabled
+  telemetry_not_disabled:
+    title: An Anime Game Launcher
+    body: I servizi di telemtria non sono disattivati
+
+  # Before patch applying when xdelta3 package is not downloaded
+  xdelta3_package_required:
+    title: An Anime Game Launcher
+    body: Devi scaricare il package xdelta3 per attivare la patch
+
+  # If patch wasn't applied because of some error
+  patch_applying_error:
+    title: An Anime Game Launcher
+    body: La patch non è stata applicata con successo. Controlla i file di log per trovare il motivo, o chiedi a qualcuno sul nostro server Discord.
+
+  # Patch repositories are not available
+  patch_repos_unavailable:
+    title: An Anime Game Launcher
+    body: Tutte le repository della patch non sono disponibili. Puoi avviare il gioco,
+          ma il launcher non si può assicurare che la patch è stata applicata correttamente
+
+  # HDiffPatch couldn't successfully apply game files changes
+  game_changes_applying_error:
+    title: Si è verificato un errore nell'aggiornamento del gioco
+    body: '{files} file non sono stati aggiornati dalla patch hdiff'
+
+# ToS violation warning window
+tos_violation:
+  title: Avviso di violazione ToS
+  heading: ⚠️ Avviso importante
+           Questo launcher non è ufficiale, non è in alcun modo collegato a {company} o {company_alterego}.
+           Questo mezzo è designato per facilitare l'avvio di {game} su Linux, ed è stato creato con il solo scopo di facilitare l'installazione di {game} su Linux.
+           Può fare ciò usando componenti già esistenti e rendendo l'esperienza più semplice per l'utente.
+           Alcuni componenti usati potrebbero infrangere i Termini di Servizio di {game}.
+           Se stai usando questo launcher, il tuo account potrebbe essere identificato come non conforme ai TOS da {company}/{company_alterego}.
+           Se questo succede, {company}/{company_alterego} ha pieno diritto sul tuo account, incluso il ban.
+           Se comprendi il rischio di provare a giocare con un mezzo non ufficiale, premi OK e inizia ad esplorare il mondo di Tevyat!
+  buttons:
+    ok:
+      title: Capisco il rischio
+      tooltip: Dovresti davvero leggere il testo sopra. È importante
+    cancel: Annulla
+    discord: Il nostro server Discord
+
+# Analytics window
+analytics:
+  title: La commissione di Yanfei...
+  header: Partecipa nella collezione di dati anonimi
+
+  body:
+    - Per contare il numero di giocatori      attivi su Linux, Yanfei vorrebbe          collezionare il tuo indirizzo IP ogni     volta che il gioco si aggiorna
+    - L'indirizzo IP sarà hashato per           motivi di sicurezza
+
+  actions:
+    share_country:
+      title: Condividi paese
+      hint: Permetti a Yanfei di registrare lo stato del tuo indirizzo IP per raccogliere statistiche più dettagliate.
+            Nessun altro dato oltre al paese verrà registrato.
+
+    participate: Partecipa
+    skip: Rifiuta
+    skip_forever: Rifiuta e non chiedere più
+
+# Screenshots window
+screenshots:
+  heading: Screenshots
+  info: Clicca su uno screenshot per aprirlo
+  buttons:
+    more: Carica altro
+    folder: Apri screenshot
+  no_images: Nessuno screenshot disponibile

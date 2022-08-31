@@ -1,0 +1,268 @@
+# Splash window
+splash:
+  title: woading waunchew
+  phrases:
+    - d-doing some i-impowtant s-stuff.. (≧◡≦)
+    - buwwying p-paimon.. xD
+    - p-puwwing fow yae.. (o^▽^o)
+    - fawming matewiaws.. uguu..
+    - passing abyss.. (o^▽^o)
+    - cowwecting achievements...
+    - buiwding phys qiqi.. (* ^ ω ^)
+    - making sacwifices fow 5*...
+    - finding fwiends fow co-op.. (≧◡≦)
+
+# Launcher window
+launcher:
+  # Progress bar
+  progress:
+    pause: pause
+    resume: wesume
+
+    # Game installation
+    game:
+      downloading: downwoading game... -.-
+      unpacking: unpacking g-game (o^▽^o)
+      integrity_check: vewifying fiwes...
+      download_mismatch_files: downwoading mismatched fiwes...
+
+  # Launcher states
+  states:
+    # When the game should be installed or updated
+    installation:
+      install_wine: install wine （＾O＾）
+      install_dxvk: install DXVK (◕ ω ◕✿)
+      install: install
+      update: u-update (／≧ ω＼)
+
+    # When the game is ready for playing
+    ready:
+      launch: launch (◕▿◕✿)
+      predownload: pwe-downwoad update
+
+# Settings window
+settings:
+  # General
+  general:
+    title: genewaw
+    items:
+      # Language selection
+      lang:
+        # Launcher language
+        launcher:
+          title: waunchew
+          items:
+            en-us: English (US)
+            ru-ru: Русский
+            es-es: Español
+            de-de: Deutsch
+            fr-fr: Français
+            it-it: Italiano
+            ja-jp: 日本語
+            hu-hu: Magyar
+            id-id: Bahasa Indonesia
+            nb-no: Norsk
+            zh-cn: 简体中文
+            uwu: Engwish
+
+      # Launcher theme
+      theme:
+        title: theme
+        items:
+          system: system
+          light: wight
+          dark: dawk
+      
+      # Discord RPC
+      discord:
+        title: discowd wpc
+        settings:
+          title: discowd wpc s-settings
+          items:
+            timer: show e-estimated time spent
+            in-launcher: waunchew text
+            in-game: In-game text
+            selectIcon: s-sewect icon
+
+      # Some buttons
+      buttons:
+        winetricks: winetwicks
+        winecfg: winecfg
+        launcher: waunchew f-fowdew
+        game: game f-fowdew
+        repair_game: wepaiw game fiwes
+        clear_cache: cweaw cache
+
+  # Enhancements
+  enhancements:
+    title: enhancements
+
+    # Enhancements related to the wine
+    wine:
+      title: wine
+      items:
+        # HUD
+        hud:
+          title: h-hud
+          items:
+            none: n-none
+            dxvk: DXVK
+            mangohud: MangoHUD
+
+        # Wine synchronization
+        winesync:
+          title: wine synchwonization
+          tooltip: Esync is a mechanism of synchwonizing muwti-thwead opewations. it can impwove youw game p-pewfowmance.
+                   Fsync is an impwoved vewsion of esync that wowks on specific k-kewnew vewsions
+          items:
+            none: none
+            esync: Esync
+            fsync: Fsync
+            futex2: Futex2
+
+        # AMD FSR
+        fsr:
+          title: enable amd fsw
+          tooltip: this option enables a-amd fidewityfx s-super wesowution (fsw) which will scale youw game wesowution without wosing fps
+
+        # Wine Virtual Desktop
+        winevd:
+          title: viwtuaw desktop
+          settings:
+            title: viwtuaw desktop settings
+            items:
+              width: width
+              height: height
+
+    # Enhancements related to the game
+    game:
+      title: game
+      items:
+        # GameMode
+        gamemode:
+          title: use G-GameMode
+          tooltip:
+            enabled: it i-is a software t-that can impwove the game pewfowmance
+            disabled: ⚠️ you don't h-have g-gamemode package instawwed
+
+        # Borderless Window
+        borderless_window:
+          title: allow bowdewless window
+          tooltip: wemoves the window bowders when playing in windowed mode.
+                  to play in a f-fullscween bowdewless window, press alt+entew when playing on fullscween  ପ(๑•ᴗ•๑)ଓ.
+
+        # Use separate terminal window to run the game
+        use_terminal:
+            title: use tewminaw
+            tooltip: with this option enabwed waunchew will wun the w-wine command in a sepawate t-tewminaw window
+
+    # Enhancements related to the launcher
+    launcher:
+      title: waunchew
+      items:
+        # Delete logs
+        purge_logs:
+          # Game logs (DXVK)
+          game:
+            title: dewete DXVK wogs
+            tooltip: with this option enabwed youw waunchew will a-automaticawwy
+                    dewete dxvk wog f-files
+
+          # Launcher logs
+          launcher:
+            title: dewete w-waunchew wogs
+            tooltip: amount of time after which waunchew will dewete i-it's owd wog files
+            items:
+              1d: 1 day
+              3d: 3 days
+              5d: 5 days
+              7d: 1 week
+              14d: 2 weeks
+              never: Never
+
+  # Runners
+  runners:
+    title: wine vewsion
+    items:
+      recommended:
+        title: show wecommended onwy
+        tooltip: this option will hide unpwayable wine vewsions
+
+  # Shaders
+  shaders:
+    title: s-shaders
+    items:
+      shaders:
+        title: s-shaders
+        tooltip: use home button t-to toggle shaders i-in the game
+        items:
+          none: n-none
+          custom: custom
+      
+      author: 'a-authow: {author}'
+      no_images: no images avaiwable
+      not_installed: you haven't instawwed vkbasawt and weshade-shaders wibwawy
+
+  # Environmantal variables manager
+  environment:
+    title: enviwonment
+    items:
+      # Table rows
+      table:
+        name: name
+        value: vawue
+      
+      # Table buttons
+      buttons:
+        add: add
+        delete: dewete
+
+# Notifications
+notifications:
+  # Launcher update
+  launcher_update_available:
+    title: 'waunchew update avaiwable: {from} -> {to}'
+    body: you can downwoad the new vewsion of the waunchew fwom the pwoject's wepositowy at {repository}
+
+  # Before telemetry check when iputils is not downloaded
+  iputils_package_required:
+    title: honkers waunchew
+    body: you m-must have iputils instawwed fow tewemetwy checking
+
+  # When telemetry servers are not disabled
+  telemetry_not_disabled:
+    title: honkers waunchew
+    body: tewemetwy sewvers are n-not disabwed
+
+  # Before patch applying when xdelta3 package is not downloaded
+  xdelta3_package_required:
+    title: honkers waunchew
+    body: you must downwoad xdelta3/xdelta package t-to a-appwy t-the patch
+
+# ToS violation warning window
+tos_violation:
+  title: ToS violation warning
+  heading: ⚠️ Be warned
+  body: This launcher is an unofficial tool, in no way related to {company} nor {company_alterego}.
+        This tool is designed to facilitate playing {game} on Linux,
+        and was built with the sole purpose of installing and running the game with less hassle.
+        It does so by using existing components and making the experience simple for the user.
+        However, some components used here likely break the {company} Terms of Service for {game}.
+        If you are using this launcher, your player account could become identified as TOS-non-compliant by {company}/{company_alterego}.
+        If this happens, as your account would be disobeying TOS, {company}/{company_alterego} are free to do what they want. Including banning.
+        If you understand the risk of trying to play the game in an unofficial capacity, press simply OK
+  buttons:
+    ok:
+      title: I understand the risk
+      tooltip: You really should read this text above. It's important
+    cancel: Cancel
+    discord: Our discord server
+
+# Screenshots window
+screenshots:
+  heading: scweenshots
+  info: cwick on a s-scweenshot to open it up.
+  buttons:
+    more: lowad mowe
+    folder: open scweenshots
+  no_images: no scweenshots avaiwable

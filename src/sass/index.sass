@@ -1,0 +1,185 @@
+@import "basic"
+
+#background
+    position: absolute
+    
+    width: 100%
+    height: 100%
+
+#info
+    position: absolute
+    
+    top: 196px
+    left: 48px
+
+    width: 460px
+    height: 352px
+
+    background-color: rgba(0, 0, 0, .65)
+
+.button
+    border-radius: 8px
+    background-color: #ffcb0b
+    border: none
+    cursor: pointer
+
+.button:hover:not([disabled])
+    background-color: #fac60b
+    box-shadow: 0 1px 8px 0 rgba(0, 0, 0, .2)
+
+.button:disabled
+    background-color: rgba(0, 0, 0, .35)
+    color: rgba(255, 255, 255, .7)
+
+    cursor: default
+
+.button-blue
+    background-color: #8193c5
+    color: white
+
+.button-blue:hover:not([disabled])
+    background-color: #7284b6
+
+#launch, #pause
+    position: absolute
+
+    width: 238px
+    height: 64px
+
+    right: 128px
+    bottom: 48px
+
+    font-size: 22px
+
+#pause
+    display: none
+
+#predownload
+    position: absolute
+    display: none
+
+    width: 52px
+    height: 52px
+
+    right: 386px
+    bottom: 54px
+
+    border-radius: 32px
+
+    img
+        width: 60%
+        margin: auto
+
+#settings
+    width: 76px
+    height: 76px
+
+    position: absolute
+
+    right: 0
+    bottom: 0
+
+    cursor: pointer
+
+    > img
+        width: 40px
+        height: 40px
+        
+        margin: 18px
+
+    .active
+        display: none
+
+    .unactive
+        display: block
+
+#settings.hovered
+    .active
+        display: block
+
+    .unactive
+        display: none
+
+#screenshots
+    width: 76px
+    height: 128px
+
+    position: absolute
+
+    right: 0
+    bottom: 0
+
+    cursor: pointer
+
+    > img
+        width: 40px
+        height: 40px
+        
+        margin: 18px
+
+    .active
+        display: none
+
+    .unactive
+        display: block
+
+#screenshots.hovered
+    .active
+        display: block
+
+    .unactive
+        display: none
+
+.downloader-panel
+    user-select: none
+
+    .downloader-label
+        position: absolute
+
+        left: 48px
+        bottom: 100px
+
+        color: white
+        font-size: 18px
+
+        #downloaded
+            max-width: 720px
+            display: inline-block
+            word-break: break-all
+
+        #speed, #eta
+            margin-left: 8px
+            color: #cccccc
+            font-weight: 100
+
+    .progress-bar
+        position: absolute
+
+        padding: 0
+
+        left: 48px
+        bottom: 52px
+
+        width: 720px
+        height: 36px
+
+        background-color: rgba(0, 0, 0, .1)
+        border: 1px solid rgba(0, 0, 0, .2)
+        border-radius: 8px
+
+        .progress
+            width: 0
+            height: 100%
+
+            background-color: rgba(255, 255, 255, .7)
+            border-radius: 6px
+
+
+/*#downloader-panel.dark
+    #downloader-label
+        #downloaded, #speed, #eta
+            color: rgba(0, 0, 0, .7)
+
+    #downloader
+        background-color: rgba(0,0,0,.3)
+        border: 1px solid rgba(0,0,0,.4)
