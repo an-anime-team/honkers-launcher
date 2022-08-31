@@ -188,7 +188,7 @@
 {#if typeof $locale === 'string'}
     <main>
         <div class="menu">
-            {#each ['general', 'enhancements', 'runners', 'dxvks', 'shaders', 'environment'] as item}
+            {#each ['general', 'enhancements', 'runners', 'shaders', 'environment'] as item}
                 <div
                     class="menu-item"
                     class:menu-item-active={selectedItem === item}
