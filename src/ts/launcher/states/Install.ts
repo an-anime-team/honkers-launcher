@@ -41,10 +41,6 @@ export default (launcher: Launcher): Promise<void> => {
                 launcher.state!.pauseButton.style['display'] = 'block';
 
                 let paused = false;
-                
-                if(await fs.exists(gameDir)) {
-                    await fs.remove(gameDir);
-                }
 
                 launcher.state!.pauseButton.onclick = () => {
                     if (!paused)
