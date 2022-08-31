@@ -1,6 +1,6 @@
 import type Launcher from '../../Launcher';
 
-import { promisify, Configs } from '../../../empathize';
+import { promisify, Configs, fs } from '../../../empathize';
 
 import Game from '../../Game';
 import Prefix from '../../core/Prefix';
@@ -26,8 +26,9 @@ export default (launcher: Launcher): Promise<void> => {
 
         const updateGame = async () => {
             const prevGameVersion = await Game.current;
+            const gameDir = await constants.paths.gameDir;
 
-            Game.update(prevGameVersion).then((stream) => {
+            Game.update(prevGameVersion).then(async (stream) => {
                 launcher.progressBar?.init({
                     label: Locales.translate('launcher.progress.game.downloading'),
                     showSpeed: true,
@@ -40,6 +41,10 @@ export default (launcher: Launcher): Promise<void> => {
                 launcher.state!.pauseButton.style['display'] = 'block';
 
                 let paused = false;
+                
+                if(await fs.exists(gameDir)) {
+                    await fs.remove(gameDir);
+                }
 
                 launcher.state!.pauseButton.onclick = () => {
                     if (!paused)
