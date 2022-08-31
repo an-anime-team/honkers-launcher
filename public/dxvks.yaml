@@ -43,7 +43,7 @@
   recommended: false
 
 - version: 'honk-1.9.4'
-  uri: https://github.com/an-anime-team/an-anime-game-launcher/raw/honkers/repository/dxvk-honk-1.9.4.zip
+  uri: https://github.com/an-anime-team/honkers-launcher/raw/main/repository/dxvk-honk-1.9.4.zip
   recommended: true
 
 - version: '1.9.3'
