@@ -6,7 +6,7 @@
 
 <p align="center">You could also try <a href="https://github.com/an-anime-team/honkers-launcher-gtk">the GTK branch</a></p>
 
-<br><br>
+<br>
 
 # Requirements
 
