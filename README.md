@@ -15,7 +15,6 @@ To make this launcher work you need the following dependencies
 | Name | Description |
 | --- | --- |
 | webkit2gtk | To run Neutralino apps |
-| libayatana-appindicator3-1 | To run Neutralino apps |
 | unzip | To unpack zip archives (DXVK / Wine) |
 | tar | To unpack tar archives (DXVK / Wine) |
 | p7zip | To unpack 7z archives (Game) |
