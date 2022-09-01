@@ -100,7 +100,7 @@ class FilesVerifier
                         message: [
                             'File is missing',
                             `[path] ${fileCheckInfo.remoteName}`,
-                            `[hash] ${fileCheckInfo.md5}`
+                            `[hash] ${fileCheckInfo.md5.toLowerCase()}`
                         ]
                     });
                 }
@@ -112,7 +112,7 @@ class FilesVerifier
                 {
                     const fileHash = await md5(`${this.gameDir}/${fileCheckInfo.remoteName}`);
 
-                    if (fileHash != fileCheckInfo.md5)
+                    if (fileHash != fileCheckInfo.md5.toLowerCase())
                     {
                         this.mismatches.push(fileCheckInfo);
 
@@ -121,7 +121,7 @@ class FilesVerifier
                                 'Wrong file hash found',
                                 `[path] ${fileCheckInfo.remoteName}`,
                                 `[hash] ${fileHash}`,
-                                `[remote hash] ${fileCheckInfo.md5}`
+                                `[remote hash] ${fileCheckInfo.md5.toLowerCase()}`
                             ]
                         });
                     }
