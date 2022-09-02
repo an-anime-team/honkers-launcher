@@ -29,7 +29,6 @@ export default class State
     public launchButton: HTMLElement;
     public pauseButton: HTMLElement;
     public predownloadButton: HTMLElement;
-    public screenshotsButton: HTMLElement;
     public settingsButton: HTMLElement;
 
     protected _state: LauncherState = 'game-launch-available';
@@ -55,7 +54,6 @@ export default class State
         this.launchButton      = <HTMLElement> document.getElementById('launch');
         this.pauseButton       = <HTMLElement> document.getElementById('pause');
         this.predownloadButton = <HTMLElement> document.getElementById('predownload');
-        this.screenshotsButton = <HTMLElement> document.getElementById('screenshots');
         this.settingsButton    = <HTMLElement> document.getElementById('settings');
 
         Background.get().then((uri) => {
@@ -69,14 +67,12 @@ export default class State
             if (this.events[this._state])
             {
                 this.launchButton.style['display'] = 'none';
-                this.screenshotsButton.style['display'] = 'none';
                 this.settingsButton.style['display'] = 'none';
 
                 this.events[this._state].then((event) => {
                     event.default(this.launcher).then(() => {
                         this.update().then(() => {
                             this.launchButton.style['display'] = 'block';
-                            this.screenshotsButton.style['display'] = 'block';
                             this.settingsButton.style['display'] = 'block';
                         });
                     });
@@ -87,7 +83,6 @@ export default class State
         this.predownloadButton.onclick = () => {
             this.launchButton.style['display'] = 'none';
             this.predownloadButton.style['display'] = 'none';
-            this.screenshotsButton.style['display'] = 'none';
             this.settingsButton.style['display'] = 'none';
 
             // We must specify this files here directly
@@ -99,7 +94,6 @@ export default class State
                     module.default(this.launcher).then(() => {
                         this.update().then(() => {
                             this.launchButton.style['display'] = 'block';
-                            this.screenshotsButton.style['display'] = 'block';
                             this.settingsButton.style['display'] = 'block';
                         });
                     });
@@ -109,45 +103,6 @@ export default class State
         this.update().then(async () => {
             // Close splash screen
             IPC.write('launcher-loaded');
-
-            // If it is the first run - we should show ToS violation warning
-            if (await fs.exists(path.join(await constants.paths.launcherDir, '.first-run')))
-            {
-                Windows.open('tos-violation', {
-                    title: 'ToS violation warning',
-                    width: 700,
-                    height: 500,
-                    exitProcessOnClose: false
-                });
-
-                await new Promise<void>((resolve) => {
-                    const tosWaiter = async () => {
-                        let found = false;
-
-                        for (const record of await IPC.read())
-                            if (record.data['type'] == 'tos-violation')
-                            {
-                                found = true;
-
-                                if (record.pop().data['agreed'])
-                                {
-                                    fs.remove(path.join(await constants.paths.launcherDir, '.first-run'));
-
-                                    resolve();
-                                }
-
-                                else Neutralino.app.exit();
-
-                                break;
-                            }
-
-                        if (!found)
-                            setTimeout(tosWaiter, 1000);
-                    };
-
-                    setTimeout(tosWaiter, 1000);
-                });
-            }
 
             // Show launcher's window
             await Windows.current.show();

@@ -15,9 +15,7 @@ export default defineConfig({
             input: [
                 'index.html',
                 'settings.html',
-                'splash.html',
-                'tos-violation.html',
-                'screenshots.html'
+                'splash.html'
             ]
         }
     }

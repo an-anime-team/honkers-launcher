@@ -32,7 +32,6 @@ export default class Launcher
     public static readonly version: string = version;
 
     protected settingsMenu?: Process;
-    protected screenshotsWindow?: Process;
 
     public constructor(onMount)
     {
@@ -58,9 +57,6 @@ export default class Launcher
             if (!await fs.exists(launcherDir))
             {
                 await fs.mkdir(launcherDir);
-                
-                // Needs for the ToS violation warning window
-                await fs.write(path.join(launcherDir, '.first-run'), '');
             }
             
             // Create logs folder if it doesn't exist
@@ -77,44 +73,6 @@ export default class Launcher
                 this.state = new State(this);
             });
         });
-    }
-
-    public showScreenshots(): Promise<boolean>
-    {
-        return new Promise(async (resolve) => {
-            if (this.screenshotsWindow)
-                resolve(false);
-            
-            else
-            {
-                this.screenshotsWindow = undefined;
-
-                const window = await Windows.open('screenshots', {
-                    title: 'Screenshots',
-                    width: 900,
-                    height: 600,
-                    resizable: true,
-                    // enableInspector: true,
-                    exitProcessOnClose: true
-                });
-
-                if (window.status)
-                {
-                    this.screenshotsWindow = new Process(window.data!.pid);
-
-                    this.screenshotsWindow.finish(async () => {
-                        this.screenshotsWindow = undefined;
-
-                        await Windows.current.show();
-                        await Windows.current.center(1280, 700);
-                    });
-
-                    Windows.current.hide();
-                }
-                
-                resolve(window.status);
-            }
-        })
     }
 
     public showSettings(): Promise<boolean>

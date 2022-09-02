@@ -53,16 +53,7 @@ settings:
           title: Launcher
           items:
             en-us: English (US)
-            ru-ru: Русский
-            es-es: Español
             de-de: Deutsch
-            fr-fr: Français
-            it-it: Italiano
-            ja-jp: 日本語
-            hu-hu: Magyar
-            id-id: Bahasa Indonesia
-            nb-no: Norsk
-            zh-cn: 简体中文
             uwu: Engwish
 
       # Launcher thema
@@ -235,35 +226,3 @@ notifications:
   telemetry_not_disabled:
     title: Honkers Launcher
     body: Telemetry Server sind nicht deaktiviert.
-
-  # Before patch applying when xdelta3 package is not downloaded
-  xdelta3_package_required:
-    title: Honkers Launcher
-    body: Sie müssen xdelta3/xdelta installiert haben, um den Patch anzuwenden
-
-# ToS violation warning window
-tos_violation:
-  title: ToS-Verletzungswarnung
-  heading: ⚠️ Sei gewarnt   
-  body: Dieser Launcher ist ein inoffizielles Tool, das in keiner Weise mit {company} oder {company_alterego} in Verbindung steht.
-        Dieses Tool wurde entwickelt, um das Spielen von {game} unter Linux zu erleichtern. Es wurde mit dem einzigen Ziel entwickelt, das Spiel mit weniger Aufwand zu installieren und zu starten.
-        Dies geschieht durch die Verwendung vorhandener Komponenten und vereinfacht die Erfahrung für den Benutzer.
-        Einige der hier verwendeten Komponenten verstoßen jedoch wahrscheinlich gegen die {company}-Nutzungsbedingungen für {game}.
-        Wenn Sie diesen Launcher verwenden, könnte ihr Spielerkonto von {company}/{company_alterego} als nicht TOS-konform identifiziert werden.
-        Wenn dies geschieht, kann {company}/{company_alterego} entscheiden, was mit Ihrem Konto passiert. Im schlimmsten Fall könnte dies in einem Ban enden.
-        Wenn Ihnen dieses Risiko bewusst ist, dass sie womöglich gegen die ToS verstoßen, drücken Sie einfach auf "Ich akzeptiere das Risiko"
-  buttons:
-    ok:
-      title: Ich akzeptiere das Risiko
-      tooltip: Sie sollten diesen Text wirklich lesen, er ist sehr wichtig.
-    cancel: Abbrechen
-    discord: Unser Discord Server
-
-# Screenshots window
-screenshots:
-  heading: Schnappschüsse
-  info: Klicken Sie auf einen Schnappschuss, um ihn zu öffnen.
-  buttons:
-    more: Mehr laden
-    folder: Öffne Schnappschüsse
-  no_images: Keine Schnappschüsse verfügbar
