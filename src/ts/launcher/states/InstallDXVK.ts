@@ -48,9 +48,13 @@ export default (launcher: Launcher): Promise<void> => {
 
                         // And apply it
                         DXVK.apply(await constants.paths.prefix.current, 'honk-1.9.4').then(() => {
-                            launcher.progressBar?.hide();
-
-                            resolve();
+                            import('./CreatePrefix').then((module) => {
+                                module.default(launcher).then(() => {
+                                    import('./InstallMF').then((module) => {
+                                        module.default(launcher).then(() => resolve());
+                                    });
+                                });
+                            });
                         });
                     });
                 });
