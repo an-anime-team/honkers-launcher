@@ -44,6 +44,7 @@ function apply(prefix: string): Promise<void> {
                         cwd: mfPlatDir,
                         env: {
                             WINE: runner ? `${runnerDir}/${runner.files.wine}` : 'wine',
+                            WINE64: runner ? `${runnerDir}/${runner.files.wine64}` : 'wine64',
                             WINESERVER: runner ? `${runnerDir}/${runner.files.wineserver}` : 'wineserver',
                             WINEPREFIX: prefix
                         }
