@@ -6,7 +6,7 @@ declare const Neutralino;
 import AbstractInstaller from '../../core/AbstractInstaller';
 import constants from '../../Constants';
 import Runners from '../../core/Runners';
-import { Process, promisify,fs  } from '../../../empathize';
+import { Process, promisify, fs  } from '../../../empathize';
 import { DebugThread } from '@empathize/framework/dist/meta/Debug';
 
 class Stream extends AbstractInstaller
