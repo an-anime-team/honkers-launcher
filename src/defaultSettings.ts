@@ -9,9 +9,6 @@ export default new Promise<void>(async (resolve) => {
     await Configs.defaults({
         lang: {
             launcher: systemLocale,
-            voice: [
-                'en-us'
-            ]
         },
 
         /**
@@ -19,7 +16,7 @@ export default new Promise<void>(async (resolve) => {
          * 
          * Available options: "global" and "cn"
          */
-        server: systemLocale === 'zh-cn' ? 'cn' : 'global',
+        server: 'global',
 
         folders: {
             /**
@@ -121,14 +118,14 @@ export default new Promise<void>(async (resolve) => {
                  * 
                  * @default 720
                  */
-                width: 720,
+                width: 1280,
 
                 /**
                  * Virtual Desktop Height
                  * 
                  * @default 1280
                  */
-                height: 1280
+                height: 720
             }
         },
     
