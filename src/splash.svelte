@@ -10,7 +10,7 @@
 
     import constants from './ts/Constants';
 
-    import Splash from './assets/gifs/running-qiqi.gif';
+    import Splash from './assets/images/splash.png';
     import SplashSecret from './assets/gifs/loading-marie-please.gif';
 
     const splash = Math.round(Math.random() * 100) < 100 ? Splash : SplashSecret;
