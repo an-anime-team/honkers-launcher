@@ -167,9 +167,9 @@ export default new Promise<void>(async (resolve) => {
                 },
 
                 'in-game': {
-                    details: 'Exploring the landscape',
-                    state: 'of Teyvat',
-                    icon: 'game'
+                    details: 'Trying to Survive',
+                    state: 'the Honkai',
+                    icon: 'main'
                 }
             }
         },

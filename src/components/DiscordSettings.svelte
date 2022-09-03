@@ -15,30 +15,8 @@
     // neutralino won't be able to load them because of its restrictions
     const icons = {
         'bGF1bmNoZXI=': import('../../public/icons/256x256.png'),
-        'Z2ktaWNvbg==': import('../assets/images/discord/anime-icon.jpg'),
-        'Z2FtZQ==': import('../assets/images/discord/game.jpg'),
-
-        'YXJ0Z2FtZQ==': import('../assets/images/discord/chr-ms-ab-1.jpg'),
-        'YXJ0Z2FtZTM=': import('../assets/images/discord/chr-ms-ab-2.jpg'),
-
-        'YmVpZG91Z2FtZQ==': import('../assets/images/discord/chr-ly-bd-1.jpg'),
-
-        'a2xlZWdhbWU=': import('../assets/images/discord/chr-ms-kl-1.jpg'),
-        'a2xlZWdhbWUy': import('../assets/images/discord/chr-ms-kl-2.jpg'),
-        'YXJ0Z2FtZTI=': import('../assets/images/discord/chr-ms-kl-3.jpg'),
-
-        'YmFhbDE=': import('../assets/images/discord/chr-in-rs-1.webp'),
-
-        'eWFlbWlrbzE=': import('../assets/images/discord/chr-in-ym-1.webp'),
-        'eWFlbWlrbzI=': import('../assets/images/discord/chr-in-ym-2.jpg'),
-
-        'bGl5dWVnYW1l': import('../assets/images/discord/loc-ly-1.jpg'),
-
-        'aW5henVtYTE=': import('../assets/images/discord/loc-in-1.jpg'),
-        'aW5henVtYTI=': import('../assets/images/discord/loc-in-2.jpg'),
-        'aW5henVtYTM=': import('../assets/images/discord/loc-in-3.jpg'),
-        'aW5henVtYTQ=': import('../assets/images/discord/loc-in-4.jpg'),
-        'aW5henVtYTU=': import('../assets/images/discord/loc-in-5.jpg')
+        'aG9ua2FpLWljb24=': import('../assets/images/discord/anime-icon.png'),
+        'bWFpbg==': import('../assets/images/discord/chr-1.png')
     };
 
     let iconSelector: 'in-game' | 'in-launcher' | null = null;
@@ -46,7 +24,7 @@
     let states = {
         'in-game': {
             text: '',
-            icon: 'Z2FtZQ=='
+            icon: 'bWFpbg=='
         },
         'in-launcher': {
             text: '',

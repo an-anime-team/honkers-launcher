@@ -197,7 +197,7 @@ export default class Launcher
                         this.rpc.stop(true);
                     
                     this.rpc = new DiscordRPC({
-                        id: '901534333360304168',
+                        id: '1015417833603219477',
 
                         // @ts-expect-error
                         details: discord.states[state].details,
