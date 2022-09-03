@@ -50,6 +50,7 @@ export default class Game
             //const globalGameManagersPath = `${await constants.paths.gameDataDir}/globalgamemanagers`;
             
             // workaround for now
+            // TODO: Make a better version
             if(await md5(`${await constants.paths.gameDir}/BH3.exe`) == "db91f38673c17596362aab300f5a7c73") {
                 resolve("5.9.1");
             } else {
