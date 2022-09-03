@@ -12,7 +12,6 @@ import { DebugThread } from '@empathize/framework/dist/meta/Debug';
 
 import constants from './Constants';
 import AbstractInstaller from './core/AbstractInstaller';
-import md5 from './core/md5';
 
 declare const Neutralino;
 
@@ -46,24 +45,15 @@ export default class Game
     public static get current(): Promise<string|null>
     {
         return new Promise(async (resolve) => {
-            // const persistentPath = `${await constants.paths.gameDataDir}/Persistent/ScriptVersion`;
-            //const globalGameManagersPath = `${await constants.paths.gameDataDir}/globalgamemanagers`;
-            
-            // workaround for now
-            // TODO: Make a better version
-            if(await md5(`${await constants.paths.gameDir}/BH3.exe`) == "db91f38673c17596362aab300f5a7c73") {
-                resolve("5.9.1");
-            } else {
-                resolve(null);
-            }
+            const globalGameManagersPath = `${await constants.paths.gameDataDir}/globalgamemanagers`;
 
-            /*Neutralino.filesystem.readFile(persistentPath)
+            Neutralino.filesystem.readFile(persistentPath)
                 .then((version) => resolve(version))
-                .catch(() => {*/
-                    /*Neutralino.filesystem.readBinaryFile(globalGameManagersPath)
+                .catch(() => {
+                    Neutralino.filesystem.readBinaryFile(globalGameManagersPath)
                         .then((config: ArrayBuffer) => {
                             const buffer = new TextDecoder('ascii').decode(new Uint8Array(config));
-                            const version = /([1-9]+\.[0-9]+\.[0-9]+)_[\d]+_[\d]+/.exec(buffer);
+                            const version = /[\u0000]{4,}([1-9]+\.[0-9]+\.[0-9]+)[\u0000]{4,}/.exec(buffer);
 
                             Debug.log({
                                 function: 'Game.current',
@@ -72,8 +62,8 @@ export default class Game
 
                             resolve(version !== null ? version[1] : null);
                         })
-                        .catch(() => resolve(null));*/
-                // });
+                        .catch(() => resolve(null));
+                 });
         });
     }
 
