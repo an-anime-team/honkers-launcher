@@ -47,9 +47,9 @@ export default class Game
         return new Promise(async (resolve) => {
             const globalGameManagersPath = `${await constants.paths.gameDataDir}/globalgamemanagers`;
 
-            Neutralino.filesystem.readFile(persistentPath)
+            /*Neutralino.filesystem.readFile(persistentPath)
                 .then((version) => resolve(version))
-                .catch(() => {
+                .catch(() => {*/
                     Neutralino.filesystem.readBinaryFile(globalGameManagersPath)
                         .then((config: ArrayBuffer) => {
                             const buffer = new TextDecoder('ascii').decode(new Uint8Array(config));
@@ -63,7 +63,7 @@ export default class Game
                             resolve(version !== null ? version[1] : null);
                         })
                         .catch(() => resolve(null));
-                 });
+                // });
         });
     }
 
