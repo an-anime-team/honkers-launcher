@@ -24,7 +24,9 @@ To make this launcher work you need the following dependencies
 | libnotify | To send system notifications |
 | samba | For Authentication |
 
-## Install
+<br>
+
+# Install
 
 ### apt
 
@@ -43,6 +45,17 @@ sudo pacman -Syu unzip tar git curl samba p7zip cabextract libnotify
 ```sh
 sudo dnf install unzip tar git curl samba p7zip p7zip-plugins cabextract libnotify webkit2gtk3 libappindicator
 ```
+
+<br>
+
+[download the latest release](https://github.com/an-anime-team/honkers-launcher/releases/latest)
+
+<br>
+
+# Manual Installation
+[Check the wiki page for a detailed guide](https://github.com/an-anime-team/honkers-launcher/wiki/Manual-Installation)
+
+<br>
 
 # Development
 
