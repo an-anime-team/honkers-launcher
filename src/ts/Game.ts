@@ -148,7 +148,6 @@ export default class Game
         return new Promise(async (resolve, reject) => {
             this.getLatestData()
                 .then((data) => {
-                      console.log(version, data.game.latest.version);
                       if (data.game.latest.version != version)
                       {
                           resolve(data.game.latest);
