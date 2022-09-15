@@ -143,18 +143,18 @@ export default class Game
      * 
      * @returns null if the difference can't be calculated
      */
-    public static getDiff(version: string): Promise<Diff|null>
+    public static getDiff(version: string): Promise<Latest|null>
     {
         return new Promise(async (resolve, reject) => {
             this.getLatestData()
                 .then((data) => {
-                    for (const diff of data.game.diffs)
-                        if (diff.version == version)
-                        {
-                            resolve(diff);
+                      console.log(version, data.game.latest.version);
+                      if (data.game.latest.version != version)
+                      {
+                          resolve(data.game.latest);
 
-                            return;
-                        }
+                          return;
+                      }
 
                     resolve(null);
                 })
@@ -180,24 +180,9 @@ export default class Game
         });
 
         return new Promise((resolve, reject) => {
-            this.isUpdatePredownloaded().then(async (predownloaded) => {
-                if (predownloaded)
-                {
-                    Debug.log({
-                        function: 'Game.update',
-                        message: 'Update is already pre-downloaded. Unpacking started'
-                    });
-
-                    resolve(new Stream(`${await constants.paths.launcherDir}/game-predownloaded.zip`, true));
-                }
-
-                else
-                {
-                    (version === null ? this.latest : this.getDiff(version))
-                        .then((data: Latest|Diff|null) => resolve(data === null ? null : new Stream(data.path)))
-                        .catch((error) => reject(error));
-                }
-            });
+            (version === null ? this.latest : this.getDiff(version))
+                .then((data: Latest|Diff|null) => resolve(data === null ? null : new Stream(data.path)))
+                .catch((error) => reject(error));
         });
     }
 
