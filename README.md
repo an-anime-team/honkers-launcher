@@ -1,3 +1,5 @@
+# DEPREACTED DUE TO THE GAME NO LONGER LAUNCHING ON LINUX
+
 <img src="repository/pics/launcher-main.png">
 
 <img src="repository/pics/launcher-settings.png">
