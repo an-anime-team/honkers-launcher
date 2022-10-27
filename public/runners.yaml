@@ -3,6 +3,16 @@
   runners:
   # Specials
   - family: Wine-GE-Proton
+    name: wine-7.19-staging-tkg-amd64
+    title: Wine 7.19 TKG
+    uri: https://github.com/Kron4ek/Wine-Builds/releases/download/7.19/wine-7.19-staging-tkg-amd64.tar.xz
+    files:
+      wine: bin/wine64
+      wineserver: bin/wineserver
+      winecfg: lib/wine/x86_64-windows/winecfg.exe
+    recommended: true
+  
+  - family: Wine-GE-Proton
     name: wine-7.18-staging-tkg-amd64
     title: Wine 7.18 TKG
     uri: https://github.com/Kron4ek/Wine-Builds/releases/download/7.18/wine-7.18-staging-tkg-amd64.tar.xz
