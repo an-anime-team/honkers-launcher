@@ -33,7 +33,7 @@ impl SimpleComponent for AboutDialog {
 
     view! {
         dialog = adw::AboutWindow {
-            set_application_name: "An Anime Game Launcher",
+            set_application_name: "Honkers Launcher",
             set_application_icon: APP_ID,
 
             set_website: "https://github.com/an-anime-team/an-anime-game-launcher",
@@ -54,7 +54,7 @@ impl SimpleComponent for AboutDialog {
             ]),
 
             set_artists: &[
-                "@nightany https://pinterest.com/pin/356206651788051017"
+                "Lê Thanh Trực https://www.pinterest.com/pin/140806225786287"
             ],
 
             set_translator_credits: &[
@@ -77,7 +77,7 @@ impl SimpleComponent for AboutDialog {
             ].join("\n"),
 
             set_release_notes_version: &APP_VERSION,
-            set_release_notes: &[
+            /*set_release_notes: &[
                 "<p>Fixed</p>",
 
                 "<ul>",
@@ -90,7 +90,7 @@ impl SimpleComponent for AboutDialog {
                 "<ul>",
                     "<li>Removed fractions displaying in repairer's progress bar</li>",
                 "</ul>",
-            ].join("\n"),
+            ].join("\n"),*/
 
             set_modal: true,
             set_hide_on_close: true,

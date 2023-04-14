@@ -6,12 +6,14 @@ use adw::prelude::*;
 
 use gtk::glib::clone;
 
-use super::progress_bar::ProgressBarMsg;
+use anime_launcher_sdk::config::Config as _;
+use anime_launcher_sdk::honkai::config::Config;
 
-use anime_launcher_sdk::config;
 use anime_launcher_sdk::anime_game_core::prelude::*;
 
 use std::path::PathBuf;
+
+use super::progress_bar::ProgressBarMsg;
 
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub enum VersionState {
@@ -142,7 +144,7 @@ impl SimpleAsyncComponent for ComponentVersion {
                     }
 
                     VersionState::NotDownloaded => {
-                        if let Ok(config) = config::get() {
+                        if let Ok(config) = Config::get() {
                             // todo
                             let mut installer = Installer::new(&self.download_uri)
                                 .expect("Failed to create installer instance for this version");

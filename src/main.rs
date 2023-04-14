@@ -1,11 +1,13 @@
 use relm4::prelude::*;
 
-use anime_launcher_sdk::config;
-use anime_launcher_sdk::states::LauncherState;
-use anime_launcher_sdk::consts::launcher_dir;
+use anime_launcher_sdk::config::Config as _;
+use anime_launcher_sdk::honkai::config::{Config, Schema};
+
+use anime_launcher_sdk::honkai::states::LauncherState;
+use anime_launcher_sdk::honkai::consts::launcher_dir;
 
 use anime_launcher_sdk::anime_game_core::prelude::*;
-use anime_launcher_sdk::anime_game_core::genshin::prelude::*;
+use anime_launcher_sdk::anime_game_core::honkai::prelude::*;
 
 use tracing_subscriber::prelude::*;
 use tracing_subscriber::filter::*;
@@ -20,7 +22,7 @@ pub mod ui;
 use ui::main::*;
 use ui::first_run::main::*;
 
-pub const APP_ID: &str = "moe.launcher.an-anime-game-launcher";
+pub const APP_ID: &str = "moe.launcher.honkers-launcher";
 pub const APP_VERSION: &str = env!("CARGO_PKG_VERSION");
 pub const APP_DEBUG: bool = cfg!(debug_assertions);
 
@@ -36,9 +38,9 @@ pub fn is_ready() -> bool {
 lazy_static::lazy_static! {
     /// Config loaded on the app's start. Use `config::get()` to get up to date config instead.
     /// This one is used to prepare some launcher UI components on start
-    pub static ref CONFIG: config::Config = config::get().expect("Failed to load config");
+    pub static ref CONFIG: Schema = Config::get().expect("Failed to load config");
 
-    pub static ref GAME: Game = Game::new(CONFIG.game.path.for_edition(CONFIG.launcher.edition));
+    pub static ref GAME: Game = Game::new(&CONFIG.game.path);
 
     /// Path to launcher folder. Standard is `$HOME/.local/share/anime-game-launcher`
     pub static ref LAUNCHER_FOLDER: PathBuf = launcher_dir().expect("Failed to get launcher folder");
@@ -69,11 +71,11 @@ fn main() {
         std::fs::write(FIRST_RUN_FILE.as_path(), "").expect("Failed to create .first-run file");
 
         // Set initial launcher language based on system language
-        let mut config = config::get().expect("Failed to get config");
+        let mut config = Config::get().expect("Failed to get config");
 
         config.launcher.language = i18n::format_lang(&i18n::get_default_lang());
 
-        config::update_raw(config).expect("Failed to update config");
+        Config::update_raw(config).expect("Failed to update config");
     }
 
     // Force debug output
@@ -127,8 +129,8 @@ fn main() {
         .expect("Failed to register resources");
 
     // Set application's title
-    gtk::glib::set_application_name("An Anime Game Launcher");
-    gtk::glib::set_program_name(Some("An Anime Game Launcher"));
+    gtk::glib::set_application_name("Honkers Launcher");
+    gtk::glib::set_program_name(Some("Honkers Launcher"));
 
     // Set global css
     relm4::set_global_css(&format!("
@@ -160,9 +162,6 @@ fn main() {
         }}
     ", BACKGROUND_FILE.to_string_lossy()));
 
-    // Set game edition
-    GameEdition::from(CONFIG.launcher.edition).select();
-
     // Set UI language
     let lang = CONFIG.launcher.language.parse().expect("Wrong language format used in config");
 
@@ -187,16 +186,14 @@ fn main() {
 
             match state {
                 LauncherState::Launch => {
-                    anime_launcher_sdk::game::run().expect("Failed to run the game");
+                    anime_launcher_sdk::honkai::game::run().expect("Failed to run the game");
 
                     return;
                 }
 
-                LauncherState::PredownloadAvailable { .. } |
-                LauncherState::UnityPlayerPatchAvailable(UnityPlayerPatch { status: PatchStatus::NotAvailable, .. }) |
-                LauncherState::XluaPatchAvailable(XluaPatch { status: PatchStatus::NotAvailable, .. }) => {
+                LauncherState::PredownloadAvailable { .. } => {
                     if just_run_game {
-                        anime_launcher_sdk::game::run().expect("Failed to run the game");
+                        anime_launcher_sdk::honkai::game::run().expect("Failed to run the game");
 
                         return;
                     }

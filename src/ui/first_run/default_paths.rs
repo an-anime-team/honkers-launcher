@@ -3,7 +3,8 @@ use relm4::component::*;
 
 use adw::prelude::*;
 
-use anime_launcher_sdk::config;
+use anime_launcher_sdk::config::Config as _;
+use anime_launcher_sdk::honkai::config::Config;
 
 use std::path::PathBuf;
 
@@ -23,9 +24,7 @@ pub struct DefaultPathsApp {
     runners: PathBuf,
     dxvks: PathBuf,
     prefix: PathBuf,
-    game_global: PathBuf,
-    game_china: PathBuf,
-    fps_unlocker: PathBuf,
+    game: PathBuf,
     components: PathBuf,
     patch: PathBuf,
     temp: PathBuf
@@ -37,9 +36,7 @@ pub enum Folders {
     Runners,
     DXVK,
     Prefix,
-    GameGlobal,
-    GameChina,
-    FpsUnlocker,
+    Game,
     Components,
     Patch,
     Temp
@@ -153,36 +150,14 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                 },
 
                 adw::ActionRow {
-                    set_title: &tr("global-game-installation-folder"),
+                    set_title: &tr("global-game-installation-folder"), // FIXME: locale
                     set_icon_name: Some("folder-symbolic"),
                     set_activatable: true,
 
                     #[watch]
-                    set_subtitle: model.game_global.to_str().unwrap(),
+                    set_subtitle: model.game.to_str().unwrap(),
 
-                    connect_activated => DefaultPathsAppMsg::ChoosePath(Folders::GameGlobal)
-                },
-
-                adw::ActionRow {
-                    set_title: &tr("chinese-game-installation-folder"),
-                    set_icon_name: Some("folder-symbolic"),
-                    set_activatable: true,
-
-                    #[watch]
-                    set_subtitle: model.game_china.to_str().unwrap(),
-
-                    connect_activated => DefaultPathsAppMsg::ChoosePath(Folders::GameChina)
-                },
-
-                adw::ActionRow {
-                    set_title: &tr("fps-unlocker-folder"),
-                    set_icon_name: Some("folder-symbolic"),
-                    set_activatable: true,
-
-                    #[watch]
-                    set_subtitle: model.fps_unlocker.to_str().unwrap(),
-
-                    connect_activated => DefaultPathsAppMsg::ChoosePath(Folders::FpsUnlocker)
+                    connect_activated => DefaultPathsAppMsg::ChoosePath(Folders::Game)
                 },
 
                 adw::ActionRow {
@@ -300,9 +275,7 @@ impl SimpleAsyncComponent for DefaultPathsApp {
             runners: CONFIG.game.wine.builds.clone(),
             dxvks: CONFIG.game.dxvk.builds.clone(),
             prefix: CONFIG.game.wine.prefix.clone(),
-            game_global: CONFIG.game.path.global.clone(),
-            game_china: CONFIG.game.path.china.clone(),
-            fps_unlocker: CONFIG.game.enhancements.fps_unlocker.path.clone(),
+            game: CONFIG.game.path.clone(),
             components: CONFIG.components.path.clone(),
             patch: CONFIG.patch.path.clone(),
 
@@ -332,35 +305,31 @@ impl SimpleAsyncComponent for DefaultPathsApp {
 
                     match folder {
                         Folders::Launcher => {
-                            self.runners      = result.join("runners");
-                            self.dxvks        = result.join("dxvks");
-                            self.prefix       = result.join("prefix");
-                            self.game_global  = result.join(concat!("Ge", "nshi", "n Imp", "act"));
-                            self.game_china   = result.join(concat!("Yu", "anS", "hen"));
-                            self.fps_unlocker = result.join("fps-unlocker");
-                            self.components   = result.join("components");
-                            self.patch        = result.join("patch");
-                            self.temp         = result.clone();
+                            self.runners    = result.join("runners");
+                            self.dxvks      = result.join("dxvks");
+                            self.prefix     = result.join("prefix");
+                            self.game       = result.join(concat!("Honk", "ai Im", "pact"));
+                            self.components = result.join("components");
+                            self.patch      = result.join("patch");
+                            self.temp       = result.clone();
 
                             self.launcher = result;
                         }
 
-                        Folders::Runners     => self.runners      = result,
-                        Folders::DXVK        => self.dxvks        = result,
-                        Folders::Prefix      => self.prefix       = result,
-                        Folders::GameGlobal  => self.game_global  = result,
-                        Folders::GameChina   => self.game_china   = result,
-                        Folders::FpsUnlocker => self.fps_unlocker = result,
-                        Folders::Components  => self.components   = result,
-                        Folders::Patch       => self.patch        = result,
-                        Folders::Temp        => self.temp         = result
+                        Folders::Runners    => self.runners    = result,
+                        Folders::DXVK       => self.dxvks      = result,
+                        Folders::Prefix     => self.prefix     = result,
+                        Folders::Game       => self.game       = result,
+                        Folders::Components => self.components = result,
+                        Folders::Patch      => self.patch      = result,
+                        Folders::Temp       => self.temp       = result
                     }
                 }
             }
 
             #[allow(unused_must_use)]
             DefaultPathsAppMsg::Continue => {
-                let old_config = config::get().unwrap_or_else(|_| CONFIG.clone());
+                let old_config = Config::get().unwrap_or_else(|_| CONFIG.clone());
 
                 match self.update_config() {
                     Ok(_) => {
@@ -373,12 +342,9 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                                 (old_config.game.wine.builds, &self.runners),
                                 (old_config.game.dxvk.builds, &self.dxvks),
                                 (old_config.game.wine.prefix, &self.prefix),
-                                (old_config.game.path.global, &self.game_global),
-                                (old_config.game.path.china,  &self.game_china),
+                                (old_config.game.path,        &self.game),
                                 (old_config.components.path,  &self.components),
-                                (old_config.patch.path,       &self.patch),
-
-                                (old_config.game.enhancements.fps_unlocker.path, &self.fps_unlocker)
+                                (old_config.patch.path,       &self.patch)
                             ];
 
                             #[allow(clippy::expect_fun_call)]
@@ -402,7 +368,7 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                         }
 
                         else {
-                            sender.output(Self::Output::ScrollToSelectVoiceovers);
+                            sender.output(Self::Output::ScrollToDownloadComponents);
                         }
                     }
 
@@ -431,19 +397,17 @@ impl SimpleAsyncComponent for DefaultPathsApp {
 
 impl DefaultPathsApp {
     pub fn update_config(&self) -> anyhow::Result<()> {
-        let mut config = config::get()?;
+        let mut config = Config::get()?;
 
         config.game.wine.builds = self.runners.clone();
         config.game.dxvk.builds = self.dxvks.clone();
         config.game.wine.prefix = self.prefix.clone();
-        config.game.path.global = self.game_global.clone();
-        config.game.path.china  = self.game_china.clone();
+        config.game.path        = self.game.clone();
         config.components.path  = self.components.clone();
         config.patch.path       = self.patch.clone();
+
         config.launcher.temp    = Some(self.temp.clone());
 
-        config.game.enhancements.fps_unlocker.path = self.fps_unlocker.clone();
-
-        config::update_raw(config)
+        Config::update_raw(config)
     }
 }

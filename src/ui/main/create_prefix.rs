@@ -1,13 +1,15 @@
 use relm4::prelude::*;
 
-use anime_launcher_sdk::config;
 use anime_launcher_sdk::wincompatlib::prelude::*;
+
+use anime_launcher_sdk::config::Config as _;
+use anime_launcher_sdk::honkai::config::Config;
 
 use crate::i18n::*;
 use super::{App, AppMsg};
 
 pub fn create_prefix(sender: ComponentSender<App>) {
-    let config = config::get().unwrap();
+    let config = Config::get().unwrap();
 
     match config.get_selected_wine() {
         Ok(Some(wine)) => {
@@ -39,7 +41,7 @@ pub fn create_prefix(sender: ComponentSender<App>) {
         }
 
         Ok(None) => {
-            tracing::error!("Failed to get selected wine executable");
+            tracing::error!("Failed to get selected wine version");
 
             sender.input(AppMsg::Toast {
                 title: tr("failed-get-selected-wine"),
@@ -48,7 +50,7 @@ pub fn create_prefix(sender: ComponentSender<App>) {
         }
 
         Err(err) => {
-            tracing::error!("Failed to get selected wine executable: {err}");
+            tracing::error!("Failed to get selected wine version: {err}");
 
             sender.input(AppMsg::Toast {
                 title: tr("failed-get-selected-wine"),

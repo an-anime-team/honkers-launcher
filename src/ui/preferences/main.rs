@@ -5,8 +5,11 @@ use gtk::prelude::*;
 use adw::prelude::*;
 
 use anime_launcher_sdk::anime_game_core::prelude::*;
-use anime_launcher_sdk::anime_game_core::genshin::prelude::*;
-use anime_launcher_sdk::config::launcher::LauncherStyle;
+
+use anime_launcher_sdk::config::Config as _;
+use anime_launcher_sdk::honkai::config::Config;
+use anime_launcher_sdk::honkai::config::schema::launcher::LauncherStyle;
+
 
 use crate::i18n::tr;
 
@@ -27,14 +30,6 @@ pub enum PreferencesAppMsg {
     /// Supposed to be called automatically on app's run when the latest game version
     /// was retrieved from the API
     SetGameDiff(Option<VersionDiff>),
-
-    /// Supposed to be called automatically on app's run when the latest UnityPlayer patch version
-    /// was retrieved from remote repos
-    SetUnityPlayerPatch(Option<UnityPlayerPatch>),
-
-    /// Supposed to be called automatically on app's run when the latest xlua patch version
-    /// was retrieved from remote repos
-    SetXluaPatch(Option<XluaPatch>),
 
     SetLauncherStyle(LauncherStyle),
 
@@ -67,7 +62,7 @@ impl SimpleAsyncComponent for PreferencesApp {
             add = model.environment.widget(),
 
             connect_close_request[sender] => move |_| {
-                if let Err(err) = anime_launcher_sdk::config::flush() {
+                if let Err(err) = Config::flush() {
                     sender.input(PreferencesAppMsg::Toast {
                         title: tr("config-update-error"),
                         description: Some(err.to_string())
@@ -125,16 +120,6 @@ impl SimpleAsyncComponent for PreferencesApp {
             #[allow(unused_must_use)]
             PreferencesAppMsg::SetGameDiff(diff) => {
                 self.general.sender().send(GeneralAppMsg::SetGameDiff(diff));
-            }
-
-            #[allow(unused_must_use)]
-            PreferencesAppMsg::SetUnityPlayerPatch(patch) => {
-                self.general.sender().send(GeneralAppMsg::SetUnityPlayerPatch(patch));
-            }
-
-            #[allow(unused_must_use)]
-            PreferencesAppMsg::SetXluaPatch(patch) => {
-                self.general.sender().send(GeneralAppMsg::SetXluaPatch(patch));
             }
 
             #[allow(unused_must_use)]
