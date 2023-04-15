@@ -11,7 +11,7 @@ use adw::prelude::*;
 use gtk::glib::clone;
 
 mod repair_game;
-// mod apply_patch;
+mod apply_patch;
 mod download_wine;
 mod create_prefix;
 mod download_diff;
@@ -76,6 +76,10 @@ pub enum AppMsg {
     /// Supposed to be called automatically on app's run when the latest game version
     /// was retrieved from the API
     SetGameDiff(Option<VersionDiff>),
+
+    /// Supposed to be called automatically on app's run when the latest main patch version
+    /// was retrieved from remote repos
+    SetMainPatch(Option<MainPatch>),
 
     /// Supposed to be called automatically on app's run when the launcher state was chosen
     SetLauncherState(Option<LauncherState>),
@@ -358,6 +362,7 @@ impl SimpleComponent for App {
                                         set_label: &match model.state {
                                             Some(LauncherState::Launch)                         => tr("launch"),
                                             Some(LauncherState::PredownloadAvailable { .. })    => tr("launch"),
+                                            Some(LauncherState::PatchAvailable(_))              => tr("apply-patch"),
                                             Some(LauncherState::WineNotInstalled)               => tr("download-wine"),
                                             Some(LauncherState::PrefixNotExists)                => tr("create-prefix"),
                                             Some(LauncherState::GameUpdateAvailable(_))         => tr("update"),
@@ -370,22 +375,44 @@ impl SimpleComponent for App {
                                         #[watch]
                                         set_sensitive: !model.disabled_buttons && match &model.state {
                                             Some(LauncherState::GameOutdated { .. }) => false,
-                                            Some(_) => true,
 
+                                            Some(LauncherState::PatchAvailable(MainPatch { status, .. })) => match status {
+                                                PatchStatus::Outdated { .. } => false,
+
+                                                PatchStatus::Testing { .. } |
+                                                PatchStatus::Available { .. } => true
+                                            },
+
+                                            Some(_) => true,
                                             None => false
                                         },
 
                                         #[watch]
                                         set_css_classes: match &model.state {
                                             Some(LauncherState::GameOutdated { .. }) => &["warning"],
-                                            Some(_) => &["suggested-action"],
 
+                                            Some(LauncherState::PatchAvailable(MainPatch { status, .. })) => match status {
+                                                PatchStatus::Outdated { .. } => &["error"],
+                                                PatchStatus::Testing { .. } => &["warning"],
+                                                PatchStatus::Available { .. } => &["suggested-action"]
+                                            },
+
+                                            Some(_) => &["suggested-action"],
                                             None => &[]
                                         },
 
                                         #[watch]
                                         set_tooltip_text: Some(&match &model.state {
                                             Some(LauncherState::GameOutdated { .. }) => tr("main-window--version-outdated-tooltip"),
+
+                                            Some(LauncherState::PatchAvailable(MainPatch { status, .. })) => match status {
+                                                PatchStatus::Outdated { .. } => tr("main-window--patch-outdated-tooltip"),
+
+                                                // TODO
+                                                // PatchStatus::Testing { .. } => tr("main-window--patch-testing-tooltip"),
+
+                                                _ => String::new()
+                                            },
 
                                             _ => String::new()
                                         }),
@@ -624,7 +651,7 @@ impl SimpleComponent for App {
             sender.input(AppMsg::SetLoadingStatus(Some(Some(tr("loading-patch-status")))));
 
             // Sync local patch repo
-            /*let patch = Patch::new(&CONFIG.patch.path);
+            let patch = Patch::new(&CONFIG.patch.path);
 
             match patch.is_sync(&CONFIG.patch.servers) {
                 Ok(Some(_)) => (),
@@ -656,12 +683,12 @@ impl SimpleComponent for App {
                 }
             }
 
-            // Get main UnityPlayer patch status
-            sender.input(AppMsg::SetUnityPlayerPatch(match patch.unity_player_patch() {
+            // Get main patch status
+            sender.input(AppMsg::SetMainPatch(match patch.main_patch() {
                 Ok(patch) => Some(patch),
 
                 Err(err) => {
-                    tracing::error!("Failed to fetch unity player patch info: {err}");
+                    tracing::error!("Failed to fetch main player patch info: {err}");
 
                     sender.input(AppMsg::Toast {
                         title: tr("patch-info-fetching-error"),
@@ -672,23 +699,7 @@ impl SimpleComponent for App {
                 }
             }));
 
-            // Get additional xlua patch status
-            sender.input(AppMsg::SetXluaPatch(match patch.xlua_patch() {
-                Ok(patch) => Some(patch),
-
-                Err(err) => {
-                    tracing::error!("Failed to fetch xlua patch info: {err}");
-
-                    sender.input(AppMsg::Toast {
-                        title: tr("patch-info-fetching-error"),
-                        description: Some(err.to_string())
-                    });
-
-                    None
-                }
-            }));
-
-            tracing::info!("Updated patch status");*/
+            tracing::info!("Updated patch status");
 
             // Update initial game version status
 
@@ -780,6 +791,10 @@ impl SimpleComponent for App {
                             sender.input(AppMsg::PerformAction);
                         }
 
+                        LauncherState::PatchAvailable(_) if apply_patch_if_needed => {
+                            sender.input(AppMsg::PerformAction);
+                        }
+
                         _ => ()
                     }
                 }
@@ -788,6 +803,11 @@ impl SimpleComponent for App {
             #[allow(unused_must_use)]
             AppMsg::SetGameDiff(diff) => unsafe {
                 PREFERENCES_WINDOW.as_ref().unwrap_unchecked().sender().send(PreferencesAppMsg::SetGameDiff(diff));
+            }
+
+            #[allow(unused_must_use)]
+            AppMsg::SetMainPatch(patch) => unsafe {
+                PREFERENCES_WINDOW.as_ref().unwrap_unchecked().sender().send(PreferencesAppMsg::SetMainPatch(patch));
             }
 
             AppMsg::SetLauncherState(state) => {
@@ -856,8 +876,8 @@ impl SimpleComponent for App {
                     LauncherState::PredownloadAvailable { .. } |
                     LauncherState::Launch => launch::launch(sender),
 
+                    LauncherState::PatchAvailable(patch) => apply_patch::apply_patch(sender, patch.to_owned()),
                     LauncherState::WineNotInstalled => download_wine::download_wine(sender, self.progress_bar.sender().to_owned()),
-
                     LauncherState::PrefixNotExists => create_prefix::create_prefix(sender),
 
                     LauncherState::GameUpdateAvailable(diff) |
