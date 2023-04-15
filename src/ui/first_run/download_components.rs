@@ -9,7 +9,7 @@ use anime_launcher_sdk::anime_game_core::prelude::*;
 use anime_launcher_sdk::components::*;
 use anime_launcher_sdk::components::wine::WincompatlibWine;
 
-use anime_launcher_sdk::config::Config as _;
+use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
 
 use std::path::PathBuf;

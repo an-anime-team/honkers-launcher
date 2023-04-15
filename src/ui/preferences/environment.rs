@@ -4,7 +4,7 @@ use relm4::factory::*;
 
 use adw::prelude::*;
 
-use anime_launcher_sdk::config::Config as _;
+use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
 
 use crate::i18n::tr;

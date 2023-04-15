@@ -19,7 +19,7 @@ mod launch;
 
 use anime_launcher_sdk::components::loader::ComponentsLoader;
 
-use anime_launcher_sdk::config::Config as _;
+use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
 
 use anime_launcher_sdk::honkai::config::schema::launcher::LauncherStyle;

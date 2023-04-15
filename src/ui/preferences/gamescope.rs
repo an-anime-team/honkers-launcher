@@ -3,7 +3,7 @@ use relm4::component::*;
 
 use adw::prelude::*;
 
-use anime_launcher_sdk::config::Config as _;
+use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::config::schema_blanks::prelude::*;
 
 use anime_launcher_sdk::honkai::config::Config;
