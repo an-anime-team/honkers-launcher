@@ -6,6 +6,8 @@ use relm4::{
 use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
 
+use std::path::Path;
+
 use crate::*;
 use crate::i18n::*;
 use crate::ui::components::*;
@@ -93,16 +95,40 @@ pub fn repair_game(sender: ComponentSender<App>, progress_bar_input: Sender<Prog
 
                     let total = broken.len() as f64;
 
+                    let main_patch = MainPatch::from_folder(&config.patch.path).unwrap()
+                        .is_applied(&config.game.path).unwrap();
+
+                    tracing::debug!("Patches status: {main_patch}");
+
+                    fn should_ignore(path: &Path, main_patch: bool) -> bool {
+                        // Main patch related files
+                        if main_patch {
+                            for part in ["BH3Base.dll", "UnityPlayer.dll"] {
+                                if path.ends_with(part) {
+                                    return true;
+                                }
+                            }
+                        }
+
+                        false
+                    }
+
                     for (i, file) in broken.into_iter().enumerate() {
-                        tracing::debug!("Repairing file: {}", file.path.to_string_lossy());
+                        if !should_ignore(&file.path, main_patch) {
+                            tracing::debug!("Repairing file: {}", file.path.to_string_lossy());
 
-                        if let Err(err) = file.repair(&config.game.path) {
-                            sender.input(AppMsg::Toast {
-                                title: tr("game-file-repairing-error"),
-                                description: Some(err.to_string())
-                            });
+                            if let Err(err) = file.repair(&config.game.path) {
+                                sender.input(AppMsg::Toast {
+                                    title: tr("game-file-repairing-error"),
+                                    description: Some(err.to_string())
+                                });
 
-                            tracing::error!("Failed to repair game file: {err}");
+                                tracing::error!("Failed to repair game file: {err}");
+                            }
+                        }
+
+                        else {
+                            tracing::debug!("Skipped file: {}", file.path.to_string_lossy());
                         }
 
                         progress_bar_input.send(ProgressBarMsg::UpdateProgress(i as u64, total as u64));
