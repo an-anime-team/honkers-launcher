@@ -7,7 +7,7 @@ use crate::*;
 use crate::i18n::*;
 use super::{App, AppMsg};
 
-pub fn apply_patch(sender: ComponentSender<App>, patch: MainPatch) {
+pub fn apply_main_patch(sender: ComponentSender<App>, patch: MainPatch) {
     match patch.status() {
         PatchStatus::Outdated { .. } => unreachable!(),
 

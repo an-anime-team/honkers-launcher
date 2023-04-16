@@ -11,7 +11,8 @@ use adw::prelude::*;
 use gtk::glib::clone;
 
 mod repair_game;
-mod apply_patch;
+mod apply_mfplat_patch;
+mod apply_main_patch;
 mod download_wine;
 mod create_prefix;
 mod download_diff;
@@ -76,6 +77,9 @@ pub enum AppMsg {
     /// Supposed to be called automatically on app's run when the latest game version
     /// was retrieved from the API
     SetGameDiff(Option<VersionDiff>),
+
+    /// Supposed to be called automatically on app's run
+    SetMfplatPatch(bool),
 
     /// Supposed to be called automatically on app's run when the latest main patch version
     /// was retrieved from remote repos
@@ -362,7 +366,8 @@ impl SimpleComponent for App {
                                         set_label: &match model.state {
                                             Some(LauncherState::Launch)                         => tr("launch"),
                                             Some(LauncherState::PredownloadAvailable { .. })    => tr("launch"),
-                                            Some(LauncherState::PatchAvailable(_))              => tr("apply-patch"),
+                                            Some(LauncherState::MfplatPatchAvailable)           => tr("apply-patch"),
+                                            Some(LauncherState::MainPatchAvailable(_))          => tr("apply-patch"),
                                             Some(LauncherState::WineNotInstalled)               => tr("download-wine"),
                                             Some(LauncherState::PrefixNotExists)                => tr("create-prefix"),
                                             Some(LauncherState::GameUpdateAvailable(_))         => tr("update"),
@@ -376,7 +381,7 @@ impl SimpleComponent for App {
                                         set_sensitive: !model.disabled_buttons && match &model.state {
                                             Some(LauncherState::GameOutdated { .. }) => false,
 
-                                            Some(LauncherState::PatchAvailable(MainPatch { status, .. })) => match status {
+                                            Some(LauncherState::MainPatchAvailable(MainPatch { status, .. })) => match status {
                                                 PatchStatus::Outdated { .. } => false,
 
                                                 PatchStatus::Testing { .. } |
@@ -391,7 +396,7 @@ impl SimpleComponent for App {
                                         set_css_classes: match &model.state {
                                             Some(LauncherState::GameOutdated { .. }) => &["warning"],
 
-                                            Some(LauncherState::PatchAvailable(MainPatch { status, .. })) => match status {
+                                            Some(LauncherState::MainPatchAvailable(MainPatch { status, .. })) => match status {
                                                 PatchStatus::Outdated { .. } => &["error"],
                                                 PatchStatus::Testing { .. } => &["warning"],
                                                 PatchStatus::Available { .. } => &["suggested-action"]
@@ -405,7 +410,7 @@ impl SimpleComponent for App {
                                         set_tooltip_text: Some(&match &model.state {
                                             Some(LauncherState::GameOutdated { .. }) => tr("main-window--version-outdated-tooltip"),
 
-                                            Some(LauncherState::PatchAvailable(MainPatch { status, .. })) => match status {
+                                            Some(LauncherState::MainPatchAvailable(MainPatch { status, .. })) => match status {
                                                 PatchStatus::Outdated { .. } => tr("main-window--patch-outdated-tooltip"),
 
                                                 // TODO
@@ -650,6 +655,20 @@ impl SimpleComponent for App {
 
             sender.input(AppMsg::SetLoadingStatus(Some(Some(tr("loading-patch-status")))));
 
+            // Check mfplay patch
+            match MfplatPatch::is_applied(&CONFIG.game.wine.prefix) {
+                Ok(applied) => sender.input(AppMsg::SetMfplatPatch(applied)),
+
+                Err(err) => {
+                    tracing::error!("Failed to check mfplat patch status: {err}");
+
+                    sender.input(AppMsg::Toast {
+                        title: tr("patch-state-check-failed"),
+                        description: Some(err.to_string())
+                    });
+                }
+            }
+
             // Sync local patch repo
             let patch = Patch::new(&CONFIG.patch.path);
 
@@ -791,7 +810,8 @@ impl SimpleComponent for App {
                             sender.input(AppMsg::PerformAction);
                         }
 
-                        LauncherState::PatchAvailable(_) if apply_patch_if_needed => {
+                        LauncherState::MfplatPatchAvailable |
+                        LauncherState::MainPatchAvailable(_) if apply_patch_if_needed => {
                             sender.input(AppMsg::PerformAction);
                         }
 
@@ -803,6 +823,11 @@ impl SimpleComponent for App {
             #[allow(unused_must_use)]
             AppMsg::SetGameDiff(diff) => unsafe {
                 PREFERENCES_WINDOW.as_ref().unwrap_unchecked().sender().send(PreferencesAppMsg::SetGameDiff(diff));
+            }
+
+            #[allow(unused_must_use)]
+            AppMsg::SetMfplatPatch(applied) => unsafe {
+                PREFERENCES_WINDOW.as_ref().unwrap_unchecked().sender().send(PreferencesAppMsg::SetMfplatPatch(applied));
             }
 
             #[allow(unused_must_use)]
@@ -876,7 +901,9 @@ impl SimpleComponent for App {
                     LauncherState::PredownloadAvailable { .. } |
                     LauncherState::Launch => launch::launch(sender),
 
-                    LauncherState::PatchAvailable(patch) => apply_patch::apply_patch(sender, patch.to_owned()),
+                    LauncherState::MfplatPatchAvailable => apply_mfplat_patch::apply_mfplat_patch(sender),
+                    LauncherState::MainPatchAvailable(patch) => apply_main_patch::apply_main_patch(sender, patch.to_owned()),
+
                     LauncherState::WineNotInstalled => download_wine::download_wine(sender, self.progress_bar.sender().to_owned()),
                     LauncherState::PrefixNotExists => create_prefix::create_prefix(sender),
 

@@ -33,6 +33,9 @@ pub enum PreferencesAppMsg {
     /// was retrieved from the API
     SetGameDiff(Option<VersionDiff>),
 
+    /// Supposed to be called automatically on app's run
+    SetMfplatPatch(bool),
+
     /// Supposed to be called automatically on app's run when the latest main patch version
     /// was retrieved from remote repos
     SetMainPatch(Option<MainPatch>),
@@ -131,6 +134,11 @@ impl SimpleAsyncComponent for PreferencesApp {
             #[allow(unused_must_use)]
             PreferencesAppMsg::SetGameDiff(diff) => {
                 self.general.sender().send(GeneralAppMsg::SetGameDiff(diff));
+            }
+
+            #[allow(unused_must_use)]
+            PreferencesAppMsg::SetMfplatPatch(applied) => {
+                self.general.sender().send(GeneralAppMsg::SetMfplatPatch(applied));
             }
 
             #[allow(unused_must_use)]

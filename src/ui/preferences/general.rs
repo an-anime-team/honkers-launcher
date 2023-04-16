@@ -27,6 +27,7 @@ pub struct GeneralApp {
     dxvk_components: AsyncController<ComponentsList<GeneralAppMsg>>,
 
     game_diff: Option<VersionDiff>,
+    mfplat_patch: bool,
     main_patch: Option<MainPatch>,
 
     style: LauncherStyle,
@@ -49,6 +50,9 @@ pub enum GeneralAppMsg {
     /// Supposed to be called automatically on app's run when the latest game version
     /// was retrieved from the API
     SetGameDiff(Option<VersionDiff>),
+
+    /// Supposed to be called automatically on app's run
+    SetMfplatPatch(bool),
 
     /// Supposed to be called automatically on app's run when the latest main patch version
     /// was retrieved from remote repos
@@ -346,10 +350,54 @@ impl SimpleAsyncComponent for GeneralApp {
                             None => String::new()
                         })
                     }
+                },
+
+                adw::ActionRow {
+                    set_title: "Mfplat patch version",
+                    set_subtitle: "Additional patch that may fix video playing issues",
+
+                    add_suffix = &gtk::Label {
+                        #[watch]
+                        set_text: if model.mfplat_patch {
+                            "applied"
+                        } else {
+                            "not applied"
+                        },
+
+                        #[watch]
+                        set_css_classes: if model.mfplat_patch {
+                            &["success"]
+                        } else {
+                            &["warning"]
+                        }
+                    }
                 }
             },
 
             add = &adw::PreferencesGroup {
+                adw::ActionRow {
+                    set_title: "Apply mfplat patch",
+
+                    add_suffix = &gtk::Switch {
+                        set_valign: gtk::Align::Center,
+
+                        set_state: CONFIG.patch.apply_mfplat,
+
+                        connect_state_notify[sender] => move |switch| {
+                            if is_ready() {
+                                #[allow(unused_must_use)]
+                                if let Ok(mut config) = Config::get() {
+                                    config.patch.apply_mfplat = switch.state();
+
+                                    Config::update(config);
+
+                                    sender.output(PreferencesAppMsg::UpdateLauncherState);
+                                }
+                            }
+                        }
+                    }
+                },
+
                 adw::ActionRow {
                     set_title: &tr("ask-superuser-permissions"),
                     set_subtitle: &tr("ask-superuser-permissions-description"),
@@ -630,6 +678,7 @@ impl SimpleAsyncComponent for GeneralApp {
                 .forward(sender.input_sender(), std::convert::identity),
 
             game_diff: None,
+            mfplat_patch: false,
             main_patch: None,
 
             style: CONFIG.launcher.style,
@@ -666,6 +715,10 @@ impl SimpleAsyncComponent for GeneralApp {
         match msg {
             GeneralAppMsg::SetGameDiff(diff) => {
                 self.game_diff = diff;
+            }
+
+            GeneralAppMsg::SetMfplatPatch(applied) => {
+                self.mfplat_patch = applied;
             }
 
             GeneralAppMsg::SetMainPatch(patch) => {
