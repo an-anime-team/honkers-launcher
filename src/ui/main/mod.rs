@@ -543,7 +543,6 @@ impl SimpleComponent for App {
 
         group.add_action::<ConfigFile>(&RelmAction::new_stateless(clone!(@strong sender => move |_| {
             if let Ok(file) = config_file() {
-            if let Ok(file) = config_file() {
                 if let Err(err) = open::that(file) {
                     sender.input(AppMsg::Toast {
                         title: tr("config-file-opening-error"),
