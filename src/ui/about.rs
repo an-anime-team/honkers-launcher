@@ -85,14 +85,15 @@ impl SimpleComponent for AboutDialog {
                 "<p>Fixed</p>",
 
                 "<ul>",
-                    "<li>Fixed base game's hdiff patches applying errors caused by 3.6's voiceovers files migration</li>",
-                    "<li>Fixed xlua patch applying</li>",
+                    "<li>Added game sandboxing feature</li>",
+                    "<li>Added debugger to wine tools</li>",
                 "</ul>",
 
                 "<p>Changed</p>",
 
                 "<ul>",
-                    "<li>Removed fractions displaying in repairer's progress bar</li>",
+                    "<li>Removed fractions displaying in components downloading progress bar</li>",
+                    "<li>Moved to upgraded launcher SDK</li>",
                 "</ul>",
             ].join("\n"),*/
 

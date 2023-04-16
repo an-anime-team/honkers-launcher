@@ -36,7 +36,7 @@ pub fn is_ready() -> bool {
 }
 
 lazy_static::lazy_static! {
-    /// Config loaded on the app's start. Use `config::get()` to get up to date config instead.
+    /// Config loaded on the app's start. Use `Config::get()` to get up to date config instead.
     /// This one is used to prepare some launcher UI components on start
     pub static ref CONFIG: Schema = Config::get().expect("Failed to load config");
 
