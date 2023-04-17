@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 17.04.2023
+
 ### Added
 
 - Added mfplat patch integration
@@ -23,5 +25,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <br>
 
-[unreleased]: https://github.com/an-anime-team/honkers-launcher/compare/1.0.0...next
+[unreleased]: https://github.com/an-anime-team/honkers-launcher/compare/1.0.1...next
+[1.0.1]: https://github.com/an-anime-team/honkers-launcher/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/an-anime-team/honkers-launcher/releases/tag/1.0.0
