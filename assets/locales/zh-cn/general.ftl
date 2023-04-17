@@ -37,8 +37,11 @@ game-outdated = 游戏版本过旧，无法更新。最新版本: {$latest}
 player-patch-version = 主补丁版本
 player-patch-version-description = UnitPlayer.dll 的补丁，在 Linux 上运行游戏必备
 
-xlua-patch-version = xLua 补丁版本
-xlua-patch-version-description = 额外的补丁，用于修复某些问题以及改善低端 PC 的游戏性能
+mfplat-patch-version = Mfplat patch version
+mfplat-patch-version-description = Additional patch that may fix video playing issues
+
+applied = applied
+not-applied = not applied
 
 patch-not-available = 不可用
 patch-not-available-tooltip = 无法连接补丁服务器
@@ -52,7 +55,7 @@ patch-preparation-tooltip = 补丁还在开发中
 patch-testing-tooltip = 有测试版补丁可用
 patch-not-applied-tooltip = 补丁未应用
 
-apply-xlua-patch = 应用 xLua 补丁
+apply-mfplat-patch = Apply mfplat patch
 
 ask-superuser-permissions = 请求超级用户权限
 ask-superuser-permissions-description = 启动器需要超级用户权限来修改 hosts 文件。flatpak 版无需此权限

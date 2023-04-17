@@ -37,8 +37,11 @@ game-outdated = El juego está demasiado desactualizado y no puede actualizarse.
 player-patch-version = Versión del parche del jugador
 player-patch-version-description = El parche principal que te permite jugar al juego en Linux
 
-xlua-patch-version = Versión del parche Xlua
-xlua-patch-version-description = Parche adicional que arregla algunos problemas y mejora el rendimiento en PCs de gama baja
+mfplat-patch-version = Mfplat patch version
+mfplat-patch-version-description = Additional patch that may fix video playing issues
+
+applied = applied
+not-applied = not applied
 
 patch-not-available = No disponible
 patch-not-available-tooltip = Los servidores del parche no pudieron contactarse
@@ -52,7 +55,7 @@ patch-preparation-tooltip = El parche está en desarrollo
 patch-testing-tooltip = Está disponible un parche de prueba
 patch-not-applied-tooltip = El parche no está aplicado
 
-apply-xlua-patch = Aplicar parche Xlua
+apply-mfplat-patch = Apply mfplat patch
 
 ask-superuser-permissions = Pedir permisos de superusuario
 ask-superuser-permissions-description = El launcher usará los permisos para actualizar automáticamente tu archivo hosts. Esto no es necesario en la versión de Flatpak
