@@ -42,8 +42,6 @@ dependencies = [
 name = "anime-game-core"
 version = "1.7.1"
 source = "git+https://github.com/an-anime-team/anime-game-core?tag=1.7.1#8978728ce5d94aec5c6aecfe470e45fc43d5b522"
-version = "1.7.1"
-source = "git+https://github.com/an-anime-team/anime-game-core?tag=1.7.1#8978728ce5d94aec5c6aecfe470e45fc43d5b522"
 dependencies = [
  "anyhow",
  "bzip2",
