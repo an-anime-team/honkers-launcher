@@ -41,9 +41,7 @@ Documentation for the launcher can be found in the [repository wiki](https://git
 Currently there are 5 options available:
 1. Flatpak
 2. AUR
-3. RPM
-4. Gentoo/ebuild
-5. NixOS
+3. Gentoo/ebuild
 
 To see the installation guides, [Please visit the wiki page here](https://github.com/an-anime-team/honkers-launcher/wiki/Installation)
 
