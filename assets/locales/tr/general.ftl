@@ -37,8 +37,11 @@ game-outdated = Oyun çok eski bu yüzden güncellenemez. En son sürüm: {$late
 player-patch-version = Ana yama versiyonu
 player-patch-version-description = Oyunu linuxda oynamanıza izin veren ana yama
 
-xlua-patch-version = Xlua yama versiyonu
-xlua-patch-version-description = Eski bilgisayarlarda performansı arttıran ve bir kaç sorunu düzelten ekstra yama
+mfplat-patch-version = Mfplat patch version
+mfplat-patch-version-description = Additional patch that may fix video playing issues
+
+applied = applied
+not-applied = not applied
 
 patch-not-available = Mevcut değil
 patch-not-available-tooltip = Yama sunucularına erişelemiyor
@@ -52,7 +55,7 @@ patch-preparation-tooltip = Yama hala geliştiriliyor
 patch-testing-tooltip = Test yaması mevcut
 patch-not-applied-tooltip = Yama uygulanmamış
 
-apply-xlua-patch = Xlua yamasını uygula
+apply-mfplat-patch = Apply mfplat patch
 
 ask-superuser-permissions = Yönetici izinlerini sor
 ask-superuser-permissions-description = İstemci yöneticini iznini hostunuzun dosyalarını güncellemek için otomatik olarak kullanıcaktır. Buna flatpak versiyonunda gerek yoktur

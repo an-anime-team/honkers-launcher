@@ -37,8 +37,11 @@ game-outdated = Game is too outdated and can't be updated. Latest version: {$lat
 player-patch-version = Player patch version
 player-patch-version-description = Main patch that lets you play the game on Linux
 
-xlua-patch-version = Xlua patch version
-xlua-patch-version-description = Additional patch that fixes some issues and improves performance on low-end PCs
+mfplat-patch-version = Mfplat patch version
+mfplat-patch-version-description = Additional patch that may fix video playing issues
+
+applied = applied
+not-applied = not applied
 
 patch-not-available = not available
 patch-not-available-tooltip = Patch servers are unreachable
@@ -52,7 +55,7 @@ patch-preparation-tooltip = Patch is in development
 patch-testing-tooltip = Test patch is available
 patch-not-applied-tooltip = Patch is not applied
 
-apply-xlua-patch = Apply xlua patch
+apply-mfplat-patch = Apply mfplat patch
 
 ask-superuser-permissions = Ask superuser permissions
 ask-superuser-permissions-description = Launcher will use them to automatically update your hosts file. This is not needed in flatpak edition

@@ -353,15 +353,15 @@ impl SimpleAsyncComponent for GeneralApp {
                 },
 
                 adw::ActionRow {
-                    set_title: "Mfplat patch version",
-                    set_subtitle: "Additional patch that may fix video playing issues",
+                    set_title: &tr("mfplat-patch-version"),
+                    set_subtitle: &tr("mfplat-patch-version-description"),
 
                     add_suffix = &gtk::Label {
                         #[watch]
-                        set_text: if model.mfplat_patch {
-                            "applied"
+                        set_text: &if model.mfplat_patch {
+                            tr("applied")
                         } else {
-                            "not applied"
+                            tr("not-applied")
                         },
 
                         #[watch]
@@ -376,7 +376,7 @@ impl SimpleAsyncComponent for GeneralApp {
 
             add = &adw::PreferencesGroup {
                 adw::ActionRow {
-                    set_title: "Apply mfplat patch",
+                    set_title: &tr("apply-mfplat-patch"),
 
                     add_suffix = &gtk::Switch {
                         set_valign: gtk::Align::Center,

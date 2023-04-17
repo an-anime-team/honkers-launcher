@@ -86,6 +86,7 @@ impl SimpleComponent for AboutDialog {
 
                 "<ul>",
                     "<li>Added mfplat patch integration</li>",
+                    "<li>Added arguments and symlinks editor to sandbox settings</li>",
                 "</ul>",
 
                 "<p>Fixed</p>",
