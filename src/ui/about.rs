@@ -82,10 +82,11 @@ impl SimpleComponent for AboutDialog {
 
             set_release_notes_version: &APP_VERSION,
             set_release_notes: &[
-                "<p>Fixed</p>",
+                "<p>Added</p>",
 
                 "<ul>",
                     "<li>Added mfplat patch integration</li>",
+                    "<li>Added arguments and symlinks editor to sandbox settings</li>",
                 "</ul>",
 
                 "<p>Fixed</p>",

@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added mfplat patch integration
+- Added arguments and symlinks editor to sandbox settings
 
 ### Fixed
 
