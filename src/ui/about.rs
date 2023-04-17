@@ -81,21 +81,20 @@ impl SimpleComponent for AboutDialog {
             ].join("\n"),
 
             set_release_notes_version: &APP_VERSION,
-            /*set_release_notes: &[
+            set_release_notes: &[
+                "<p>Added</p>",
+
+                "<ul>",
+                    "<li>Added mfplat patch integration</li>",
+                "</ul>",
+
                 "<p>Fixed</p>",
 
                 "<ul>",
-                    "<li>Added game sandboxing feature</li>",
-                    "<li>Added debugger to wine tools</li>",
+                    "<li>Fixed launcher pup-up on game launching</li>",
+                    "<li>Fixed game running issue if you have spaces in paths</li>",
                 "</ul>",
-
-                "<p>Changed</p>",
-
-                "<ul>",
-                    "<li>Removed fractions displaying in components downloading progress bar</li>",
-                    "<li>Moved to upgraded launcher SDK</li>",
-                "</ul>",
-            ].join("\n"),*/
+            ].join("\n"),
 
             set_modal: true,
             set_hide_on_close: true,
