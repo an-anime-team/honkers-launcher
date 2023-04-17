@@ -5,6 +5,8 @@ use anime_launcher_sdk::honkai::config::Config;
 
 use anime_launcher_sdk::anime_game_core::honkai::linux_patch::MfplatPatch;
 
+use std::env::temp_dir;
+
 use crate::i18n::*;
 use super::{App, AppMsg};
 
@@ -16,7 +18,9 @@ pub fn apply_mfplat_patch(sender: ComponentSender<App>) {
     std::thread::spawn(move || {
         let mut apply_patch_if_needed = true;
 
-        if let Err(err) = MfplatPatch::apply(config.game.wine.prefix) {
+        let temp = config.launcher.temp.unwrap_or_else(temp_dir);
+
+        if let Err(err) = MfplatPatch::apply(config.game.wine.prefix, temp) {
             tracing::error!("Failed to patch the game");
 
             sender.input(AppMsg::Toast {
