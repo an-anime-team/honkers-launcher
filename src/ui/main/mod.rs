@@ -656,7 +656,7 @@ impl SimpleComponent for App {
             sender.input(AppMsg::SetLoadingStatus(Some(Some(tr("loading-patch-status")))));
 
             // Check mfplay patch
-            match MfplatPatch::is_applied(&CONFIG.game.wine.prefix) {
+            match MfplatPatch::is_applied(CONFIG.get_wine_prefix_path()) {
                 Ok(applied) => sender.input(AppMsg::SetMfplatPatch(applied)),
 
                 Err(err) => {
