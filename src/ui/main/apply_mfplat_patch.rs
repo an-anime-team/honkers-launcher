@@ -18,9 +18,9 @@ pub fn apply_mfplat_patch(sender: ComponentSender<App>) {
     std::thread::spawn(move || {
         let mut apply_patch_if_needed = true;
 
-        let temp = config.launcher.temp.unwrap_or_else(temp_dir);
+        let temp = config.launcher.temp.clone().unwrap_or_else(temp_dir);
 
-        if let Err(err) = MfplatPatch::apply(config.game.wine.prefix, temp) {
+        if let Err(err) = MfplatPatch::apply(config.get_wine_prefix_path(), temp) {
             tracing::error!("Failed to patch the game");
 
             sender.input(AppMsg::Toast {
