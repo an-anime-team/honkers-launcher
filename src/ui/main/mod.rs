@@ -382,6 +382,7 @@ impl SimpleComponent for App {
                                             Some(LauncherState::GameOutdated { .. }) => false,
 
                                             Some(LauncherState::MainPatchAvailable(MainPatch { status, .. })) => match status {
+                                                PatchStatus::NotAvailable |
                                                 PatchStatus::Outdated { .. } => false,
 
                                                 PatchStatus::Testing { .. } |
@@ -397,7 +398,9 @@ impl SimpleComponent for App {
                                             Some(LauncherState::GameOutdated { .. }) => &["warning"],
 
                                             Some(LauncherState::MainPatchAvailable(MainPatch { status, .. })) => match status {
+                                                PatchStatus::NotAvailable |
                                                 PatchStatus::Outdated { .. } => &["error"],
+
                                                 PatchStatus::Testing { .. } => &["warning"],
                                                 PatchStatus::Available { .. } => &["suggested-action"]
                                             },
@@ -411,6 +414,7 @@ impl SimpleComponent for App {
                                             Some(LauncherState::GameOutdated { .. }) => tr("main-window--version-outdated-tooltip"),
 
                                             Some(LauncherState::MainPatchAvailable(MainPatch { status, .. })) => match status {
+                                                PatchStatus::NotAvailable => tr("main-window--patch-unavailable-tooltip"),
                                                 PatchStatus::Outdated { .. } => tr("main-window--patch-outdated-tooltip"),
 
                                                 // TODO

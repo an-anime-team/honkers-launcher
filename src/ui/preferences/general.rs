@@ -295,7 +295,10 @@ impl SimpleAsyncComponent for GeneralApp {
                         #[watch]
                         set_text: &match model.main_patch.as_ref() {
                             Some(patch) => match patch.status() {
+                                PatchStatus::NotAvailable => tr("patch-not-available"),
+
                                 PatchStatus::Outdated { current, .. } => tr_args("patch-outdated", [("current", current.to_string().into())]),
+
                                 PatchStatus::Testing { version, .. } |
                                 PatchStatus::Available { version, .. } => version.to_string()
                             }
@@ -306,8 +309,11 @@ impl SimpleAsyncComponent for GeneralApp {
                         #[watch]
                         set_css_classes: match model.main_patch.as_ref() {
                             Some(patch) => match patch.status() {
+                                PatchStatus::NotAvailable => &["error"],
+
                                 PatchStatus::Outdated { .. } |
                                 PatchStatus::Testing { .. } => &["warning"],
+
                                 PatchStatus::Available { .. } => unsafe {
                                     let path = match Config::get() {
                                         Ok(config) => config.game.path,
@@ -328,11 +334,15 @@ impl SimpleAsyncComponent for GeneralApp {
                         #[watch]
                         set_tooltip_text: Some(&match model.main_patch.as_ref() {
                             Some(patch) => match patch.status() {
+                                PatchStatus::NotAvailable => tr("patch-not-available-tooltip"),
+
                                 PatchStatus::Outdated { current, latest, .. } => tr_args("patch-outdated-tooltip", [
                                     ("current", current.to_string().into()),
                                     ("latest", latest.to_string().into())
                                 ]),
+
                                 PatchStatus::Testing { .. } => tr("patch-testing-tooltip"),
+
                                 PatchStatus::Available { .. } => unsafe {
                                     let path = match Config::get() {
                                         Ok(config) => config.game.path,
