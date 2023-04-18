@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2]
+
+### Fixed
+
+- Fixed mfplat patch applying. Added support for proton builds
+- Fixed wine tools running using proton builds
+
 ## [1.0.1] - 17.04.2023
 
 ### Added
@@ -25,6 +32,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <br>
 
-[unreleased]: https://github.com/an-anime-team/honkers-launcher/compare/1.0.1...next
+[unreleased]: https://github.com/an-anime-team/honkers-launcher/compare/1.0.2...next
+[1.0.2]: https://github.com/an-anime-team/honkers-launcher/compare/1.0.1...1.0.2
 [1.0.1]: https://github.com/an-anime-team/honkers-launcher/compare/1.0.0...1.0.1
 [1.0.0]: https://github.com/an-anime-team/honkers-launcher/releases/tag/1.0.0

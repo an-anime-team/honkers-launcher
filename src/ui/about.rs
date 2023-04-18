@@ -82,18 +82,11 @@ impl SimpleComponent for AboutDialog {
 
             set_release_notes_version: &APP_VERSION,
             set_release_notes: &[
-                "<p>Added</p>",
-
-                "<ul>",
-                    "<li>Added mfplat patch integration</li>",
-                    "<li>Added arguments and symlinks editor to sandbox settings</li>",
-                "</ul>",
-
                 "<p>Fixed</p>",
 
                 "<ul>",
-                    "<li>Fixed launcher pup-up on game launching</li>",
-                    "<li>Fixed game running issue if you have spaces in paths</li>",
+                    "<li>Fixed mfplat patch applying. Added support for proton builds</li>",
+                    "<li>Fixed wine tools running using proton builds</li>",
                 "</ul>",
             ].join("\n"),
 

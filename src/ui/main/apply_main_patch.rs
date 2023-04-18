@@ -9,6 +9,7 @@ use super::{App, AppMsg};
 
 pub fn apply_main_patch(sender: ComponentSender<App>, patch: MainPatch) {
     match patch.status() {
+        PatchStatus::NotAvailable |
         PatchStatus::Outdated { .. } => unreachable!(),
 
         PatchStatus::Testing { .. } |
