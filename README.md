@@ -52,7 +52,7 @@ instead of the actual name of the game, to avoid search engine parsing.
 | AUR | [link](https://github.com/an-anime-team/honkers-launcher/wiki/Installation#-arch-linux-aur) | [honkers-launcher-bin](https://aur.archlinux.org/packages/honkers-launcher-bin) |
 | Gentoo (ebuild) | [link](https://github.com/an-anime-team/honkers-launcher/wiki/Installation#-gentoo-linux-ebuild) | [aagl-ebuilds](https://github.com/an-anime-team/aagl-ebuilds) |
 
-To see the installation guides, please visit the wiki page [here](https://github.com/an-anime-team/an-anime-game-launcher/wiki/Installation)
+To see the installation guides, please visit the wiki page [here](https://github.com/an-anime-team/honkers-launcher/wiki/Installation)
 
 <br>
 
