@@ -16,7 +16,7 @@
 
 <br>
 
-# Please don't link to this repository
+# ⚠️ Please don't link to this repository
 
 We understand you want to help people run An Anime Game on Linux. The issue is, the more people know
 of the tools involved in it, the higher the chances The Anime Game Company will notice them, and then
@@ -32,9 +32,17 @@ Or share them and ruin it for the dozens of Linux players. It's up to you.
 Do what you must, but we would respectfully request that you try to label the game as "An Anime Game"
 instead of the actual name of the game, to avoid search engine parsing.
 
-# Documentation
+<br>
 
-Documentation for the launcher can be found in the [repository wiki](https://github.com/an-anime-team/honkers-launcher/wiki).
+# Useful links and thanks
+
+* Original patch project without which this project wouldn't be possible. Link is omitted for "privacy" purposes
+* [macOS launcher](https://github.com/3Shain/yet-another-anime-game-launcher) which contains some additional compatibility components
+* [Wiki](https://github.com/an-anime-team/honkers-launcher/wiki) contains some basic FAQ, installation instructions and more
+* [Releases page](https://github.com/an-anime-team/honkers-launcher/releases) where you can find latest available version
+* [Changelog](CHANGELOG.md) with chronology of the project
+
+<br>
 
 # Download
 
