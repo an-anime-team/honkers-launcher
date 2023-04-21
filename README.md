@@ -34,7 +34,7 @@ instead of the actual name of the game, to avoid search engine parsing.
 
 <br>
 
-# Useful links and thanks
+# ♥️ Useful links and thanks
 
 * Original patch project without which this project wouldn't be possible. Link is omitted for "privacy" purposes
 * [macOS launcher](https://github.com/3Shain/yet-another-anime-game-launcher) which contains some additional compatibility components
@@ -44,16 +44,19 @@ instead of the actual name of the game, to avoid search engine parsing.
 
 <br>
 
-# Download
+# ⬇️ Download
 
-Currently there are 5 options available:
-1. Flatpak
-2. AUR
-3. Gentoo/ebuild
+| Format | Wiki | Source |
+| - | - | - |
+| Flatpak | [link](https://github.com/an-anime-team/honkers-launcher/wiki/Installation#-any-distribution-flatpak) | - |
+| AUR | [link](https://github.com/an-anime-team/honkers-launcher/wiki/Installation#-arch-linux-aur) | [honkers-launcher-bin](https://aur.archlinux.org/packages/honkers-launcher-bin) |
+| Gentoo (ebuild) | [link](https://github.com/an-anime-team/honkers-launcher/wiki/Installation#-gentoo-linux-ebuild) | [aagl-ebuilds](https://github.com/an-anime-team/aagl-ebuilds) |
 
-To see the installation guides, [Please visit the wiki page here](https://github.com/an-anime-team/honkers-launcher/wiki/Installation)
+To see the installation guides, please visit the wiki page [here](https://github.com/an-anime-team/an-anime-game-launcher/wiki/Installation)
 
-# Development
+<br>
+
+# 💻 Development
 
 | Folder | Description |
 | - | - |
