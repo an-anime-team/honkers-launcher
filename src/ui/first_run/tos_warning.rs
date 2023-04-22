@@ -86,7 +86,7 @@ impl SimpleAsyncComponent for TosWarningApp {
         match msg {
             #[allow(unused_must_use)]
             TosWarningAppMsg::Continue => {
-                if is_available("git") && is_available("xdelta3") {
+                if is_available("git") && is_available("xdelta3") && is_available("7z") {
                     sender.output(Self::Output::ScrollToDefaultPaths);
                 } else {
                     sender.output(Self::Output::ScrollToDependencies);
