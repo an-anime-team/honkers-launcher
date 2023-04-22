@@ -46,11 +46,11 @@ instead of the actual name of the game, to avoid search engine parsing.
 
 # ⬇️ Download
 
-| Format | Wiki | Source |
-| - | - | - |
-| Flatpak | [link](https://github.com/an-anime-team/honkers-launcher/wiki/Installation#-any-distribution-flatpak) | - |
-| AUR | [link](https://github.com/an-anime-team/honkers-launcher/wiki/Installation#-arch-linux-aur) | [honkers-launcher-bin](https://aur.archlinux.org/packages/honkers-launcher-bin) |
-| Gentoo (ebuild) | [link](https://github.com/an-anime-team/honkers-launcher/wiki/Installation#-gentoo-linux-ebuild) | [aagl-ebuilds](https://github.com/an-anime-team/aagl-ebuilds) |
+| Distribution | Format | Wiki | Source |
+| - | - | - | - |
+| Fedora, Ubuntu | Flatpak (recommended) | [link](https://github.com/an-anime-team/honkers-launcher/wiki/Installation#-any-distribution-flatpak) | - |
+| Arch Linux, Manjaro | AUR | [link](https://github.com/an-anime-team/honkers-launcher/wiki/Installation#-arch-linux-aur) | [honkers-launcher-bin](https://aur.archlinux.org/packages/honkers-launcher-bin) |
+| Gentoo | Ebuild | [link](https://github.com/an-anime-team/honkers-launcher/wiki/Installation#-gentoo-linux-ebuild) | [aagl-ebuilds](https://github.com/an-anime-team/aagl-ebuilds) |
 
 To see the installation guides, please visit the wiki page [here](https://github.com/an-anime-team/honkers-launcher/wiki/Installation)
 
