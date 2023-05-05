@@ -50,7 +50,7 @@ instead of the actual name of the game, to avoid search engine parsing.
 | - | - | - | - |
 | Fedora, Ubuntu | Flatpak (recommended) | [link](https://github.com/an-anime-team/honkers-launcher/wiki/Installation#-any-distribution-flatpak) | - |
 | Arch Linux, Manjaro | AUR | [link](https://github.com/an-anime-team/honkers-launcher/wiki/Installation#-arch-linux-aur) | [honkers-launcher-bin](https://aur.archlinux.org/packages/honkers-launcher-bin) |
-| Fedora, OpenSUSE | RPM | [link](https://github.com/an-anime-team/the-honkers-railway-launcher/wiki/Installation#-fedora-rpm) | [HL](https://build.opensuse.org/repositories/home:Maroxy:AAT-Apps/HL) |
+| Fedora, OpenSUSE | RPM | [link](https://github.com/an-anime-team/honkers-launcher/wiki/Installation#-fedora-rpm) | [HL](https://build.opensuse.org/repositories/home:Maroxy:AAT-Apps/HL) |
 | Gentoo | Ebuild | [link](https://github.com/an-anime-team/honkers-launcher/wiki/Installation#-gentoo-linux-ebuild) | [gentoo-ebuilds](https://github.com/an-anime-team/gentoo-ebuilds) |
 
 To see the installation guides, please visit the wiki page [here](https://github.com/an-anime-team/honkers-launcher/wiki/Installation)
