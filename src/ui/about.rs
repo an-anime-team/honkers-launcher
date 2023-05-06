@@ -105,7 +105,6 @@ impl SimpleComponent for AboutDialog {
                 "<p>Fixed</p>",
 
                 "<ul>",
-                    "<li>Fixed wine tools running using proton builds</li>",
                     "<li>Fixed sandboxed game running (sounds are broken for now)</li>",
                 "</ul>",
             ].join("\n"),
