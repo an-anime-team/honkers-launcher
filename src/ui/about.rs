@@ -68,7 +68,8 @@ impl SimpleComponent for AboutDialog {
                 "Deutsch — @Marie https://github.com/Mar0xy",
                 "Español — Lautaro Garavano https://github.com/Rattlehead15",
                 "Français — @zeGolem https://github.com/zeGolem",
-                "Türk — @Kaozix https://github.com/Kaozix1776",
+                "Türkçe — @Kaozix https://github.com/Kaozix1776",
+                "Türkçe — Kayra Nachfolger https://github.com/kayranachfolger",
                 "简体中文 — Caibin Chen https://github.com/tigersoldier"
             ].join("\n"),
 
@@ -84,11 +85,28 @@ impl SimpleComponent for AboutDialog {
 
             set_release_notes_version: &APP_VERSION,
             set_release_notes: &[
+                "<p>Added</p>",
+
+                "<ul>",
+                    "<li>Added rules approving dialog to the first run window</li>",
+                    "<li>Added game settings section</li>",
+                    "<li>Added game sessions manager</li>",
+                    "<li>Added `LAUNCHER_FOLDER` variable support</li>",
+                    "<li>Added patch repository mirror</li>",
+                "</ul>",
+
+                "<p>Changed</p>",
+
+                "<ul>",
+                    "<li>Improved launcher logo rendering quality</li>",
+                    "<li>Reworked entry rows in the settings</li>",
+                "</ul>",
+
                 "<p>Fixed</p>",
 
                 "<ul>",
-                    "<li>Fixed mfplat patch applying. Added support for proton builds</li>",
                     "<li>Fixed wine tools running using proton builds</li>",
+                    "<li>Fixed sandboxed game running (sounds are broken for now)</li>",
                 "</ul>",
             ].join("\n"),
 

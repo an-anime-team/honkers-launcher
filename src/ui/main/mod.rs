@@ -213,13 +213,15 @@ impl SimpleComponent for App {
                         set_visible: model.loading.is_none(),
 
                         add = &adw::PreferencesGroup {
+                            set_margin_top: 48,
+
                             #[watch]
                             set_visible: model.style == LauncherStyle::Modern,
 
-                            gtk::Image {
+                            gtk::Picture {
                                 set_resource: Some("/org/app/images/icon.png"),
                                 set_vexpand: true,
-                                set_margin_top: 48
+                                set_content_fit: gtk::ContentFit::ScaleDown
                             },
 
                             gtk::Label {
@@ -246,6 +248,8 @@ impl SimpleComponent for App {
                             set_visible: model.downloading,
 
                             set_vexpand: true,
+                            set_margin_top: 48,
+                            set_margin_bottom: 48,
 
                             add = model.progress_bar.widget(),
                         },
@@ -265,6 +269,12 @@ impl SimpleComponent for App {
 
                             #[watch]
                             set_visible: !model.downloading,
+
+                            #[watch]
+                            set_margin_bottom: match model.style {
+                                LauncherStyle::Modern => 48,
+                                LauncherStyle::Classic => 0
+                            },
 
                             set_vexpand: true,
 
@@ -519,11 +529,11 @@ impl SimpleComponent for App {
                 .detach());
         }
 
-        let group = RelmActionGroup::<WindowActionGroup>::new();
+        let mut group = RelmActionGroup::<WindowActionGroup>::new();
 
         // TODO: reduce code somehow
 
-        group.add_action::<LauncherFolder>(&RelmAction::new_stateless(clone!(@strong sender => move |_| {
+        group.add_action::<LauncherFolder>(RelmAction::new_stateless(clone!(@strong sender => move |_| {
             if let Err(err) = open::that(LAUNCHER_FOLDER.as_path()) {
                 sender.input(AppMsg::Toast {
                     title: tr("launcher-folder-opening-error"),
@@ -534,7 +544,7 @@ impl SimpleComponent for App {
             }
         })));
 
-        group.add_action::<GameFolder>(&RelmAction::new_stateless(clone!(@strong sender => move |_| {
+        group.add_action::<GameFolder>(RelmAction::new_stateless(clone!(@strong sender => move |_| {
             let path = match Config::get() {
                 Ok(config) => config.game.path,
                 Err(_) => CONFIG.game.path.clone()
@@ -550,7 +560,7 @@ impl SimpleComponent for App {
             }
         })));
 
-        group.add_action::<ConfigFile>(&RelmAction::new_stateless(clone!(@strong sender => move |_| {
+        group.add_action::<ConfigFile>(RelmAction::new_stateless(clone!(@strong sender => move |_| {
             if let Ok(file) = config_file() {
                 if let Err(err) = open::that(file) {
                     sender.input(AppMsg::Toast {
@@ -563,7 +573,7 @@ impl SimpleComponent for App {
             }
         })));
 
-        group.add_action::<DebugFile>(&RelmAction::new_stateless(clone!(@strong sender => move |_| {
+        group.add_action::<DebugFile>(RelmAction::new_stateless(clone!(@strong sender => move |_| {
             if let Err(err) = open::that(crate::DEBUG_FILE.as_os_str()) {
                 sender.input(AppMsg::Toast {
                     title: tr("debug-file-opening-error"),
@@ -574,7 +584,7 @@ impl SimpleComponent for App {
             }
         })));
 
-        group.add_action::<About>(&RelmAction::new_stateless(move |_| {
+        group.add_action::<About>(RelmAction::new_stateless(move |_| {
             about_dialog_broker.send(AboutDialogMsg::Show);
         }));
 
@@ -621,10 +631,8 @@ impl SimpleComponent for App {
                                     description: if changes.is_empty() {
                                         None
                                     } else {
-                                        let max_len = changes.iter().map(|line| line.len()).max().unwrap_or(80);
-
                                         Some(changes.into_iter()
-                                            .map(|line| format!("- {line}{}", " ".repeat(max_len - line.len())))
+                                            .map(|line| format!("- {line}"))
                                             .collect::<Vec<_>>()
                                             .join("\n"))
                                     }
