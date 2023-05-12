@@ -57,7 +57,6 @@ instead of the actual name of the game, to avoid search engine parsing.
 To see the installation guides, please visit the wiki page [here](https://github.com/an-anime-team/honkers-launcher/wiki/Installation)
 
 Lutris integration described [here](https://github.com/an-anime-team/honkers-launcher/wiki/Installation#-lutris)
-
 <br>
 
 # 💻 Development
