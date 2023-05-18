@@ -18,6 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Now launcher applies selected session before launching the game.
   This should fix issues when you switch wine prefix, for example, by downloading a proton build
+- Mfplat patch is now disabled by default 
 
 ### Fixed
 

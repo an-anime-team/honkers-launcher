@@ -96,6 +96,7 @@ impl SimpleComponent for AboutDialog {
 
                 "<ul>",
                     "<li>Now launcher applies selected session before launching the game</li>",
+                    "<li>Mfplat patch is now disabled by default </li>",
                 "</ul>",
 
                 "<p>Fixed</p>",
