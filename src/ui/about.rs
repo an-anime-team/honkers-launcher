@@ -88,24 +88,20 @@ impl SimpleComponent for AboutDialog {
                 "<p>Added</p>",
 
                 "<ul>",
-                    "<li>Added rules approving dialog to the first run window</li>",
-                    "<li>Added game settings section</li>",
-                    "<li>Added game sessions manager</li>",
-                    "<li>Added `LAUNCHER_FOLDER` variable support</li>",
-                    "<li>Added patch repository mirror</li>",
+                    "<li>Added support of http_proxy-like variables</li>",
+                    "<li>Added `LAUNCHER_REQUESTS_TIMEOUT` environment variable</li>",
                 "</ul>",
 
                 "<p>Changed</p>",
 
                 "<ul>",
-                    "<li>Improved launcher logo rendering quality</li>",
-                    "<li>Reworked entry rows in the settings</li>",
+                    "<li>Now launcher applies selected session before launching the game</li>",
                 "</ul>",
 
                 "<p>Fixed</p>",
 
                 "<ul>",
-                    "<li>Fixed sandboxed game running (sounds are broken for now)</li>",
+                    "<li>Added a workaround for `7z` binary which fixes game updating issue</li>",
                 "</ul>",
             ].join("\n"),
 
