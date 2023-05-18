@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.1] - 18.05.2023
+
+### Added
+
+- Added support of http_proxy-like variables (`http_proxy`, `https_proxy`, `HTTPS_PROXY`, `all_proxy`, ...)
+- Added `LAUNCHER_REQUESTS_TIMEOUT` environment variable
+
+### Changed
+
+- Now launcher applies selected session before launching the game.
+  This should fix issues when you switch wine prefix, for example, by downloading a proton build
+
+### Fixed
+
+- Added a workaround for `7z` binary which fixes game updating issue
+
 ## [1.1.0] - 06.05.2023
 
 ### Added
@@ -52,7 +68,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <br>
 
-[unreleased]: https://github.com/an-anime-team/honkers-launcher/compare/1.1.0...next
+[unreleased]: https://github.com/an-anime-team/honkers-launcher/compare/1.1.1...next
+[1.1.1]: https://github.com/an-anime-team/honkers-launcher/compare/1.1.0...1.1.1
 [1.1.0]: https://github.com/an-anime-team/honkers-launcher/compare/1.0.2...1.1.0
 [1.0.2]: https://github.com/an-anime-team/honkers-launcher/compare/1.0.1...1.0.2
 [1.0.1]: https://github.com/an-anime-team/honkers-launcher/compare/1.0.0...1.0.1
