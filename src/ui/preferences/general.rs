@@ -5,7 +5,6 @@ use gtk::prelude::*;
 use adw::prelude::*;
 
 use anime_launcher_sdk::wincompatlib::prelude::*;
-use anime_launcher_sdk::anime_game_core::prelude::*;
 
 use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
@@ -241,9 +240,7 @@ impl SimpleAsyncComponent for GeneralApp {
                         set_text: &match model.game_diff.as_ref() {
                             Some(diff) => match diff {
                                 VersionDiff::Latest(current) |
-                                VersionDiff::Predownload { current, .. } |
-                                VersionDiff::Diff { current, .. } |
-                                VersionDiff::Outdated { current, .. } => current.to_string(),
+                                VersionDiff::Diff { current, .. } => current.to_string(),
 
                                 VersionDiff::NotInstalled { .. } => tr("game-not-installed")
                             }
@@ -255,9 +252,7 @@ impl SimpleAsyncComponent for GeneralApp {
                         set_css_classes: match model.game_diff.as_ref() {
                             Some(diff) => match diff {
                                 VersionDiff::Latest(_) => &["success"],
-                                VersionDiff::Predownload { .. } => &["accent"],
                                 VersionDiff::Diff { .. } => &["warning"],
-                                VersionDiff::Outdated { .. } => &["error"],
                                 VersionDiff::NotInstalled { .. } => &[]
                             }
 
@@ -268,16 +263,9 @@ impl SimpleAsyncComponent for GeneralApp {
                         set_tooltip_text: Some(&match model.game_diff.as_ref() {
                             Some(diff) => match diff {
                                 VersionDiff::Latest(_) => String::new(),
-                                VersionDiff::Predownload { current, latest, .. } => tr_args("game-predownload-available", [
-                                    ("old", current.to_string().into()),
-                                    ("new", latest.to_string().into())
-                                ]),
                                 VersionDiff::Diff { current, latest, .. } => tr_args("game-update-available", [
                                     ("old", current.to_string().into()),
                                     ("new", latest.to_string().into())
-                                ]),
-                                VersionDiff::Outdated { latest, ..} => tr_args("game-outdated", [
-                                    ("latest", latest.to_string().into())
                                 ]),
                                 VersionDiff::NotInstalled { .. } => String::new()
                             }

@@ -85,6 +85,7 @@ fn main() {
     let run_game = std::env::args().any(|arg| &arg == "--run-game");
 
     // Forcely run the game
+    // Is not different from the --run-game in this game
     let just_run_game = std::env::args().any(|arg| &arg == "--just-run-game");
 
     // Prepare stdout logger
@@ -184,22 +185,10 @@ fn main() {
             let state = LauncherState::get_from_config(|_| {})
                 .expect("Failed to get launcher state");
 
-            match state {
-                LauncherState::Launch => {
-                    anime_launcher_sdk::honkai::game::run().expect("Failed to run the game");
+            if let LauncherState::Launch = state {
+                anime_launcher_sdk::honkai::game::run().expect("Failed to run the game");
 
-                    return;
-                }
-
-                LauncherState::PredownloadAvailable { .. } => {
-                    if just_run_game {
-                        anime_launcher_sdk::honkai::game::run().expect("Failed to run the game");
-
-                        return;
-                    }
-                }
-
-                _ => ()
+                return;
             }
         }
 

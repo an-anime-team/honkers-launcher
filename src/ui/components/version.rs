@@ -147,11 +147,8 @@ impl SimpleAsyncComponent for ComponentVersion {
                         if let Ok(config) = Config::get() {
                             // todo
                             let mut installer = Installer::new(&self.download_uri)
-                                .expect("Failed to create installer instance for this version");
-
-                            if let Some(temp) = config.launcher.temp {
-                                installer.set_temp_folder(temp);
-                            }
+                                .expect("Failed to create installer instance for this version")
+                                .with_temp_folder(config.launcher.temp.unwrap_or_else(std::env::temp_dir));
 
                             self.state = VersionState::Downloading;
 
@@ -182,7 +179,7 @@ impl SimpleAsyncComponent for ComponentVersion {
                                         _ => ()
                                     }
 
-                                    progress_bar_sender.send(ProgressBarMsg::UpdateFromState(DiffUpdate::InstallerUpdate(state)));
+                                    progress_bar_sender.send(ProgressBarMsg::UpdateFromState(state));
                                 });
                             }));
                         }
