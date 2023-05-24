@@ -20,8 +20,7 @@ use crate::i18n::*;
 use crate::*;
 
 fn get_installer(uri: &str, temp: Option<PathBuf>) -> anyhow::Result<Installer> {
-    Ok(Installer::new(uri)?
-        .with_temp_folder(temp.unwrap_or_else(std::env::temp_dir)))
+    Ok(Installer::new(uri)?.with_temp_folder(temp.unwrap_or_else(std::env::temp_dir)))
 }
 
 pub struct DownloadComponentsApp {
