@@ -293,23 +293,28 @@ impl SimpleComponent for App {
                                 set_margin_top: 64,
                                 set_spacing: 8,
 
-                                // TODO: add tooltips
-
                                 adw::Bin {
                                     set_css_classes: &["background", "round-bin"],
 
                                     gtk::Button {
                                         #[watch]
                                         set_label: &match model.state {
-                                            Some(LauncherState::Launch)                 => tr("launch"),
-                                            Some(LauncherState::MfplatPatchAvailable)   => tr("apply-patch"),
-                                            Some(LauncherState::MainPatchAvailable(_))  => tr("apply-patch"),
-                                            Some(LauncherState::WineNotInstalled)       => tr("download-wine"),
-                                            Some(LauncherState::PrefixNotExists)        => tr("create-prefix"),
-                                            Some(LauncherState::GameUpdateAvailable(_)) => tr("update"),
-                                            Some(LauncherState::GameNotInstalled(_))    => tr("download"),
+                                            Some(LauncherState::Launch)                         => tr("launch"),
+                                            Some(LauncherState::PredownloadAvailable { .. })    => tr("launch"),
+                                            Some(LauncherState::FolderMigrationRequired { .. }) => tr("migrate-folders"),
+                                            Some(LauncherState::UnityPlayerPatchAvailable(_))   => tr("apply-patch"),
+                                            Some(LauncherState::XluaPatchAvailable(_))          => tr("apply-patch"),
+                                            Some(LauncherState::WineNotInstalled)               => tr("download-wine"),
+                                            Some(LauncherState::PrefixNotExists)                => tr("create-prefix"),
+                                            Some(LauncherState::VoiceUpdateAvailable(_))        => tr("update"),
+                                            Some(LauncherState::VoiceOutdated(_))               => tr("update"),
+                                            Some(LauncherState::VoiceNotInstalled(_))           => tr("download"),
+                                            Some(LauncherState::GameUpdateAvailable(_))         => tr("update"),
+                                            Some(LauncherState::GameOutdated(_))                => tr("update"),
+                                            Some(LauncherState::GameNotInstalled(_))            => tr("download"),
 
-                                            None => String::from("...")
+                                                None => String::from("...")
+                                            }
                                         },
 
                                         #[watch]
@@ -328,15 +333,21 @@ impl SimpleComponent for App {
 
                                         #[watch]
                                         set_css_classes: match &model.state {
-                                            Some(LauncherState::MainPatchAvailable(MainPatch { status, .. })) => match status {
-                                                PatchStatus::NotAvailable |
-                                                PatchStatus::Outdated { .. } => &["error"],
+                                            Some(LauncherState::GameOutdated { .. }) |
+                                            Some(LauncherState::VoiceOutdated(_)) => &["warning"],
 
-                                                PatchStatus::Testing { .. } => &["warning"],
-                                                PatchStatus::Available { .. } => &["suggested-action"]
+                                            Some(LauncherState::UnityPlayerPatchAvailable(UnityPlayerPatch { status, .. })) |
+                                            Some(LauncherState::XluaPatchAvailable(XluaPatch { status, .. })) => match status {
+                                                PatchStatus::NotAvailable |
+                                                PatchStatus::Outdated { .. } |
+                                                PatchStatus::Preparation { .. } => &["error"],
+
+                                                PatchStatus::Testing { .. } => &["warning", "pill"],
+                                                PatchStatus::Available { .. } => &["suggested-action", "pill"]
                                             },
 
                                             Some(_) => &["suggested-action"],
+
                                             None => &[]
                                         },
 
@@ -367,14 +378,11 @@ impl SimpleComponent for App {
 
                                     gtk::Button {
                                         #[watch]
-                                        set_width_request: match model.style {
-                                            LauncherStyle::Modern => -1,
-                                            LauncherStyle::Classic => 40
-                                        },
-
-                                        #[watch]
                                         set_sensitive: !model.disabled_buttons,
 
+                                        set_width_request: 44,
+
+                                        add_css_class: "circular",
                                         set_icon_name: "emblem-system-symbolic",
 
                                         connect_clicked => AppMsg::OpenPreferences
@@ -791,6 +799,49 @@ impl SimpleComponent for App {
             }
 
             AppMsg::RepairGame => repair_game::repair_game(sender, self.progress_bar.sender().to_owned()),
+
+            #[allow(unused_must_use)]
+            AppMsg::PredownloadUpdate => {
+                if let Some(LauncherState::PredownloadAvailable { game, mut voices }) = self.state.clone() {
+                    let tmp = Config::get().unwrap().launcher.temp.unwrap_or_else(std::env::temp_dir);
+
+                    self.downloading = true;
+
+                    let progress_bar_input = self.progress_bar.sender().clone();
+
+                    progress_bar_input.send(ProgressBarMsg::UpdateCaption(Some(tr("downloading"))));
+
+                    let mut diffs: Vec<VersionDiff> = vec![game];
+
+                    diffs.append(&mut voices);
+
+                    std::thread::spawn(move || {
+                        for mut diff in diffs {
+                            let result = diff.download_in(&tmp, clone!(@strong progress_bar_input => move |curr, total| {
+                                progress_bar_input.send(ProgressBarMsg::UpdateProgress(curr, total));
+                            }));
+
+                            if let Err(err) = result {
+                                sender.input(AppMsg::Toast {
+                                    title: tr("downloading-failed"),
+                                    description: Some(err.to_string())
+                                });
+
+                                tracing::error!("Failed to predownload update: {err}");
+
+                                break;
+                            }
+                        }
+
+                        sender.input(AppMsg::SetDownloading(false));
+                        sender.input(AppMsg::UpdateLauncherState {
+                            perform_on_download_needed: false,
+                            apply_patch_if_needed: false,
+                            show_status_page: true
+                        });
+                    });
+                }
+            }
 
             AppMsg::PerformAction => unsafe {
                 match self.state.as_ref().unwrap_unchecked() {

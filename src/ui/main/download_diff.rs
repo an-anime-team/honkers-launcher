@@ -13,6 +13,7 @@ use anime_launcher_sdk::anime_game_core::honkai::version_diff::*;
 use crate::*;
 use crate::i18n::*;
 use crate::ui::components::*;
+
 use super::{App, AppMsg};
 
 pub fn download_diff(sender: ComponentSender<App>, progress_bar_input: Sender<ProgressBarMsg>, mut diff: VersionDiff) {

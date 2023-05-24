@@ -60,12 +60,6 @@ apply-mfplat-patch = Apply mfplat patch
 ask-superuser-permissions = Ask superuser permissions
 ask-superuser-permissions-description = Launcher will use them to automatically update your hosts file. This is not needed in flatpak edition
 
-selected-version = Selected version
-recommended-only = Recommended only
-
-wine-version = Wine version
-wine-recommended-description = Show only recommended wine versions
-
 wine-tools = Wine tools
 command-line = Command line
 registry-editor = Registry editor
@@ -73,7 +67,3 @@ explorer = Explorer
 task-manager = Task manager
 configuration = Configuration
 debugger = Debugger
-
-dxvk-version = DXVK version
-dxvk-selection-disabled = DXVK selection is disabled by your wine group preferences
-dxvk-recommended-description = Show only recommended dxvk versions

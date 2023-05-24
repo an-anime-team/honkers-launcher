@@ -7,6 +7,7 @@ use adw::prelude::*;
 use gtk::glib::clone;
 
 use anime_launcher_sdk::anime_game_core::prelude::*;
+use anime_launcher_sdk::anime_game_core::genshin::prelude::*;
 
 use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;

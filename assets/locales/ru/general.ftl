@@ -60,12 +60,6 @@ apply-mfplat-patch = Применить патч mfplat
 ask-superuser-permissions = Запрашивать права суперпользователя
 ask-superuser-permissions-description = Лаунчер будет использовать их чтобы автоматически обновлять ваш hosts файл. Это не требуется при использовании flatpak
 
-selected-version = Выбранная версия
-recommended-only = Только рекомендуемое
-
-wine-version = Версия Wine
-wine-recommended-description = Показывать только рекомендуемые версии Wine
-
 wine-tools = Инструменты Wine
 command-line = Коммандная строка
 registry-editor = Редактор реестра
@@ -73,7 +67,3 @@ explorer = Проводник
 task-manager = Диспетчер задач
 configuration = Настройки
 debugger = Отладчик
-
-dxvk-version = Версия DXVK
-dxvk-selection-disabled = Выбор версии DXVK отключен настройками выбранного вами Wine
-dxvk-recommended-description = Показывать только рекомендуемые версии DXVK
