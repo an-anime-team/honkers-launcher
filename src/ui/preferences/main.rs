@@ -4,6 +4,7 @@ use relm4::component::*;
 use gtk::prelude::*;
 use adw::prelude::*;
 
+use anime_launcher_sdk::anime_game_core::prelude::*;
 use anime_launcher_sdk::anime_game_core::honkai::prelude::*;
 
 use anime_launcher_sdk::config::ConfigExt;
@@ -33,7 +34,7 @@ pub enum PreferencesAppMsg {
 
     /// Supposed to be called automatically on app's run when the latest main patch version
     /// was retrieved from remote repos
-    SetMainPatch(Option<MainPatch>),
+    SetMainPatch(Option<(Version, JadeitePatchStatusVariant)>),
 
     SetLauncherStyle(LauncherStyle),
 

@@ -12,7 +12,7 @@ use gtk::glib::clone;
 
 mod repair_game;
 mod apply_mfplat_patch;
-mod apply_main_patch;
+mod update_main_patch;
 mod download_wine;
 mod create_prefix;
 mod download_diff;
@@ -83,7 +83,7 @@ pub enum AppMsg {
 
     /// Supposed to be called automatically on app's run when the latest main patch version
     /// was retrieved from remote repos
-    SetMainPatch(Option<MainPatch>),
+    SetMainPatch(Option<(Version, JadeitePatchStatusVariant)>),
 
     /// Supposed to be called automatically on app's run when the launcher state was chosen
     SetLauncherState(Option<LauncherState>),
@@ -300,7 +300,11 @@ impl SimpleComponent for App {
                                         adw::ButtonContent {
                                             #[watch]
                                             set_icon_name: match &model.state {
-                                                Some(LauncherState::Launch) => "media-playback-start-symbolic",
+                                                Some(LauncherState::Launch) |
+                                                Some(LauncherState::PatchNotVerified) => "media-playback-start-symbolic",
+
+                                                Some(LauncherState::PatchNotInstalled) |
+                                                Some(LauncherState::PatchUpdateAvailable) => "document-save-symbolic",
 
                                                 Some(LauncherState::WineNotInstalled) |
                                                 Some(LauncherState::PrefixNotExists) => "document-save-symbolic",
@@ -309,25 +313,27 @@ impl SimpleComponent for App {
                                                 Some(LauncherState::GameNotInstalled(_)) |
                                                 Some(LauncherState::MfplatPatchAvailable) => "document-save-symbolic",
 
-                                                Some(LauncherState::MainPatchAvailable(MainPatch { status, .. })) => match status {
-                                                    PatchStatus::NotAvailable |
-                                                    PatchStatus::Outdated { .. } => "window-close-symbolic",
-
-                                                    PatchStatus::Testing { .. } |
-                                                    PatchStatus::Available { .. } => "document-save-symbolic"
-                                                }
-
+                                                Some(LauncherState::PatchBroken) |
+                                                Some(LauncherState::PatchUnsafe) |
                                                 None => "window-close-symbolic"
                                             },
 
                                             #[watch]
                                             set_label: &match &model.state {
-                                                Some(LauncherState::Launch)                => tr("launch"),
-                                                Some(LauncherState::MfplatPatchAvailable)  => tr("apply-patch"),
-                                                Some(LauncherState::MainPatchAvailable(_)) => tr("apply-patch"),
-                                                Some(LauncherState::WineNotInstalled)      => tr("download-wine"),
-                                                Some(LauncherState::PrefixNotExists)       => tr("create-prefix"),
-                                                Some(LauncherState::GameNotInstalled(_))   => tr("download"),
+                                                Some(LauncherState::Launch) |
+                                                Some(LauncherState::PatchNotVerified) => tr("launch"),
+
+                                                Some(LauncherState::MfplatPatchAvailable) => tr("apply-patch"),
+                                                Some(LauncherState::WineNotInstalled)     => tr("download-wine"),
+                                                Some(LauncherState::PrefixNotExists)      => tr("create-prefix"),
+                                                Some(LauncherState::GameNotInstalled(_))  => tr("download"),
+
+                                                // TODO: add localization
+                                                Some(LauncherState::PatchNotInstalled) |
+                                                Some(LauncherState::PatchUpdateAvailable) => String::from("Download patch"),
+
+                                                Some(LauncherState::PatchBroken) => String::from("Patch is broken"),
+                                                Some(LauncherState::PatchUnsafe) => String::from("Patch is unsafe"),
 
                                                 Some(LauncherState::GameUpdateAvailable(diff)) => {
                                                     match (Config::get(), diff.file_name()) {
@@ -353,13 +359,8 @@ impl SimpleComponent for App {
 
                                         #[watch]
                                         set_sensitive: !model.disabled_buttons && match &model.state {
-                                            Some(LauncherState::MainPatchAvailable(MainPatch { status, .. })) => match status {
-                                                PatchStatus::NotAvailable |
-                                                PatchStatus::Outdated { .. } => false,
-
-                                                PatchStatus::Testing { .. } |
-                                                PatchStatus::Available { .. } => true
-                                            },
+                                            Some(LauncherState::PatchBroken) |
+                                            Some(LauncherState::PatchUnsafe) => false,
 
                                             Some(_) => true,
                                             None => false
@@ -367,13 +368,10 @@ impl SimpleComponent for App {
 
                                         #[watch]
                                         set_css_classes: match &model.state {
-                                            Some(LauncherState::MainPatchAvailable(MainPatch { status, .. })) => match status {
-                                                PatchStatus::NotAvailable |
-                                                PatchStatus::Outdated { .. } => &["error", "pill"],
+                                            Some(LauncherState::PatchNotVerified) => &["warning", "pill"],
 
-                                                PatchStatus::Testing { .. } => &["warning", "pill"],
-                                                PatchStatus::Available { .. } => &["suggested-action", "pill"]
-                                            },
+                                            Some(LauncherState::PatchBroken) |
+                                            Some(LauncherState::PatchUnsafe) => &["error", "pill"],
 
                                             Some(_) => &["suggested-action", "pill"],
 
@@ -382,15 +380,9 @@ impl SimpleComponent for App {
 
                                         #[watch]
                                         set_tooltip_text: Some(&match &model.state {
-                                            Some(LauncherState::MainPatchAvailable(MainPatch { status, .. })) => match status {
-                                                PatchStatus::NotAvailable => tr("main-window--patch-unavailable-tooltip"),
-                                                PatchStatus::Outdated { .. } => tr("main-window--patch-outdated-tooltip"),
-
-                                                // TODO
-                                                // PatchStatus::Testing { .. } => tr("main-window--patch-testing-tooltip"),
-
-                                                _ => String::new()
-                                            },
+                                            // TODO: add localization
+                                            Some(LauncherState::PatchBroken) => String::from("Current patch version is broken and doesn't work properly"),
+                                            Some(LauncherState::PatchUnsafe) => String::from("Current patch version is unsafe and should not be used"),
 
                                             _ => String::new()
                                         }),
@@ -625,7 +617,7 @@ impl SimpleComponent for App {
 
             tasks.push(std::thread::spawn(clone!(@strong sender => move || {
                 // Check mfplay patch
-                match MfplatPatch::is_applied(CONFIG.get_wine_prefix_path()) {
+                match mfplat::is_applied(CONFIG.get_wine_prefix_path()) {
                     Ok(applied) => sender.input(AppMsg::SetMfplatPatch(applied)),
 
                     Err(err) => {
@@ -638,45 +630,31 @@ impl SimpleComponent for App {
                     }
                 }
 
-                // Sync local patch repo
-                let patch = Patch::new(&CONFIG.patch.path);
-
-                match patch.is_sync(&CONFIG.patch.servers) {
-                    Ok(Some(_)) => (),
-
-                    Ok(None) => {
-                        for server in &CONFIG.patch.servers {
-                            match patch.sync(server) {
-                                Ok(_) => break,
-
-                                Err(err) => {
-                                    tracing::error!("Failed to sync patch folder with remote: {server}: {err}");
-
-                                    sender.input(AppMsg::Toast {
-                                        title: tr("patch-sync-failed"),
-                                        description: Some(err.to_string())
-                                    });
-                                }
-                            }
-                        }
-                    }
-
-                    Err(err) => {
-                        tracing::error!("Failed to compare local patch folder with remote: {err}");
-
-                        sender.input(AppMsg::Toast {
-                            title: tr("patch-state-check-failed"),
-                            description: Some(err.to_string())
-                        });
-                    }
-                }
-
                 // Get main patch status
-                sender.input(AppMsg::SetMainPatch(match patch.main_patch() {
-                    Ok(patch) => Some(patch),
+                sender.input(AppMsg::SetMainPatch(match jadeite::get_latest() {
+                    Ok(latest) => match jadeite::get_metadata() {
+                        Ok(metadata) => {
+                            let status = GAME.get_version()
+                                .map(|version| metadata.hsr.global.get_status(version))
+                                .unwrap_or(metadata.hsr.global.status);
+
+                            Some((latest.version, status))
+                        }
+
+                        Err(err) => {
+                            tracing::error!("Failed to fetch patch metadata: {err}");
+
+                            sender.input(AppMsg::Toast {
+                                title: tr("patch-info-fetching-error"),
+                                description: Some(err.to_string())
+                            });
+
+                            None
+                        }
+                    },
 
                     Err(err) => {
-                        tracing::error!("Failed to fetch main player patch info: {err}");
+                        tracing::error!("Failed to fetch latest patch version: {err}");
 
                         sender.input(AppMsg::Toast {
                             title: tr("patch-info-fetching-error"),
@@ -786,7 +764,8 @@ impl SimpleComponent for App {
                         }
 
                         LauncherState::MfplatPatchAvailable |
-                        LauncherState::MainPatchAvailable(_) if apply_patch_if_needed => {
+                        LauncherState::PatchNotInstalled |
+                        LauncherState::PatchUpdateAvailable if apply_patch_if_needed => {
                             sender.input(AppMsg::PerformAction);
                         }
 
@@ -841,14 +820,18 @@ impl SimpleComponent for App {
                     LauncherState::Launch => launch::launch(sender),
 
                     LauncherState::MfplatPatchAvailable => apply_mfplat_patch::apply_mfplat_patch(sender),
-                    LauncherState::MainPatchAvailable(patch) => apply_main_patch::apply_main_patch(sender, patch.to_owned()),
+
+                    LauncherState::PatchNotInstalled |
+                    LauncherState::PatchUpdateAvailable => update_main_patch::update_main_patch(sender, self.progress_bar.sender().to_owned()),
 
                     LauncherState::WineNotInstalled => download_wine::download_wine(sender, self.progress_bar.sender().to_owned()),
                     LauncherState::PrefixNotExists => create_prefix::create_prefix(sender),
 
                     LauncherState::GameUpdateAvailable(diff) |
                     LauncherState::GameNotInstalled(diff) =>
-                        download_diff::download_diff(sender, self.progress_bar.sender().to_owned(), diff.to_owned())
+                        download_diff::download_diff(sender, self.progress_bar.sender().to_owned(), diff.to_owned()),
+
+                    _ => ()
                 }
             }
 
