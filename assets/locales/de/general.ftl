@@ -2,9 +2,9 @@ appearance = Aussehen
 modern = Modern
 classic = Klassisch
 update-background = Hintergrundbild aktualisieren
-update-background-description = Lädt das offizielle Hintergrundbild herunter für den Launcher. SIe können es deaktiverien für ein benutzerdefiniertes Bild.
+update-background-description = Lädt das offizielle Hintergrundbild für den Launcher herunter. Deaktivieren Sie dies für eine benutzerdefiniertes Hintergrundbild. 
 
-launcher-language = Launcher Sprache
+launcher-language = Launcher-Sprache
 launcher-language-description = Gilt nach Neustart
 
 game-edition = Spiel-Edition
@@ -14,7 +14,7 @@ china = China
 game-environment = Spielumgebung
 game-environment-description = Spezielle Funktionen wie zusätzliche Zahlungsmöglichkeiten
 
-game-voiceovers = Spiel Sprachen
+game-voiceovers = Spiel-Sprachen
 game-voiceovers-description = Liste der heruntergeladenen Sprachausgabe für das Spiel. Sie können diese in den Spieleinstellungen auswählen
 english = Englisch
 japanese = Japanisch
@@ -27,7 +27,7 @@ repair-game = Spiel Reparieren
 
 status = Status
 
-game-version = Spiel version
+game-version = Spielversion
 game-not-installed = nicht installiert
 
 game-predownload-available = Vorab-Download von Spiel-Updates verfügbar: {$old} -> {$new}
@@ -35,7 +35,7 @@ game-update-available = Spiel-Update verfügbar: {$old} -> {$new}
 game-outdated = Das Spiel ist zu veraltet und kann nicht mehr aktualisiert werden. Letzte Version: {$latest}
 
 player-patch-version = Hauptpatch-Version
-player-patch-version-description = Hauptpatch, mit dem du das Spiel unter Linux spielen kannst
+player-patch-version-description = Hauptpatch, mit dem Sie das Spiel unter Linux spielen können
 
 mfplat-patch-version = Mfplat patch version
 mfplat-patch-version-description = Additional patch that may fix video playing issues
@@ -60,7 +60,7 @@ apply-mfplat-patch = Apply mfplat patch
 ask-superuser-permissions = Superuser-Berechtigungen anfordern
 ask-superuser-permissions-description = Launcher benötigt Superuser-Zugriff, um Ihre Hosts-Datei automatisch zu aktualisieren. Dies ist in der Flatpak-Edition nicht erforderlich
 
-wine-tools = Wine tools
+wine-tools = Wine-Tools
 command-line = Befehlszeile
 registry-editor = Registrierungs-Editor
 explorer = Explorer
