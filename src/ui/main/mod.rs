@@ -313,8 +313,7 @@ impl SimpleComponent for App {
                                             Some(LauncherState::GameOutdated(_))                => tr("update"),
                                             Some(LauncherState::GameNotInstalled(_))            => tr("download"),
 
-                                                None => String::from("...")
-                                            }
+                                            None => String::from("...")
                                         },
 
                                         #[watch]
