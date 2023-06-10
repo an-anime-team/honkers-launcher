@@ -95,7 +95,7 @@ impl SimpleComponent for AboutDialog {
                     "<li>Added Italian</li>",
                     "<li>Added Indonesian</li>",
                     "<li>Added dynamic main button icon switching</li>",
-                    "<li>Set button label as "Resume" when the diff is part downloaded</li>",
+                    "<li>Set button label as \"Resume\" when the diff is part downloaded</li>",
                     "<li>Added options to use wine / gstreamer shared libraries from selected wine build</li>",
                     "<li>Added setting of `LC_ALL` in wine lang setting</li>",
                     "<li>Added Discord RPC icon selection</li>",

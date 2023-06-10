@@ -10,9 +10,6 @@ use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
 use anime_launcher_sdk::honkai::config::schema::launcher::LauncherStyle;
 
-use anime_launcher_sdk::components::*;
-use anime_launcher_sdk::components::wine::WincompatlibWine;
-
 pub mod components;
 
 use components::*;
