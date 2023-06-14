@@ -1,3 +1,5 @@
+use std::path::Path;
+
 use relm4::{
     prelude::*,
     Sender
@@ -86,13 +88,13 @@ pub fn repair_game(sender: ComponentSender<App>, progress_bar_input: Sender<Prog
                 }
 
                 if !broken.is_empty() {
+                    let total = broken.len() as u64;
+
                     progress_bar_input.send(ProgressBarMsg::UpdateCaption(Some(tr("repairing-files"))));
                     progress_bar_input.send(ProgressBarMsg::DisplayFraction(false));
-                    progress_bar_input.send(ProgressBarMsg::UpdateProgress(0, 0));
+                    progress_bar_input.send(ProgressBarMsg::UpdateProgress(0, total));
 
                     tracing::warn!("Found broken files:\n{}", broken.iter().fold(String::new(), |acc, file| acc + &format!("- {}\n", file.path.to_string_lossy())));
-
-                    let total = broken.len() as f64;
 
                     for (i, file) in broken.into_iter().enumerate() {
                         tracing::debug!("Repairing file: {}", file.path.to_string_lossy());
@@ -106,7 +108,7 @@ pub fn repair_game(sender: ComponentSender<App>, progress_bar_input: Sender<Prog
                             tracing::error!("Failed to repair game file: {err}");
                         }
 
-                        progress_bar_input.send(ProgressBarMsg::UpdateProgress(i as u64, total as u64));
+                        progress_bar_input.send(ProgressBarMsg::UpdateProgress(i as u64 + 1, total));
                     }
 
                     progress_bar_input.send(ProgressBarMsg::DisplayFraction(true));

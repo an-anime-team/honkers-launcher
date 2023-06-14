@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
 - Added Italian
 - Added Indonesian
 - Added dynamic main button icon switching
@@ -21,21 +23,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 
 - Fixed progress bar style after running game repairer
-- Fixed repair button functionality (#186)
+- Fixed repair button functionality
 - Fixed default launcher language selection at the first start
 - Fixed some installer updates reporting (including "checking free space")
+- Fixed check button style for newly made sessions
+- Fixed repairer's NaN progress
+- Fixed game session selection when current one is removed
 
 ### Changed
 
 - Reworked game sessions selection
-- Updated Indonesian
 - Updated French
 - Made initial tasks async which has decreased startup time
-- Updated fps unlocker to 2.1.1
+- Updated Spanish
 
 ### Removed
 
-- Removed 3.7.0 workaround
 - Removed patch mirror migration
 
 ## [1.1.1] - 18.05.2023
