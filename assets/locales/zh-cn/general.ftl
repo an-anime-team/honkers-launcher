@@ -54,6 +54,8 @@ patch-preparation-tooltip = 补丁还在开发中
 
 patch-testing-tooltip = 有测试版补丁可用
 patch-not-applied-tooltip = 补丁未应用
+patch-broken-tooltip = Current patch version is broken and doesn't work properly
+patch-unsafe-tooltip = Current patch version is unsafe and shouldn't be used
 
 apply-mfplat-patch = 应用 mfplat 补丁
 

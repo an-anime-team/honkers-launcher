@@ -54,6 +54,8 @@ patch-preparation-tooltip = Патч в разработке
 
 patch-testing-tooltip = Доступна тестовая версия патча
 patch-not-applied-tooltip = Патч не применен
+patch-broken-tooltip = Текущая версия патча работает неисправно
+patch-unsafe-tooltip = Текущая версия патча небезопасна и не должна быть использована
 
 apply-mfplat-patch = Применить патч mfplat
 

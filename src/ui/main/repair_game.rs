@@ -1,5 +1,3 @@
-use std::path::Path;
-
 use relm4::{
     prelude::*,
     Sender
