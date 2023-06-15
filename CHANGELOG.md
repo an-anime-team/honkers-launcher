@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   These options will configure `LD_LIBRARY_PATH` and `GST_PLUGIN_PATH` environment variables
 - Added setting of `LC_ALL` in wine lang setting
 - Added Discord RPC icon selection
+- Integrated Jadeite patch
 - Added Japanese
 - Added Hungarian
 
