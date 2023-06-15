@@ -379,6 +379,7 @@ impl SimpleComponent for App {
 
                                         #[watch]
                                         set_tooltip_text: Some(&match &model.state {
+                                            Some(LauncherState::PatchNotVerified) => tr("patch-testing-tooltip"),
                                             Some(LauncherState::PatchBroken) => tr("patch-broken-tooltip"),
                                             Some(LauncherState::PatchUnsafe) => tr("patch-unsafe-tooltip"),
 
@@ -815,7 +816,8 @@ impl SimpleComponent for App {
 
             AppMsg::PerformAction => unsafe {
                 match self.state.as_ref().unwrap_unchecked() {
-                    LauncherState::Launch => launch::launch(sender),
+                    LauncherState::Launch |
+                    LauncherState::PatchNotVerified => launch::launch(sender),
 
                     LauncherState::MfplatPatchAvailable => apply_mfplat_patch::apply_mfplat_patch(sender),
 
