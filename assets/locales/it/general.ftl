@@ -48,8 +48,8 @@ patch-preparation-tooltip = La patch è in sviluppo
 
 patch-testing-tooltip = La patch di test è disponibile
 patch-not-applied-tooltip = La patch non è applicata
-patch-broken-tooltip = Current patch version is broken and doesn't work properly
-patch-unsafe-tooltip = Current patch version is unsafe and shouldn't be used
+patch-broken-tooltip = L'attuale versione della patch è difettosa e non funziona correttamente
+patch-unsafe-tooltip = L'attuale versione della patch non è sicura e non dovrebbe essere usata
 
 apply-mfplat-patch = Apply mfplat patch
 
