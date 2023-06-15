@@ -54,6 +54,7 @@ components-index-updated = A komponens index frissítve lett
 launch = Indítás
 migrate-folders = Mappák migrálása
 migrate-folders-tooltip = Játékmappa struktúra frissítése
+apply-patch = Patch alkalmazása
 download-wine = Wine letöltése
 create-prefix = Prefix létrehozása
 update = Frissítés

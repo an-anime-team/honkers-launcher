@@ -54,6 +54,7 @@ components-index-updated = L'index des composants a été mis à jour
 launch = Lancer
 migrate-folders = Migrate folders
 migrate-folders-tooltip = Update game folders structure
+apply-patch = Appliquer le patch
 download-wine = Télécharger wine
 create-prefix = Créer le préfix wine
 update = Mettre à jour
