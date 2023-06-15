@@ -36,6 +36,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated French
 - Made initial tasks async which has decreased startup time
 - Updated Spanish
+- Improved 7z support
 
 ### Removed
 

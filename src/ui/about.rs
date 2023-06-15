@@ -119,6 +119,7 @@ impl SimpleComponent for AboutDialog {
                     "<li>Updated Indonesian</li>",
                     "<li>Updated French</li>",
                     "<li>Made initial tasks async which has decreased startup time</li>",
+                    "<li>Improved 7z support</li>",
                 "</ul>",
 
                 "<p>Fixed</p>",
