@@ -1,3 +1,5 @@
+use std::path::PathBuf;
+
 use relm4::prelude::*;
 use relm4::component::*;
 
@@ -7,26 +9,19 @@ use anime_launcher_sdk::wincompatlib::prelude::*;
 use anime_launcher_sdk::anime_game_core::prelude::*;
 
 use anime_launcher_sdk::components::*;
-use anime_launcher_sdk::components::wine::WincompatlibWine;
+use anime_launcher_sdk::components::wine::UnifiedWine;
 
 use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
 
-use std::path::PathBuf;
-
 use super::main::FirstRunAppMsg;
+
 use crate::ui::components::*;
 use crate::i18n::*;
 use crate::*;
 
-fn get_installer(uri: &str, temp: Option<&PathBuf>) -> anyhow::Result<Installer> {
-    let mut installer = Installer::new(uri)?;
-
-    if let Some(temp) = temp {
-        installer.set_temp_folder(temp);
-    }
-
-    Ok(installer)
+fn get_installer(uri: &str, temp: Option<PathBuf>) -> anyhow::Result<Installer> {
+    Ok(Installer::new(uri)?.with_temp_folder(temp.unwrap_or_else(std::env::temp_dir)))
 }
 
 pub struct DownloadComponentsApp {
@@ -375,7 +370,7 @@ impl SimpleAsyncComponent for DownloadComponentsApp {
                         tracing::info!("Installing wine: {}", wine.name);
 
                         // Install wine
-                        match get_installer(&wine.uri, config.launcher.temp.as_ref()) {
+                        match get_installer(&wine.uri, config.launcher.temp.clone()) {
                             Ok(mut installer) => {
                                 // Create wine builds folder
                                 if config.game.wine.builds.exists() {
@@ -424,7 +419,7 @@ impl SimpleAsyncComponent for DownloadComponentsApp {
                                         _ => ()
                                     }
 
-                                    progress_bar_input.send(ProgressBarMsg::UpdateFromState(DiffUpdate::InstallerUpdate(update)));
+                                    progress_bar_input.send(ProgressBarMsg::UpdateFromState(update));
                                 });
                             }
 
@@ -440,6 +435,8 @@ impl SimpleAsyncComponent for DownloadComponentsApp {
                     });
                 }
             }
+
+            // TODO: perhaps I could re-use main/create_prefix.rs here?
 
             #[allow(unused_must_use)]
             DownloadComponentsAppMsg::CreatePrefix => {
@@ -459,7 +456,7 @@ impl SimpleAsyncComponent for DownloadComponentsApp {
                     .with_arch(WineArch::Win64);
 
                 std::thread::spawn(move || {
-                    match wine.update_prefix::<&str>(None) {
+                    match wine.init_prefix(None::<&str>) {
                         // Download DXVK
                         Ok(_) => sender.input(DownloadComponentsAppMsg::DownloadDXVK),
 
@@ -496,7 +493,7 @@ impl SimpleAsyncComponent for DownloadComponentsApp {
                         // Install DXVK
                         tracing::info!("Installing DXVK: {}", dxvk.name);
 
-                        match get_installer(&dxvk.uri, config.launcher.temp.as_ref()) {
+                        match get_installer(&dxvk.uri, config.launcher.temp.clone()) {
                             Ok(mut installer) => {
                                 let progress_bar_input = progress_bar_input.clone();
                                 let sender = sender.clone();
@@ -535,7 +532,7 @@ impl SimpleAsyncComponent for DownloadComponentsApp {
                                         _ => ()
                                     }
 
-                                    progress_bar_input.send(ProgressBarMsg::UpdateFromState(DiffUpdate::InstallerUpdate(update)));
+                                    progress_bar_input.send(ProgressBarMsg::UpdateFromState(update));
                                 });
                             }
 
@@ -582,7 +579,7 @@ impl SimpleAsyncComponent for DownloadComponentsApp {
                             ..InstallParams::default()
                         };
 
-                        let WincompatlibWine::Default(wine) = wine else {
+                        let UnifiedWine::Default(wine) = wine else {
                             sender.input(DownloadComponentsAppMsg::Continue);
 
                             return;

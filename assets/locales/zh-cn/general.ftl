@@ -54,17 +54,13 @@ patch-preparation-tooltip = 补丁还在开发中
 
 patch-testing-tooltip = 有测试版补丁可用
 patch-not-applied-tooltip = 补丁未应用
+patch-broken-tooltip = Current patch version is broken and doesn't work properly
+patch-unsafe-tooltip = Current patch version is unsafe and shouldn't be used
 
 apply-mfplat-patch = 应用 mfplat 补丁
 
 ask-superuser-permissions = 请求超级用户权限
 ask-superuser-permissions-description = 启动器需要超级用户权限来修改 hosts 文件。flatpak 版无需此权限
-
-selected-version = 选择版本
-recommended-only = 仅显示推荐版本
-
-wine-version = Wine 版本
-wine-recommended-description = 仅显示推荐的 Wine 版本
 
 wine-tools = Wine 工具
 command-line = 命令行
@@ -73,7 +69,3 @@ explorer = 资源管理器
 task-manager = 任务管理器
 configuration = wine 设置
 debugger = 调试器 
-
-dxvk-version = DXVK 版本
-dxvk-selection-disabled = 您的葡萄酒组首选项禁用 DXVK 选择
-dxvk-recommended-description = 仅显示推荐的 DXVK 版本

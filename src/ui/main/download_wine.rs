@@ -12,6 +12,7 @@ use anime_launcher_sdk::components::wine;
 use crate::*;
 use crate::i18n::*;
 use crate::ui::components::*;
+
 use super::{App, AppMsg};
 
 pub fn download_wine(sender: ComponentSender<App>, progress_bar_input: Sender<ProgressBarMsg>) {
@@ -80,7 +81,7 @@ pub fn download_wine(sender: ComponentSender<App>, progress_bar_input: Sender<Pr
                                 }
 
                                 #[allow(unused_must_use)] {
-                                    progress_bar_input.send(ProgressBarMsg::UpdateFromState(DiffUpdate::InstallerUpdate(state)));
+                                    progress_bar_input.send(ProgressBarMsg::UpdateFromState(state));
                                 }
                             }));
 

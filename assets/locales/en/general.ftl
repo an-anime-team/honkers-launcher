@@ -54,17 +54,13 @@ patch-preparation-tooltip = Patch is in development
 
 patch-testing-tooltip = Test patch is available
 patch-not-applied-tooltip = Patch is not applied
+patch-broken-tooltip = Current patch version is broken and doesn't work properly
+patch-unsafe-tooltip = Current patch version is unsafe and shouldn't be used
 
 apply-mfplat-patch = Apply mfplat patch
 
 ask-superuser-permissions = Ask superuser permissions
 ask-superuser-permissions-description = Launcher will use them to automatically update your hosts file. This is not needed in flatpak edition
-
-selected-version = Selected version
-recommended-only = Recommended only
-
-wine-version = Wine version
-wine-recommended-description = Show only recommended wine versions
 
 wine-tools = Wine tools
 command-line = Command line
@@ -73,7 +69,3 @@ explorer = Explorer
 task-manager = Task manager
 configuration = Configuration
 debugger = Debugger
-
-dxvk-version = DXVK version
-dxvk-selection-disabled = DXVK selection is disabled by your wine group preferences
-dxvk-recommended-description = Show only recommended dxvk versions

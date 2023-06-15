@@ -2,6 +2,7 @@ custom = Özel
 none = Boş
 default = Varsayılan
 details = Detaylar
+options = Seçenekler
 
 width = Genişlik
 height = Uzunluk
@@ -19,6 +20,7 @@ about = Hakkında
 close = Kapat
 save = Kaydet
 continue = Devam et
+resume = Sürdürmek
 exit = Çıkış yap
 check = Kontrol et
 restart = Tekrardan başlat
@@ -58,6 +60,10 @@ create-prefix = Prefix oluştur
 update = Güncelle
 download = İndir
 predownload-update =  Güncellemeyi önceden indir{$version}  ({$size})
+download-patch = Yamayı indir
+
+patch-broken = Yama bozuk
+patch-unsafe = Yama güvensiz
 
 main-window--patch-unavailable-tooltip = Yama sunucuları kullanılamıyor ve istemci, oyunun yama durumunu doğrulayamıyor. Oyunu kendi sorumluluğunuzda çalıştırabilirsiniz
 main-window--patch-outdated-tooltip = Yama güncel değil veya hazırlık aşamasında, bu nedenle kullanım için uygun değil. Durumunu görmek için daha sonra geri dönün

@@ -1,3 +1,5 @@
+use std::path::PathBuf;
+
 use relm4::prelude::*;
 use relm4::component::*;
 
@@ -6,12 +8,11 @@ use adw::prelude::*;
 use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
 
-use std::path::PathBuf;
-
 use crate::*;
 use crate::i18n::*;
-use super::main::*;
 use crate::ui::components::progress_bar::*;
+
+use super::main::*;
 
 pub struct DefaultPathsApp {
     progress_bar: AsyncController<ProgressBar>,

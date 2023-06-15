@@ -1,3 +1,7 @@
+game-settings-description = Manage in-game settings and account session
+sandbox-settings-description = Run the game in a bubblewrap sandbox, similar to what Flatpak does
+environment-settings-description = Specify environment variables and game launching command
+
 wine = Wine
 
 synchronization = Synchronization
@@ -29,6 +33,7 @@ gamescope-description = Gamescope is a tool from Valve that allows for games to 
 
 discord-rpc = Discord RPC
 discord-rpc-description = Discord RPC allows you to provide Discord the info that you are currently playing the game to let your friends know
+icon = Icon
 title = Title
 description = Description
 

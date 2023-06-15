@@ -4,7 +4,7 @@ use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::{Config, Schema};
 
 use anime_launcher_sdk::honkai::states::LauncherState;
-use anime_launcher_sdk::honkai::consts::launcher_dir;
+use anime_launcher_sdk::honkai::consts::*;
 
 use anime_launcher_sdk::anime_game_core::prelude::*;
 use anime_launcher_sdk::anime_game_core::honkai::prelude::*;
@@ -31,6 +31,7 @@ pub static mut READY: bool = false;
 
 // TODO: get rid of using this function in all the components' events
 //       e.g. by converting preferences pages into Relm4 Components
+/// Check if the app is ready
 pub fn is_ready() -> bool {
     unsafe { READY }
 }
@@ -40,16 +41,19 @@ lazy_static::lazy_static! {
     /// This one is used to prepare some launcher UI components on start
     pub static ref CONFIG: Schema = Config::get().expect("Failed to load config");
 
-    pub static ref GAME: Game = Game::new(&CONFIG.game.path);
+    pub static ref GAME: Game = Game::new(&CONFIG.game.path, ());
 
     /// Path to launcher folder. Standard is `$HOME/.local/share/anime-game-launcher`
     pub static ref LAUNCHER_FOLDER: PathBuf = launcher_dir().expect("Failed to get launcher folder");
 
+    /// Path to launcher's cache folder. Standard is `$HOME/.cache/anime-game-launcher`
+    pub static ref CACHE_FOLDER: PathBuf = cache_dir().expect("Failed to get launcher's cache folder");
+
     /// Path to `debug.log` file. Standard is `$HOME/.local/share/anime-game-launcher/debug.log`
     pub static ref DEBUG_FILE: PathBuf = LAUNCHER_FOLDER.join("debug.log");
 
-    /// Path to `background` file. Standard is `$HOME/.local/share/anime-game-launcher/background`
-    pub static ref BACKGROUND_FILE: PathBuf = LAUNCHER_FOLDER.join("background");
+    /// Path to `background` file. Standard is `$HOME/.cache/anime-game-launcher/background`
+    pub static ref BACKGROUND_FILE: PathBuf = CACHE_FOLDER.join("background");
 
     /// Path to `.keep-background` file. Used to mark launcher that it shouldn't update background picture
     /// 
@@ -71,6 +75,7 @@ fn main() {
         std::fs::write(FIRST_RUN_FILE.as_path(), "").expect("Failed to create .first-run file");
 
         // Set initial launcher language based on system language
+        // CONFIG is initialized lazily so it will contain following changes as well
         let mut config = Config::get().expect("Failed to get config");
 
         config.launcher.language = i18n::format_lang(&i18n::get_default_lang());
@@ -85,6 +90,7 @@ fn main() {
     let run_game = std::env::args().any(|arg| &arg == "--run-game");
 
     // Forcely run the game
+    // Is not different from the --run-game in this game
     let just_run_game = std::env::args().any(|arg| &arg == "--just-run-game");
 
     // Prepare stdout logger
@@ -158,7 +164,7 @@ fn main() {
         }}
 
         .round-bin {{
-            border-radius: 8px;
+            border-radius: 24px;
         }}
     ", BACKGROUND_FILE.to_string_lossy()));
 
@@ -184,22 +190,10 @@ fn main() {
             let state = LauncherState::get_from_config(|_| {})
                 .expect("Failed to get launcher state");
 
-            match state {
-                LauncherState::Launch => {
-                    anime_launcher_sdk::honkai::game::run().expect("Failed to run the game");
+            if let LauncherState::Launch = state {
+                anime_launcher_sdk::honkai::game::run().expect("Failed to run the game");
 
-                    return;
-                }
-
-                LauncherState::PredownloadAvailable { .. } => {
-                    if just_run_game {
-                        anime_launcher_sdk::honkai::game::run().expect("Failed to run the game");
-
-                        return;
-                    }
-                }
-
-                _ => ()
+                return;
             }
         }
 

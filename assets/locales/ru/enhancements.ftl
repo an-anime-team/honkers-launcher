@@ -1,3 +1,7 @@
+game-settings-description = Управление настройками игры и сессией аккаунта
+sandbox-settings-description = Запускать игру в bubblewrap песочнице, схожей с используемой в Flatpak
+environment-settings-description = Указать переменные среды и команду запуска игры
+
 wine = Wine
 
 synchronization = Синхронизация
@@ -29,6 +33,7 @@ gamescope-description = Программа от Valve, позволяющая з
 
 discord-rpc = Discord RPC
 discord-rpc-description = Discord RPC позволяет вам предоставлять Discord информацию об игре, в которую вы сейчас играете
+icon = Иконка
 title = Заголовок
 description = Описание
 

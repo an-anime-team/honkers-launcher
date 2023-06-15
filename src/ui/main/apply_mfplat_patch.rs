@@ -1,9 +1,9 @@
 use relm4::prelude::*;
 
+use anime_launcher_sdk::anime_game_core::prelude::*;
+
 use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
-
-use anime_launcher_sdk::anime_game_core::honkai::linux_patch::MfplatPatch;
 
 use std::env::temp_dir;
 
@@ -20,7 +20,7 @@ pub fn apply_mfplat_patch(sender: ComponentSender<App>) {
 
         let temp = config.launcher.temp.clone().unwrap_or_else(temp_dir);
 
-        if let Err(err) = MfplatPatch::apply(config.get_wine_prefix_path(), temp) {
+        if let Err(err) = mfplat::apply(config.get_wine_prefix_path(), temp) {
             tracing::error!("Failed to patch the game");
 
             sender.input(AppMsg::Toast {

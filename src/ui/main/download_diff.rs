@@ -7,22 +7,28 @@ use gtk::glib::clone;
 
 use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
-use anime_launcher_sdk::anime_game_core::installer::diff::VersionDiff;
+
+use anime_launcher_sdk::anime_game_core::honkai::version_diff::*;
 
 use crate::*;
 use crate::i18n::*;
 use crate::ui::components::*;
+
 use super::{App, AppMsg};
 
-pub fn download_diff(sender: ComponentSender<App>, progress_bar_input: Sender<ProgressBarMsg>, diff: VersionDiff) {
+pub fn download_diff(sender: ComponentSender<App>, progress_bar_input: Sender<ProgressBarMsg>, mut diff: VersionDiff) {
     sender.input(AppMsg::SetDownloading(true));
 
     std::thread::spawn(move || {
         let config = Config::get().unwrap();
 
-        let result = diff.install_to_by(config.game.path, config.launcher.temp, clone!(@strong sender => move |state| {
+        if let Some(temp) = config.launcher.temp {
+            diff = diff.with_temp_folder(temp);
+        }
+
+        let result = diff.install_to(config.game.path, clone!(@strong sender => move |state| {
             match &state {
-                DiffUpdate::InstallerUpdate(InstallerUpdate::DownloadingError(err)) => {
+                InstallerUpdate::DownloadingError(err) => {
                     tracing::error!("Downloading failed: {err}");
 
                     sender.input(AppMsg::Toast {
@@ -31,7 +37,7 @@ pub fn download_diff(sender: ComponentSender<App>, progress_bar_input: Sender<Pr
                     });
                 }
 
-                DiffUpdate::InstallerUpdate(InstallerUpdate::UnpackingError(err)) => {
+                InstallerUpdate::UnpackingError(err) => {
                     tracing::error!("Unpacking failed: {err}");
 
                     sender.input(AppMsg::Toast {

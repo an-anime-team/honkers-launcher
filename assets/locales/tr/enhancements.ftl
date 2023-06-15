@@ -1,3 +1,7 @@
+game-settings-description = Oyun içi ayarları ve hesap oturumunu düzenleyin
+sandbox-settings-description = Oyunu flatpak gibi bir yöntemle sanallaştırarak çalıştır
+environment-settings-description = Çevre değişkenlerini ve oyun başlatma komutlarını belirtin
+
 wine = Wine
 
 synchronization = Senkronizasyon
@@ -29,6 +33,7 @@ gamescope-description = Gamescope, oyunları izole edilmiş bir Xwayland içinde
 
 discord-rpc = Discord RPC
 discord-rpc-description = Discord RPC, Discord'a şu anda oyun oynadığınızı bildirmenizi sağlar. Bu sayede arkadaşlarınıza şu anda oyun oynadığınızı gösterebilirsiniz
+icon = İkon
 title = Başlık
 description = Açıklama
 
