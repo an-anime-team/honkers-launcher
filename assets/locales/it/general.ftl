@@ -37,6 +37,12 @@ game-outdated = La versione del gioco è troppo vecchia e non può essere aggior
 player-patch-version = Versione della patch player
 player-patch-version-description = Patch principale che ti permette di giocare al gioco su Linux
 
+mfplat-patch-version = Mfplat patch version
+mfplat-patch-version-description = Additional patch that may fix video playing issues
+
+applied = applied
+not-applied = not applied
+
 patch-not-available = non disponibile
 patch-not-available-tooltip = I server delle patch sono irraggiungibili
 

@@ -37,8 +37,11 @@ game-outdated = ゲームが非常に古いためアップデートできませ�
 player-patch-version = プレイヤーのパッチバージョン
 player-patch-version-description = Linuxでプレイするためのメインのパッチです。
 
-xlua-patch-version = Xlua のパッチバージョン
-xlua-patch-version-description = これは追加のパッチで、低スペックなPCのパフォーマンスの改善や、いくつかの細かい問題点を修正できます。
+mfplat-patch-version = Mfplat patch version
+mfplat-patch-version-description = Additional patch that may fix video playing issues
+
+applied = applied
+not-applied = not applied
 
 patch-not-available = ありません。
 patch-not-available-tooltip = パッチサーバーに接続できませんでした。
@@ -51,8 +54,8 @@ patch-preparation-tooltip = パッチは開発中
 
 patch-testing-tooltip = テストパッチがあります
 patch-not-applied-tooltip = パッチが適用されませんでした。
-patch-broken-tooltip = Current patch version is broken and doesn't work properly
-patch-unsafe-tooltip = Current patch version is unsafe and shouldn't be used
+patch-broken-tooltip = 現在のパッチは、壊れているため正しく動作しない場合があります。
+patch-unsafe-tooltip = 現在のパッチは、安全ではないので使わないほうが良いでしょう。
 
 apply-mfplat-patch = Apply mfplat patch
 

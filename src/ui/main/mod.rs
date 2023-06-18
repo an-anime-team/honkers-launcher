@@ -16,6 +16,7 @@ mod update_main_patch;
 mod download_wine;
 mod create_prefix;
 mod download_diff;
+mod disable_telemetry;
 mod launch;
 
 use anime_launcher_sdk::components::loader::ComponentsLoader;
@@ -306,6 +307,8 @@ impl SimpleComponent for App {
                                                 Some(LauncherState::PatchNotInstalled) |
                                                 Some(LauncherState::PatchUpdateAvailable) => "document-save-symbolic",
 
+                                                Some(LauncherState::TelemetryNotDisabled) => "security-high-symbolic",
+
                                                 Some(LauncherState::WineNotInstalled) |
                                                 Some(LauncherState::PrefixNotExists) => "document-save-symbolic",
 
@@ -330,6 +333,8 @@ impl SimpleComponent for App {
 
                                                 Some(LauncherState::PatchNotInstalled) |
                                                 Some(LauncherState::PatchUpdateAvailable) => tr("download-patch"),
+
+                                                Some(LauncherState::TelemetryNotDisabled) => tr("disable-telemetry"),
 
                                                 Some(LauncherState::PatchBroken) => tr("patch-broken"),
                                                 Some(LauncherState::PatchUnsafe) => tr("patch-unsafe"),
@@ -823,6 +828,8 @@ impl SimpleComponent for App {
 
                     LauncherState::PatchNotInstalled |
                     LauncherState::PatchUpdateAvailable => update_main_patch::update_main_patch(sender, self.progress_bar.sender().to_owned()),
+
+                    LauncherState::TelemetryNotDisabled => disable_telemetry::disable_telemetry(sender),
 
                     LauncherState::WineNotInstalled => download_wine::download_wine(sender, self.progress_bar.sender().to_owned()),
                     LauncherState::PrefixNotExists => create_prefix::create_prefix(sender),

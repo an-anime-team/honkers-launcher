@@ -60,7 +60,7 @@ patch-unsafe-tooltip = Текущая версия патча небезопас
 apply-mfplat-patch = Применить патч mfplat
 
 ask-superuser-permissions = Запрашивать права суперпользователя
-ask-superuser-permissions-description = Лаунчер будет использовать их чтобы автоматически обновлять ваш hosts файл. Это не требуется при использовании flatpak
+ask-superuser-permissions-description = Лаунчер будет использовать их чтобы автоматически обновлять ваш hosts файл для отключения телеметрии игры. Не требуется при использовании flatpak
 
 wine-tools = Инструменты Wine
 command-line = Коммандная строка

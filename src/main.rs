@@ -43,26 +43,26 @@ lazy_static::lazy_static! {
 
     pub static ref GAME: Game = Game::new(&CONFIG.game.path, ());
 
-    /// Path to launcher folder. Standard is `$HOME/.local/share/anime-game-launcher`
+    /// Path to launcher folder. Standard is `$HOME/.local/share/honkers-launcher`
     pub static ref LAUNCHER_FOLDER: PathBuf = launcher_dir().expect("Failed to get launcher folder");
 
-    /// Path to launcher's cache folder. Standard is `$HOME/.cache/anime-game-launcher`
+    /// Path to launcher's cache folder. Standard is `$HOME/.cache/honkers-launcher`
     pub static ref CACHE_FOLDER: PathBuf = cache_dir().expect("Failed to get launcher's cache folder");
 
-    /// Path to `debug.log` file. Standard is `$HOME/.local/share/anime-game-launcher/debug.log`
+    /// Path to `debug.log` file. Standard is `$HOME/.local/share/honkers-launcher/debug.log`
     pub static ref DEBUG_FILE: PathBuf = LAUNCHER_FOLDER.join("debug.log");
 
-    /// Path to `background` file. Standard is `$HOME/.cache/anime-game-launcher/background`
-    pub static ref BACKGROUND_FILE: PathBuf = CACHE_FOLDER.join("background");
+    /// Path to `background` file. Standard is `$HOME/.local/share/honkers-launcher/background`
+    pub static ref BACKGROUND_FILE: PathBuf = LAUNCHER_FOLDER.join("background");
 
     /// Path to `.keep-background` file. Used to mark launcher that it shouldn't update background picture
     /// 
-    /// Standard is `$HOME/.local/share/anime-game-launcher/.keep-background`
+    /// Standard is `$HOME/.local/share/honkers-launcher/.keep-background`
     pub static ref KEEP_BACKGROUND_FILE: PathBuf = LAUNCHER_FOLDER.join(".keep-background");
 
     /// Path to `.first-run` file. Used to mark launcher that it should run FirstRun window
     /// 
-    /// Standard is `$HOME/.local/share/anime-game-launcher/.first-run`
+    /// Standard is `$HOME/.local/share/honkers-launcher/.first-run`
     pub static ref FIRST_RUN_FILE: PathBuf = LAUNCHER_FOLDER.join(".first-run");
 }
 
@@ -186,14 +186,68 @@ fn main() {
 
     // Run the app if everything's ready
     else {
+        // Temporary workaround for old patches which HAVE to be reverted
+        // I don't believe to users to read announcements so better do this
+        // 
+        // There's 2 files which were modified by the old patch, but since the game
+        // was updated those files were updated as well, so no need for additional actions
+        // 
+        // Should be removed in future
+        let game_path = &CONFIG.game.path;
+
+        if game_path.join("Generated").exists() {
+            std::fs::remove_dir_all(game_path.join("Generated"))
+                .expect("Failed to delete 'Generated' folder");
+        }
+
+        if game_path.join("TVMBootstrap.dll").exists() {
+            std::fs::remove_file(game_path.join("TVMBootstrap.dll"))
+                .expect("Failed to delete 'TVMBootstrap.dll' file");
+        }
+
+        // AC won't say a thing about this file anyway but for consistency I decided
+        // to delete it as well
+        if game_path.join("launch.bat").exists() {
+            std::fs::remove_file(game_path.join("launch.bat"))
+                .expect("Failed to delete 'launch.bat' file");
+        }
+
+        // Patch was renaming crash reporter to disable it
+        if game_path.join("UnityCrashHandler64.exe.bak").exists() {
+            if game_path.join("UnityCrashHandler64.exe").exists() {
+                std::fs::remove_file(game_path.join("UnityCrashHandler64.exe.bak"))
+                    .expect("Failed to delete 'UnityCrashHandler64.exe.bak' file");
+            }
+
+            else {
+                std::fs::rename(game_path.join("UnityCrashHandler64.exe.bak"), game_path.join("UnityCrashHandler64.exe"))
+                    .expect("Failed to rename 'UnityCrashHandler64.exe.bak' file to 'UnityCrashHandler64.exe'");
+            }
+        }
+
+        // End of temporary workaround ^
+
         if run_game || just_run_game {
             let state = LauncherState::get_from_config(|_| {})
                 .expect("Failed to get launcher state");
 
-            if let LauncherState::Launch = state {
-                anime_launcher_sdk::honkai::game::run().expect("Failed to run the game");
+            match state {
+                LauncherState::Launch => {
+                    anime_launcher_sdk::honkai::game::run().expect("Failed to run the game");
 
-                return;
+                    return;
+                }
+
+                LauncherState::PatchNotVerified |
+                LauncherState::PatchUpdateAvailable => {
+                    if just_run_game {
+                        anime_launcher_sdk::honkai::game::run().expect("Failed to run the game");
+
+                        return;
+                    }
+                }
+
+                _ => ()
             }
         }
 

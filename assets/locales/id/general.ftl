@@ -37,6 +37,12 @@ game-outdated = Versi game terlalu lama dan tidak dapat diperbarui. Versi terbar
 player-patch-version = Versi patch
 player-patch-version-description = Patch utama yang membuat game bisa dimainkan di Linux
 
+mfplat-patch-version = Mfplat patch version
+mfplat-patch-version-description = Additional patch that may fix video playing issues
+
+applied = applied
+not-applied = not applied
+
 patch-not-available = Tidak tersedia
 patch-not-available-tooltip = Server patch tidak bisa dijangkau
 
