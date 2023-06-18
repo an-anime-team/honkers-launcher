@@ -35,6 +35,7 @@ pub fn create_prefix(sender: ComponentSender<App>) {
                 sender.input(AppMsg::DisableButtons(false));
                 sender.input(AppMsg::UpdateLauncherState {
                     perform_on_download_needed: false,
+                    apply_patch_if_needed: false,
                     show_status_page: true
                 });
             });

@@ -13,31 +13,19 @@ pub fn disable_telemetry(sender: ComponentSender<App>) {
     let config = Config::get().unwrap();
 
     std::thread::spawn(move || {
-        let telemetry = config.launcher.edition
-            .telemetry_servers()
+        let telemetry = TELEMETRY_SERVERS
             .iter()
             .map(|server| format!("0.0.0.0 {server}"))
             .collect::<Vec<String>>()
             .join("\\n");
 
-        let output = if config.patch.root {
-            Command::new("pkexec")
-                .arg("echo")
-                .arg("-e")
-                .arg(format!("\\n{telemetry}\\n"))
-                .arg(">>")
-                .arg("/etc/hosts")
-                .spawn()
-        }
-
-        else {
-            Command::new("echo")
-                .arg("-e")
-                .arg(format!("\\n{telemetry}\\n"))
-                .arg(">>")
-                .arg("/etc/hosts")
-                .spawn()
-        };
+        let output = Command::new("pkexec")
+            .arg("echo")
+            .arg("-e")
+            .arg(format!("\\n{telemetry}\\n"))
+            .arg(">>")
+            .arg("/etc/hosts")
+            .spawn();
 
         match output.and_then(|child| child.wait_with_output()) {
             Ok(output) => if !output.status.success() {
@@ -62,6 +50,7 @@ pub fn disable_telemetry(sender: ComponentSender<App>) {
         sender.input(AppMsg::DisableButtons(false));
         sender.input(AppMsg::UpdateLauncherState {
             perform_on_download_needed: false,
+            apply_patch_if_needed: false,
             show_status_page: true
         });
     });

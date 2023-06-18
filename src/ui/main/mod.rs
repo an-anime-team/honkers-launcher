@@ -68,6 +68,9 @@ pub enum AppMsg {
         /// Needed for chained executions (e.g. update one voice after another)
         perform_on_download_needed: bool,
 
+        /// Automatically start patch applying if possible and needed
+        apply_patch_if_needed: bool,
+
         /// Show status gathering progress page
         show_status_page: bool
     },
@@ -697,6 +700,7 @@ impl SimpleComponent for App {
             // Update launcher state
             sender.input(AppMsg::UpdateLauncherState {
                 perform_on_download_needed: false,
+                apply_patch_if_needed: false,
                 show_status_page: true
             });
 
@@ -716,7 +720,7 @@ impl SimpleComponent for App {
 
         match msg {
             // TODO: make function from this message like with toast
-            AppMsg::UpdateLauncherState { perform_on_download_needed, show_status_page } => {
+            AppMsg::UpdateLauncherState { perform_on_download_needed, apply_patch_if_needed, show_status_page } => {
                 if show_status_page {
                     sender.input(AppMsg::SetLoadingStatus(Some(Some(tr("loading-launcher-state")))));
                 } else {
