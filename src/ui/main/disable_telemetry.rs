@@ -10,8 +10,6 @@ use super::{App, AppMsg};
 pub fn disable_telemetry(sender: ComponentSender<App>) {
     sender.input(AppMsg::DisableButtons(true));
 
-    let config = Config::get().unwrap();
-
     std::thread::spawn(move || {
         let telemetry = TELEMETRY_SERVERS
             .iter()
