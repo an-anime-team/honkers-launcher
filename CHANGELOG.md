@@ -10,6 +10,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added deletion of old patch files (just in case)
+- Added telemetry disabling state support
+- Added Discord RPC icons updating
+
+### Changed
+
+- Returned back old `background` file path
 
 ## [1.2.0] - 15.06.2023
 

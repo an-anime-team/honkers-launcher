@@ -93,39 +93,15 @@ impl SimpleComponent for AboutDialog {
                 "<p>Added</p>",
 
                 "<ul>",
-                    "<li>Added Italian</li>",
-                    "<li>Added Indonesian</li>",
-                    "<li>Added dynamic main button icon switching</li>",
-                    "<li>Set button label as \"Resume\" when the diff is part downloaded</li>",
-                    "<li>Added options to use wine / gstreamer shared libraries from selected wine build</li>",
-                    "<li>Added setting of `LC_ALL` in wine lang setting</li>",
-                    "<li>Added Discord RPC icon selection</li>",
-                    "<li>Added Japanese</li>",
-                    "<li>Added Hungarian</li>",
-                "</ul>",
-
-                "<p>Fixed</p>",
-
-                "<ul>",
-                    "<li>Fixed check button style for newly made sessions</li>",
-                    "<li>Fixed repairer's NaN progress</li>",
-                    "<li>Fixed game session selection when current one is removed</li>",
+                    "<li>Added deletion of old patch files</li>",
+                    "<li>Added telemetry disabling state support</li>",
+                    "<li>Added Discord RPC icons updating</li>",
                 "</ul>",
 
                 "<p>Changed</p>",
 
                 "<ul>",
-                    "<li>Reworked game sessions selection</li>",
-                    "<li>Updated Indonesian</li>",
-                    "<li>Updated French</li>",
-                    "<li>Made initial tasks async which has decreased startup time</li>",
-                    "<li>Improved 7z support</li>",
-                "</ul>",
-
-                "<p>Fixed</p>",
-
-                "<ul>",
-                    "<li>Removed patch mirror migration</li>",
+                    "<li>Returned back old background file path</li>",
                 "</ul>",
             ].join("\n"),
 

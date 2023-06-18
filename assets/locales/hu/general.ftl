@@ -37,6 +37,12 @@ game-outdated = A játékverzió túl régi és nem frissíthető. Legfrissebb: 
 player-patch-version = Játékos patch verzió
 player-patch-version-description = A fő patch amivel játszhatsz Linuxon
 
+mfplat-patch-version = Mfplat patch version
+mfplat-patch-version-description = Additional patch that may fix video playing issues
+
+applied = applied
+not-applied = not applied
+
 patch-not-available = nem elérhető
 patch-not-available-tooltip = A patch szerverek nem elérhetőek
 
