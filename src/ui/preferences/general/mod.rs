@@ -52,6 +52,7 @@ pub enum GeneralAppMsg {
     UpdateDownloadedDxvk,
 
     OpenMigrateInstallation,
+    RepairGame,
 
     OpenMainPage,
     OpenComponentsPage,
@@ -205,6 +206,12 @@ impl SimpleAsyncComponent for GeneralApp {
                         set_tooltip_text: Some(&tr("migrate-installation-description")),
 
                         connect_clicked => GeneralAppMsg::OpenMigrateInstallation
+                    },
+
+                    gtk::Button {
+                        set_label: &tr("repair-game"),
+
+                        connect_clicked => GeneralAppMsg::RepairGame
                     }
                 }
             },
@@ -487,6 +494,10 @@ impl SimpleAsyncComponent for GeneralApp {
                 }
 
                 self.migrate_installation.widget().show();
+            }
+
+            GeneralAppMsg::RepairGame => {
+                sender.output(Self::Output::RepairGame).unwrap();
             }
 
             GeneralAppMsg::OpenMainPage => unsafe {
