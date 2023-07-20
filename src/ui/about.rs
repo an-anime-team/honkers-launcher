@@ -90,18 +90,25 @@ impl SimpleComponent for AboutDialog {
 
             set_release_notes_version: &APP_VERSION,
             set_release_notes: &[
-                "<p>Added</p>",
+                "<p>Fixed</p>",
 
                 "<ul>",
-                    "<li>Added deletion of old patch files</li>",
-                    "<li>Added telemetry disabling state support</li>",
-                    "<li>Added Discord RPC icons updating</li>",
+                    "<li>Fixed telemetry disabling</li>",
+                    "<li>Fixed jadeite patch state handling from the metadata file</li>",
+                    "<li>Fixed game pre-downloading button sensitivity when the update was partially downloaded, but then interrupted</li>",
+                    "<li>Fixed game pre-downloading button visibility when jadeite patch state is not \"verified\"</li>",
                 "</ul>",
 
                 "<p>Changed</p>",
 
                 "<ul>",
-                    "<li>Returned back old background file path</li>",
+                    "<li>Updated Italian</li>",
+                    "<li>Updated Hungarian</li>",
+                    "<li>Updated Japanese</li>",
+                    "<li>Updated Indonesian</li>",
+                    "<li>Updated Spanish</li>",
+                    "<li>Updated Turkish</li>",
+                    "<li>Updated Chinese</li>",
                 "</ul>",
             ].join("\n"),
 

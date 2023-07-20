@@ -29,7 +29,7 @@ Or share them and ruin it for the dozens of Linux players. It's up to you.
 
 ## If you're going to share it anyway
 
-Do what you must, but we would respectfully request that you try to label the game as "An Anime Game"
+Do what you must, but we would respectfully request that you try to label the game as "The Honkers Railway Game"
 instead of the actual name of the game, to avoid search engine parsing.
 
 <br>

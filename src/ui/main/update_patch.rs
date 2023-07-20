@@ -11,14 +11,12 @@ use crate::ui::components::*;
 
 use super::{App, AppMsg};
 
-pub fn update_main_patch(sender: ComponentSender<App>, progress_bar_input: Sender<ProgressBarMsg>) {
+pub fn update_patch(sender: ComponentSender<App>, progress_bar_input: Sender<ProgressBarMsg>) {
     sender.input(AppMsg::SetDownloading(true));
 
     let config = Config::get().unwrap();
 
     std::thread::spawn(move || {
-        let mut apply_patch_if_needed = true;
-
         let result = jadeite::get_latest()
             .and_then(|patch| patch.install(config.patch.path, clone!(@strong sender => move |state| {
                 match &state {
@@ -29,8 +27,6 @@ pub fn update_main_patch(sender: ComponentSender<App>, progress_bar_input: Sende
                             title: tr("downloading-failed"),
                             description: Some(err.to_string())
                         });
-
-                        // apply_patch_if_needed = false;
                     }
 
                     InstallerUpdate::UnpackingError(err) => {
@@ -40,8 +36,6 @@ pub fn update_main_patch(sender: ComponentSender<App>, progress_bar_input: Sende
                             title: tr("unpacking-failed"),
                             description: Some(err.clone())
                         });
-
-                        // apply_patch_if_needed = false;
                     }
     
                     _ => ()
@@ -59,14 +53,11 @@ pub fn update_main_patch(sender: ComponentSender<App>, progress_bar_input: Sende
                 title: tr("main-patch-update-failed"),
                 description: Some(err.to_string())
             });
-
-            apply_patch_if_needed = false;
         }
 
         sender.input(AppMsg::SetDownloading(false));
         sender.input(AppMsg::UpdateLauncherState {
             perform_on_download_needed: false,
-            apply_patch_if_needed,
             show_status_page: true
         });
     });

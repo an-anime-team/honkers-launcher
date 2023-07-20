@@ -13,16 +13,14 @@ pub fn disable_telemetry(sender: ComponentSender<App>) {
     std::thread::spawn(move || {
         let telemetry = TELEMETRY_SERVERS
             .iter()
-            .map(|server| format!("0.0.0.0 {server}"))
+            .map(|server| format!("echo '0.0.0.0 {server}' >> /etc/hosts"))
             .collect::<Vec<String>>()
-            .join("\\n");
+            .join(" ; ");
 
         let output = Command::new("pkexec")
-            .arg("echo")
-            .arg("-e")
-            .arg(format!("\\n{telemetry}\\n"))
-            .arg(">>")
-            .arg("/etc/hosts")
+            .arg("bash")
+            .arg("-c")
+            .arg(format!("echo '' >> /etc/hosts ; {telemetry} ; echo '' >> /etc/hosts"))
             .spawn();
 
         match output.and_then(|child| child.wait_with_output()) {
@@ -48,7 +46,6 @@ pub fn disable_telemetry(sender: ComponentSender<App>) {
         sender.input(AppMsg::DisableButtons(false));
         sender.input(AppMsg::UpdateLauncherState {
             perform_on_download_needed: false,
-            apply_patch_if_needed: false,
             show_status_page: true
         });
     });

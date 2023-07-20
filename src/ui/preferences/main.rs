@@ -141,7 +141,6 @@ impl SimpleAsyncComponent for PreferencesApp {
             PreferencesAppMsg::UpdateLauncherState => {
                 sender.output(Self::Output::UpdateLauncherState {
                     perform_on_download_needed: false,
-                    apply_patch_if_needed: false,
                     show_status_page: false
                 });
             }
