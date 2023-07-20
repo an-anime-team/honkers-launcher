@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed telemetry disabling
+- Fixed jadeite patch state handling from the metadata file
+- Fixed game pre-downloading button sensitivity when the update was partially downloaded, but then interrupted
+- Fixed game pre-downloading button visibility when jadeite patch state is not "verified"
+
+### Changed
+
+- Updated Italian
+- Updated Hungarian
+- Updated Japanese
+- Updated Indonesian
+- Updated Spanish
+- Updated Turkish
+- Updated Chinese
+
 ## [1.2.1] - 18.06.2023
 
 ### Added
