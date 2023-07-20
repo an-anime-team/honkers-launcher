@@ -78,7 +78,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- Added rules approving dialog to the first run window
 - Added game settings section
 - Added game sessions manager
 - Added `LAUNCHER_FOLDER` variable support.

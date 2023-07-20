@@ -2,6 +2,9 @@ use relm4::prelude::*;
 
 use crate::i18n::*;
 
+use anime_launcher_sdk::config::ConfigExt;
+use anime_launcher_sdk::star_rail::config::Config;
+
 use super::{App, AppMsg};
 
 pub fn launch(sender: ComponentSender<App>) {

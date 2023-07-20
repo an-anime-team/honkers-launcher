@@ -309,7 +309,7 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                             self.runners    = result.join("runners");
                             self.dxvks      = result.join("dxvks");
                             self.prefix     = result.join("prefix");
-                            self.game       = result.join(concat!("Honk", "ai Im", "pact"));
+                            self.game       = result.join("Honkai Impact");
                             self.components = result.join("components");
                             self.patch      = result.join("patch");
                             self.temp       = result.clone();

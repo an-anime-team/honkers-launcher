@@ -12,7 +12,7 @@ use gtk::glib::clone;
 
 mod repair_game;
 mod apply_mfplat_patch;
-mod update_main_patch;
+mod update_patch;
 mod download_wine;
 mod create_prefix;
 mod download_diff;
@@ -25,6 +25,7 @@ use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
 
 use anime_launcher_sdk::honkai::config::schema::launcher::LauncherStyle;
+
 use anime_launcher_sdk::honkai::states::*;
 use anime_launcher_sdk::honkai::consts::*;
 
@@ -96,7 +97,6 @@ pub enum AppMsg {
     DisableButtons(bool),
 
     OpenPreferences,
-    RepairGame,
 
     PerformAction,
 
@@ -356,6 +356,8 @@ impl SimpleComponent for App {
                                                         _ => tr("update")
                                                     }
                                                 },
+
+                                                Some(LauncherState::GameNotInstalled(_)) => tr("download"),
 
                                                 None => String::from("...")
                                             }
@@ -705,9 +707,7 @@ impl SimpleComponent for App {
             });
 
             // Mark app as loaded
-            unsafe {
-                crate::READY = true;
-            }
+            crate::READY.store(true, Ordering::Relaxed);
 
             tracing::info!("App is ready");
         });

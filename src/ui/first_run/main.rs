@@ -169,9 +169,9 @@ impl SimpleComponent for FirstRunApp {
 
         unsafe {
             MAIN_WINDOW = Some(widgets.window.clone());
-
-            crate::READY = true;
         }
+
+        crate::READY.store(true, Ordering::Relaxed);
 
         tracing::info!("First run window initialized. App is ready");
 
