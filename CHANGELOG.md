@@ -13,8 +13,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed telemetry disabling
 - Fixed jadeite patch state handling from the metadata file
-- Fixed game pre-downloading button sensitivity when the update was partially downloaded, but then interrupted
-- Fixed game pre-downloading button visibility when jadeite patch state is not "verified"
 
 ### Changed
 
