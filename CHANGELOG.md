@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.2] - 20.07.2023
+
 ### Fixed
 
 - Fixed telemetry disabling
@@ -135,7 +137,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <br>
 
-[unreleased]: https://github.com/an-anime-team/honkers-launcher/compare/1.2.1...next
+[unreleased]: https://github.com/an-anime-team/honkers-launcher/compare/1.2.2...next
+[1.2.1]: https://github.com/an-anime-team/honkers-launcher/compare/1.2.1...1.2.2
 [1.2.1]: https://github.com/an-anime-team/honkers-launcher/compare/1.2.0...1.2.1
 [1.2.0]: https://github.com/an-anime-team/honkers-launcher/compare/1.1.1...1.2.0
 [1.1.1]: https://github.com/an-anime-team/honkers-launcher/compare/1.1.0...1.1.1
