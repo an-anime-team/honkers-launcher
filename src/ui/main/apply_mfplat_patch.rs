@@ -16,8 +16,6 @@ pub fn apply_mfplat_patch(sender: ComponentSender<App>) {
     let config = Config::get().unwrap();
 
     std::thread::spawn(move || {
-        let mut apply_patch_if_needed = true;
-
         let temp = config.launcher.temp.clone().unwrap_or_else(temp_dir);
 
         if let Err(err) = mfplat::apply(config.get_wine_prefix_path(), temp) {
@@ -27,16 +25,11 @@ pub fn apply_mfplat_patch(sender: ComponentSender<App>) {
                 title: tr("game-patching-error"),
                 description: Some(err.to_string())
             });
-
-            // Don't try to apply the patch after state updating
-            // because we just failed to do it
-            apply_patch_if_needed = false;
         }
 
         sender.input(AppMsg::DisableButtons(false));
         sender.input(AppMsg::UpdateLauncherState {
             perform_on_download_needed: false,
-            apply_patch_if_needed,
             show_status_page: true
         });
     });

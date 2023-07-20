@@ -69,9 +69,6 @@ pub enum AppMsg {
         /// Needed for chained executions (e.g. update one voice after another)
         perform_on_download_needed: bool,
 
-        /// Automatically start patch applying if possible and needed
-        apply_patch_if_needed: bool,
-
         /// Show status gathering progress page
         show_status_page: bool
     },
@@ -97,6 +94,7 @@ pub enum AppMsg {
     DisableButtons(bool),
 
     OpenPreferences,
+    RepairGame,
 
     PerformAction,
 
@@ -356,8 +354,6 @@ impl SimpleComponent for App {
                                                         _ => tr("update")
                                                     }
                                                 },
-
-                                                Some(LauncherState::GameNotInstalled(_)) => tr("download"),
 
                                                 None => String::from("...")
                                             }
@@ -641,8 +637,8 @@ impl SimpleComponent for App {
                     Ok(latest) => match jadeite::get_metadata() {
                         Ok(metadata) => {
                             let status = GAME.get_version()
-                                .map(|version| metadata.hsr.global.get_status(version))
-                                .unwrap_or(metadata.hsr.global.status);
+                                .map(|version| metadata.games.hi3rd.global.get_status(version))
+                                .unwrap_or(metadata.games.hi3rd.global.status);
 
                             Some((latest.version, status))
                         }
@@ -702,7 +698,6 @@ impl SimpleComponent for App {
             // Update launcher state
             sender.input(AppMsg::UpdateLauncherState {
                 perform_on_download_needed: false,
-                apply_patch_if_needed: false,
                 show_status_page: true
             });
 
@@ -720,7 +715,7 @@ impl SimpleComponent for App {
 
         match msg {
             // TODO: make function from this message like with toast
-            AppMsg::UpdateLauncherState { perform_on_download_needed, apply_patch_if_needed, show_status_page } => {
+            AppMsg::UpdateLauncherState { perform_on_download_needed, show_status_page } => {
                 if show_status_page {
                     sender.input(AppMsg::SetLoadingStatus(Some(Some(tr("loading-launcher-state")))));
                 } else {
@@ -764,12 +759,6 @@ impl SimpleComponent for App {
                     match state {
                         LauncherState::GameUpdateAvailable(_) |
                         LauncherState::GameNotInstalled(_) if perform_on_download_needed => {
-                            sender.input(AppMsg::PerformAction);
-                        }
-
-                        LauncherState::MfplatPatchAvailable |
-                        LauncherState::PatchNotInstalled |
-                        LauncherState::PatchUpdateAvailable if apply_patch_if_needed => {
                             sender.input(AppMsg::PerformAction);
                         }
 
@@ -827,7 +816,7 @@ impl SimpleComponent for App {
                     LauncherState::MfplatPatchAvailable => apply_mfplat_patch::apply_mfplat_patch(sender),
 
                     LauncherState::PatchNotInstalled |
-                    LauncherState::PatchUpdateAvailable => update_main_patch::update_main_patch(sender, self.progress_bar.sender().to_owned()),
+                    LauncherState::PatchUpdateAvailable => update_patch::update_patch(sender, self.progress_bar.sender().to_owned()),
 
                     LauncherState::TelemetryNotDisabled => disable_telemetry::disable_telemetry(sender),
 
