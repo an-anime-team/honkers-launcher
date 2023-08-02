@@ -1,10 +1,10 @@
 [package]
 name = "honkers-launcher"
-version = "1.2.2"
+version = "1.3.0"
 description = "Honkers launcher"
 authors = ["Nikita Podvirnyy <suimin.tu.mu.ga.mi@gmail.com>"]
-homepage = "https://github.com/an-anime-team/the-honkers-railway-launcher"
-repository = "https://github.com/an-anime-team/the-honkers-railway-launcher"
+homepage = "https://github.com/an-anime-team/honkers-launcher"
+repository = "https://github.com/an-anime-team/honkers-launcher"
 license = "GPL-3.0"
 edition = "2021"
 build = "build.rs"
