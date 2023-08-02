@@ -298,6 +298,9 @@ impl SimpleComponent for App {
                                 adw::Bin {
                                     set_css_classes: &["background", "round-bin"],
 
+                                    #[watch]
+                                    set_visible: !model.kill_game_button,
+
                                     gtk::Button {
                                         adw::ButtonContent {
                                             #[watch]
