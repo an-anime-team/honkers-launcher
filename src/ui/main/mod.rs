@@ -432,7 +432,7 @@ impl SimpleComponent for App {
                                             }));
 
                                             let result = std::process::Command::new("pkill")
-                                                .arg("StarRail\\.exe")
+                                                .arg("BH3\\.exe")
                                                 .spawn();
 
                                             if let Err(err) = result {
