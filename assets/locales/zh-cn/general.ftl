@@ -62,6 +62,9 @@ apply-mfplat-patch = 应用 mfplat 补丁
 ask-superuser-permissions = 请求超级用户权限
 ask-superuser-permissions-description = 启动器需要超级用户权限来修改 hosts 文件。Flatpak 版无需此权限
 
+launcher-behavior = Launcher behavior
+launcher-behavior-description = What should launcher window do when it starts the game
+
 wine-tools = Wine 工具
 command-line = 命令行
 registry-editor = 注册表编辑器

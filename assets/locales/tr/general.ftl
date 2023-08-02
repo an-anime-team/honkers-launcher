@@ -62,6 +62,9 @@ apply-mfplat-patch = Mfplay yamasını uygula
 ask-superuser-permissions = Yönetici izinlerini sor
 ask-superuser-permissions-description = İstemci yönetici iznini hostunuzun dosyalarını güncellemek için otomatik olarak kullanacaktır. Buna flatpak versiyonunda gerek yoktur
 
+launcher-behavior = Launcher behavior
+launcher-behavior-description = What should launcher window do when it starts the game
+
 wine-tools = Wine araçları
 command-line = Komut istemi
 registry-editor = Girdi düzenleyicisi

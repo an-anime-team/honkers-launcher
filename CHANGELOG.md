@@ -7,6 +7,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added new gamescope version compatibility
+- Added "launcher behavior" option
+- Added "kill game process" button when chosen behavior keeps launcher window open
+- Bundled some icons into the app for consistency across the systems
+- Added better panics handler
+- Added Swedish
+
+### Fixed
+
+- Fixed jadeite patch state handling from the metadata file
+- Fixed game pre-downloading button sensitivity when the update was partially downloaded, but then interrupted
+- Fixed game pre-downloading button visibility when jadeite patch state is not "verified"
+
+### Changed
+
+- Improved pre-downloads state checking
+- Replaced translation functions by `tr!` macro
+- Reworked app resources structure
+
 ## [1.2.2] - 20.07.2023
 
 ### Fixed

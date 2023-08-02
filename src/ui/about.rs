@@ -76,24 +76,35 @@ impl SimpleComponent for AboutDialog {
                 "简体中文 — Caibin Chen https://github.com/tigersoldier",
                 "日本語 — @zozonteq https://github.com/zozonteq",
                 // Hungarian?
+                "Svenska — Jakob Fridesjö https://github.com/jakobfridesjo",
             ].join("\n"),
 
             set_debug_info: &[
                 format!("Anime Launcher SDK: {SDK_VERSION}"),
                 format!("Anime Game Core: {CORE_VERSION}"),
                 String::new(),
-                format!("GTK: {}.{}.{}", gtk::major_version(), gtk::minor_version(), gtk::micro_version()),
+                format!("gtk: {}.{}.{}", gtk::major_version(), gtk::minor_version(), gtk::micro_version()),
                 format!("libadwaita: {}.{}.{}", adw::major_version(), adw::minor_version(), adw::micro_version()),
                 format!("pango: {}", gtk::pango::version_string()),
-                format!("cairo: {}", gtk::cairo::version_string()),
+                format!("cairo: {}", gtk::cairo::version_string())
             ].join("\n"),
 
             set_release_notes_version: &APP_VERSION,
             set_release_notes: &[
+                "<p>Added</p>",
+
+                "<ul>",
+                    "<li>Added new gamescope version compatibility</li>",
+                    "<li>Added \"launcher behavior\" option</li>",
+                    "<li>Added \"kill game process\" button when chosen behavior keeps launcher window open</li>",
+                    "<li>Bundled some icons into the app for consistency across the systems</li>",
+                    "<li>Added better panics handler</li>",
+                    "<li>Added Swedish</li>",
+                "</ul>",
+
                 "<p>Fixed</p>",
 
                 "<ul>",
-                    "<li>Fixed telemetry disabling</li>",
                     "<li>Fixed jadeite patch state handling from the metadata file</li>",
                     "<li>Fixed game pre-downloading button sensitivity when the update was partially downloaded, but then interrupted</li>",
                     "<li>Fixed game pre-downloading button visibility when jadeite patch state is not \"verified\"</li>",
@@ -102,13 +113,9 @@ impl SimpleComponent for AboutDialog {
                 "<p>Changed</p>",
 
                 "<ul>",
-                    "<li>Updated Italian</li>",
-                    "<li>Updated Hungarian</li>",
-                    "<li>Updated Japanese</li>",
-                    "<li>Updated Indonesian</li>",
-                    "<li>Updated Spanish</li>",
-                    "<li>Updated Turkish</li>",
-                    "<li>Updated Chinese</li>",
+                    "<li>Improved pre-downloads state checking</li>",
+                    "<li>Replaced translation functions by `tr!` macro</li>",
+                    "<li>Reworked app resources structure</li>",
                 "</ul>",
             ].join("\n"),
 
