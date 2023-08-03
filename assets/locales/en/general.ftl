@@ -9,7 +9,7 @@ launcher-language-description = Applies after restart
 
 game-edition = Game edition
 global = Global
-sea = Sea
+sea = Southeast Asia
 china = China
 taiwan = Taiwan
 korea = Korea

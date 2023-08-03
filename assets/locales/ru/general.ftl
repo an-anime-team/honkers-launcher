@@ -9,7 +9,7 @@ launcher-language-description = Применяется после перезап
 
 game-edition = Редакция игры
 global = Глобальная
-sea = Океанская
+sea = Юго-Восточная Азия
 china = Китайская
 taiwan = Тайваньская
 korea = Корейская

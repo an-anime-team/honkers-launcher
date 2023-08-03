@@ -9,7 +9,7 @@ launcher-language-description = Efektif setelah muat ulang
 
 game-edition = Edisi game
 global = Global
-sea = Sea
+sea = Southeast Asia
 china = Cina
 taiwan = Taiwan
 korea = Korea

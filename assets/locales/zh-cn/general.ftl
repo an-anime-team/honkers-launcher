@@ -9,7 +9,7 @@ launcher-language-description = 重启后生效
 
 game-edition = 游戏版本
 global = 国际服
-sea = Sea
+sea = Southeast Asia
 china = 国服
 taiwan = Taiwan
 korea = Korea
