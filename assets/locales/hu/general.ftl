@@ -9,7 +9,11 @@ launcher-language-description = Újraindítás után lép életbe
 
 game-edition = Játék kiadás
 global = Globális
+sea = Sea
 china = Kínai
+taiwan = Taiwan
+korea = Korea
+japan = Japan
 
 game-environment = Játék környezet
 game-environment-description = Egyedi lehetőségek érhetőek el vele a játékban, mint például extra fizetési módok

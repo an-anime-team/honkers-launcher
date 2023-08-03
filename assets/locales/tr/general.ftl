@@ -9,7 +9,11 @@ launcher-language-description = Yeniden başlattıktan sonra uygulanır
 
 game-edition = Oyun Sürümü
 global = Evrensel
+sea = Sea
 china = Çin
+taiwan = Taiwan
+korea = Korea
+japan = Japan
 
 game-environment = Oyun ortamı
 game-environment-description = Ek ödeme yöntemleri gibi özelliklere erişin

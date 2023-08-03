@@ -9,7 +9,11 @@ launcher-language-description = Применяется после перезап
 
 game-edition = Редакция игры
 global = Глобальная
+sea = Океанская
 china = Китайская
+taiwan = Тайваньская
+korea = Корейская
+japan = Японская
 
 game-environment = Окружение игры
 game-environment-description = Получить особые функции такие как дополнительные методы оплаты

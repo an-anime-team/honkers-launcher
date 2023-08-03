@@ -9,7 +9,11 @@ launcher-language-description = Si applica dopo il riavvio dell'applicazione
 
 game-edition = Edizione del gioco
 global = Globale
+sea = Sea
 china = Cina
+taiwan = Taiwan
+korea = Korea
+japan = Japan
 
 game-environment = Ambiente di gioco
 game-environment-description = Ottieni caratteristiche specifiche come ulteriori metodi di pagamento

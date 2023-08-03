@@ -9,7 +9,11 @@ launcher-language-description = 重启后生效
 
 game-edition = 游戏版本
 global = 国际服
+sea = Sea
 china = 国服
+taiwan = Taiwan
+korea = Korea
+japan = Japan
 
 game-environment = 游戏环境
 game-environment-description = 获取特定功能，如其他付款方式
