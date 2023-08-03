@@ -171,7 +171,7 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                 },
 
                 adw::ActionRow {
-                    set_title: &tr!("global-game-installation-folder"), // TODO: translate this
+                    set_title: &tr!("sea-game-installation-folder"),
                     set_icon_name: Some("folder-symbolic"),
                     set_activatable: true,
 
@@ -182,7 +182,7 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                 },
 
                 adw::ActionRow {
-                    set_title: &tr!("china-game-installation-folder"), // TODO: translate this
+                    set_title: &tr!("chinese-game-installation-folder"),
                     set_icon_name: Some("folder-symbolic"),
                     set_activatable: true,
 
@@ -193,7 +193,7 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                 },
 
                 adw::ActionRow {
-                    set_title: &tr!("global-game-installation-folder"), // TODO: translate this
+                    set_title: &tr!("taiwanese-game-installation-folder"),
                     set_icon_name: Some("folder-symbolic"),
                     set_activatable: true,
 
@@ -204,7 +204,7 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                 },
 
                 adw::ActionRow {
-                    set_title: &tr!("global-game-installation-folder"), // TODO: translate this
+                    set_title: &tr!("korean-game-installation-folder"),
                     set_icon_name: Some("folder-symbolic"),
                     set_activatable: true,
 
@@ -215,7 +215,7 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                 },
 
                 adw::ActionRow {
-                    set_title: &tr!("global-game-installation-folder"), // TODO: translate this
+                    set_title: &tr!("japanese-game-installation-folder"),
                     set_icon_name: Some("folder-symbolic"),
                     set_activatable: true,
 
