@@ -19,7 +19,7 @@ pub fn repair_game(sender: ComponentSender<App>, progress_bar_input: Sender<Prog
     sender.input(AppMsg::SetDownloading(true));
 
     std::thread::spawn(move || {
-        match repairer::try_get_integrity_files(None) {
+        match repairer::try_get_integrity_files(config.launcher.edition, None) {
             Ok(files) => {
                 progress_bar_input.send(ProgressBarMsg::UpdateProgress(0, 0));
 
@@ -50,7 +50,7 @@ pub fn repair_game(sender: ComponentSender<App>, progress_bar_input: Sender<Prog
                     }
 
                     let thread_sender = verify_sender.clone();
-                    let game_path = config.game.path.clone();
+                    let game_path = config.game.path.for_edition(config.launcher.edition).to_path_buf();
 
                     std::thread::spawn(move || {
                         for file in thread_files {
@@ -96,7 +96,7 @@ pub fn repair_game(sender: ComponentSender<App>, progress_bar_input: Sender<Prog
                     for (i, file) in broken.into_iter().enumerate() {
                         tracing::debug!("Repairing file: {}", file.path.to_string_lossy());
 
-                        if let Err(err) = file.repair(&config.game.path) {
+                        if let Err(err) = file.repair(config.game.path.for_edition(config.launcher.edition)) {
                             sender.input(AppMsg::Toast {
                                 title: tr!("game-file-repairing-error"),
                                 description: Some(err.to_string())

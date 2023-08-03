@@ -44,7 +44,7 @@ lazy_static::lazy_static! {
     /// This one is used to prepare some launcher UI components on start
     pub static ref CONFIG: Schema = Config::get().expect("Failed to load config");
 
-    pub static ref GAME: Game = Game::new(&CONFIG.game.path, ());
+    pub static ref GAME: Game = Game::new(&CONFIG.game.path.for_edition(CONFIG.launcher.edition), CONFIG.launcher.edition);
 
     /// Path to launcher folder. Standard is `$HOME/.local/share/honkers-launcher`
     pub static ref LAUNCHER_FOLDER: PathBuf = launcher_dir().expect("Failed to get launcher folder");
@@ -206,7 +206,7 @@ fn main() {
         // was updated those files were updated as well, so no need for additional actions
         // 
         // Should be removed in future
-        let game_path = &CONFIG.game.path;
+        let game_path = CONFIG.game.path.for_edition(CONFIG.launcher.edition);
 
         if game_path.join("Generated").exists() {
             std::fs::remove_dir_all(game_path.join("Generated"))
