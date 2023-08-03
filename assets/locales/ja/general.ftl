@@ -62,8 +62,8 @@ apply-mfplat-patch = Apply mfplat patch
 ask-superuser-permissions = スーパーユーザーを尋ねる。
 ask-superuser-permissions-description = あなたのホストのファイルを自動更新するために、 これらを利用します。flatpak版では必要ありません。
 
-launcher-behavior = Launcher behavior
-launcher-behavior-description = What should launcher window do when it starts the game
+launcher-behavior = 起動時のランチャーの挙動
+launcher-behavior-description = ゲーム起動時にランチャーを非表示にしますか？
 
 wine-tools = ワインツール
 command-line = コマンドライン
