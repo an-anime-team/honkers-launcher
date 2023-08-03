@@ -9,11 +9,11 @@ launcher-language-description = Efektif setelah muat ulang
 
 game-edition = Edisi game
 global = Global
-sea = Southeast Asia
+sea = Asia Tenggara
 china = Cina
 taiwan = Taiwan
 korea = Korea
-japan = Japan
+japan = Jepang
 
 game-environment = Platform game
 game-environment-description = Dapatkan fitur tertentu seperti metode pembayaran lainnya
