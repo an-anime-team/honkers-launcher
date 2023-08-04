@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added multi-region support
+
+### Fixed
+
+- Fixed logo size in the first run window
+- Fixed 7z dependency check on some systems
+
 ### Changed
 
 - Updated Turkish
@@ -14,10 +23,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Japanese
 - Updated Turkish
 - Updated Indonesian
-
-### Fixed
-
-- Fixed logo size in the first run window
 
 ## [1.3.0] - 02.08.2023
 
