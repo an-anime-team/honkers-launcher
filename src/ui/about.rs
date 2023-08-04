@@ -94,28 +94,24 @@ impl SimpleComponent for AboutDialog {
                 "<p>Added</p>",
 
                 "<ul>",
-                    "<li>Added new gamescope version compatibility</li>",
-                    "<li>Added \"launcher behavior\" option</li>",
-                    "<li>Added \"kill game process\" button when chosen behavior keeps launcher window open</li>",
-                    "<li>Bundled some icons into the app for consistency across the systems</li>",
-                    "<li>Added better panics handler</li>",
-                    "<li>Added Swedish</li>",
+                    "<li>Added multi-region support</li>",
                 "</ul>",
 
                 "<p>Fixed</p>",
 
                 "<ul>",
-                    "<li>Fixed jadeite patch state handling from the metadata file</li>",
-                    "<li>Fixed game pre-downloading button sensitivity when the update was partially downloaded, but then interrupted</li>",
-                    "<li>Fixed game pre-downloading button visibility when jadeite patch state is not \"verified\"</li>",
+                    "<li>Fixed logo size in the first run window</li>",
+                    "<li>Fixed 7z dependency check on some systems</li>",
                 "</ul>",
 
                 "<p>Changed</p>",
 
                 "<ul>",
-                    "<li>Improved pre-downloads state checking</li>",
-                    "<li>Replaced translation functions by `tr!` macro</li>",
-                    "<li>Reworked app resources structure</li>",
+                    "<li>Updated Turkish</li>",
+                    "<li>Updated Italian</li>",
+                    "<li>Updated Japanese</li>",
+                    "<li>Updated Turkish</li>",
+                    "<li>Updated Indonesian</li>",
                 "</ul>",
             ].join("\n"),
 

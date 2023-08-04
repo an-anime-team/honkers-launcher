@@ -12,6 +12,8 @@ use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
 use anime_launcher_sdk::honkai::config::schema::launcher::{LauncherStyle, LauncherBehavior};
 
+use anime_launcher_sdk::anime_game_core::honkai::consts::GameEdition;
+
 pub mod components;
 
 use components::*;
@@ -191,6 +193,36 @@ impl SimpleAsyncComponent for GeneralApp {
                                     .unwrap_or(&SUPPORTED_LANGUAGES[0]));
     
                                 Config::update(config);
+                            }
+                        }
+                    }
+                },
+
+                adw::ComboRow {
+                    set_title: &tr!("game-edition"),
+
+                    set_model: Some(&gtk::StringList::new(&[
+                        &tr!("global"),
+                        &tr!("sea"),
+                        &tr!("china"),
+                        &tr!("taiwan"),
+                        &tr!("korea"),
+                        &tr!("japan")
+                    ])),
+
+                    set_selected: GameEdition::list().iter()
+                        .position(|edition| edition == &CONFIG.launcher.edition)
+                        .unwrap() as u32,
+
+                    connect_selected_notify[sender] => move |row| {
+                        if is_ready() {
+                            #[allow(unused_must_use)]
+                            if let Ok(mut config) = Config::get() {
+                                config.launcher.edition = GameEdition::list()[row.selected() as usize];
+
+                                Config::update(config);
+
+                                sender.output(PreferencesAppMsg::UpdateLauncherState);
                             }
                         }
                     }

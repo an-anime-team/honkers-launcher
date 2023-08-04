@@ -9,7 +9,11 @@ launcher-language-description = Appliceras efter omstart
 
 game-edition = Spelversion
 global = Global
+sea = Southeast Asia
 china = Kina
+taiwan = Taiwan
+korea = Korea
+japan = Japan
 
 game-environment = Spelmiljö
 game-environment-description = Få specifika funktioner som ytterligare betalningsmetoder

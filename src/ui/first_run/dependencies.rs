@@ -170,7 +170,7 @@ impl SimpleAsyncComponent for DependenciesApp {
         match msg {
             #[allow(unused_must_use)]
             DependenciesAppMsg::Continue => {
-                let packages = ["git", "xdelta3", "7z"];
+                let packages = ["git", "xdelta3"];
 
                 for package in packages {
                     if !is_available(package) {
@@ -183,6 +183,18 @@ impl SimpleAsyncComponent for DependenciesApp {
 
                         return;
                     }
+                }
+
+                // 7z sometimes has different binaries
+                if !is_available("7z") && !is_available("7za") {
+                    sender.output(Self::Output::Toast {
+                        title: tr!("package-not-available", {
+                            "package" = "7z"
+                        }),
+                        description: None
+                    });
+
+                    return;
                 }
 
                 sender.output(Self::Output::ScrollToDefaultPaths);

@@ -9,7 +9,11 @@ launcher-language-description = *再起動後に適用されます。
 
 game-edition = ゲームエディション
 global = グローバル版
+sea = 東南アジア
 china = 中国版
+taiwan = 台湾
+korea = 韓国
+japan = 日本
 
 game-environment = ゲーム環境
 game-environment-description = 特定の購入方法を利用するために使われます。
@@ -62,8 +66,8 @@ apply-mfplat-patch = Apply mfplat patch
 ask-superuser-permissions = スーパーユーザーを尋ねる。
 ask-superuser-permissions-description = あなたのホストのファイルを自動更新するために、 これらを利用します。flatpak版では必要ありません。
 
-launcher-behavior = Launcher behavior
-launcher-behavior-description = What should launcher window do when it starts the game
+launcher-behavior = 起動時のランチャーの挙動
+launcher-behavior-description = ゲーム起動時にランチャーを非表示にしますか？
 
 wine-tools = ワインツール
 command-line = コマンドライン

@@ -24,7 +24,12 @@ pub struct DefaultPathsApp {
     runners: PathBuf,
     dxvks: PathBuf,
     prefix: PathBuf,
-    game: PathBuf,
+    game_global: PathBuf,
+    game_sea: PathBuf,
+    game_china: PathBuf,
+    game_taiwan: PathBuf,
+    game_korea: PathBuf,
+    game_japan: PathBuf,
     components: PathBuf,
     patch: PathBuf,
     temp: PathBuf
@@ -36,7 +41,12 @@ pub enum Folders {
     Runners,
     DXVK,
     Prefix,
-    Game,
+    GameGlobal,
+    GameSea,
+    GameChina,
+    GameTaiwan,
+    GameKorea,
+    GameJapan,
     Components,
     Patch,
     Temp
@@ -150,14 +160,69 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                 },
 
                 adw::ActionRow {
-                    set_title: &tr!("global-game-installation-folder"), // FIXME: locale
+                    set_title: &tr!("global-game-installation-folder"),
                     set_icon_name: Some("folder-symbolic"),
                     set_activatable: true,
 
                     #[watch]
-                    set_subtitle: model.game.to_str().unwrap(),
+                    set_subtitle: model.game_global.to_str().unwrap(),
 
-                    connect_activated => DefaultPathsAppMsg::ChoosePath(Folders::Game)
+                    connect_activated => DefaultPathsAppMsg::ChoosePath(Folders::GameGlobal)
+                },
+
+                adw::ActionRow {
+                    set_title: &tr!("sea-game-installation-folder"),
+                    set_icon_name: Some("folder-symbolic"),
+                    set_activatable: true,
+
+                    #[watch]
+                    set_subtitle: model.game_sea.to_str().unwrap(),
+
+                    connect_activated => DefaultPathsAppMsg::ChoosePath(Folders::GameSea)
+                },
+
+                adw::ActionRow {
+                    set_title: &tr!("chinese-game-installation-folder"),
+                    set_icon_name: Some("folder-symbolic"),
+                    set_activatable: true,
+
+                    #[watch]
+                    set_subtitle: model.game_china.to_str().unwrap(),
+
+                    connect_activated => DefaultPathsAppMsg::ChoosePath(Folders::GameChina)
+                },
+
+                adw::ActionRow {
+                    set_title: &tr!("taiwanese-game-installation-folder"),
+                    set_icon_name: Some("folder-symbolic"),
+                    set_activatable: true,
+
+                    #[watch]
+                    set_subtitle: model.game_taiwan.to_str().unwrap(),
+
+                    connect_activated => DefaultPathsAppMsg::ChoosePath(Folders::GameTaiwan)
+                },
+
+                adw::ActionRow {
+                    set_title: &tr!("korean-game-installation-folder"),
+                    set_icon_name: Some("folder-symbolic"),
+                    set_activatable: true,
+
+                    #[watch]
+                    set_subtitle: model.game_korea.to_str().unwrap(),
+
+                    connect_activated => DefaultPathsAppMsg::ChoosePath(Folders::GameKorea)
+                },
+
+                adw::ActionRow {
+                    set_title: &tr!("japanese-game-installation-folder"),
+                    set_icon_name: Some("folder-symbolic"),
+                    set_activatable: true,
+
+                    #[watch]
+                    set_subtitle: model.game_japan.to_str().unwrap(),
+
+                    connect_activated => DefaultPathsAppMsg::ChoosePath(Folders::GameJapan)
                 },
 
                 adw::ActionRow {
@@ -275,7 +340,12 @@ impl SimpleAsyncComponent for DefaultPathsApp {
             runners: CONFIG.game.wine.builds.clone(),
             dxvks: CONFIG.game.dxvk.builds.clone(),
             prefix: CONFIG.game.wine.prefix.clone(),
-            game: CONFIG.game.path.clone(),
+            game_global: CONFIG.game.path.global.clone(),
+            game_sea: CONFIG.game.path.sea.clone(),
+            game_china: CONFIG.game.path.china.clone(),
+            game_taiwan: CONFIG.game.path.taiwan.clone(),
+            game_korea: CONFIG.game.path.korea.clone(),
+            game_japan: CONFIG.game.path.japan.clone(),
             components: CONFIG.components.path.clone(),
             patch: CONFIG.patch.path.clone(),
 
@@ -305,24 +375,34 @@ impl SimpleAsyncComponent for DefaultPathsApp {
 
                     match folder {
                         Folders::Launcher => {
-                            self.runners    = result.join("runners");
-                            self.dxvks      = result.join("dxvks");
-                            self.prefix     = result.join("prefix");
-                            self.game       = result.join("Honkai Impact");
-                            self.components = result.join("components");
-                            self.patch      = result.join("patch");
-                            self.temp       = result.clone();
+                            self.runners     = result.join("runners");
+                            self.dxvks       = result.join("dxvks");
+                            self.prefix      = result.join("prefix");
+                            self.game_global = result.join("Honkai Impact");
+                            self.game_sea    = result.join("Honkai Impact Sea");
+                            self.game_china  = result.join("Honkai Impact China");
+                            self.game_taiwan = result.join("Honkai Impact Taiwan");
+                            self.game_korea  = result.join("Honkai Impact Korea");
+                            self.game_japan  = result.join("Honkai Impact Japan");
+                            self.components  = result.join("components");
+                            self.patch       = result.join("patch");
+                            self.temp        = result.clone();
 
                             self.launcher = result;
                         }
 
-                        Folders::Runners    => self.runners    = result,
-                        Folders::DXVK       => self.dxvks      = result,
-                        Folders::Prefix     => self.prefix     = result,
-                        Folders::Game       => self.game       = result,
-                        Folders::Components => self.components = result,
-                        Folders::Patch      => self.patch      = result,
-                        Folders::Temp       => self.temp       = result
+                        Folders::Runners    => self.runners     = result,
+                        Folders::DXVK       => self.dxvks       = result,
+                        Folders::Prefix     => self.prefix      = result,
+                        Folders::GameGlobal => self.game_global = result,
+                        Folders::GameSea    => self.game_sea    = result,
+                        Folders::GameChina  => self.game_china  = result,
+                        Folders::GameTaiwan => self.game_taiwan = result,
+                        Folders::GameKorea  => self.game_korea  = result,
+                        Folders::GameJapan  => self.game_japan  = result,
+                        Folders::Components => self.components  = result,
+                        Folders::Patch      => self.patch       = result,
+                        Folders::Temp       => self.temp        = result
                     }
                 }
             }
@@ -342,7 +422,12 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                                 (old_config.game.wine.builds, &self.runners),
                                 (old_config.game.dxvk.builds, &self.dxvks),
                                 (old_config.game.wine.prefix, &self.prefix),
-                                (old_config.game.path,        &self.game),
+                                (old_config.game.path.global, &self.game_global),
+                                (old_config.game.path.sea,    &self.game_sea),
+                                (old_config.game.path.china,  &self.game_china),
+                                (old_config.game.path.taiwan, &self.game_taiwan),
+                                (old_config.game.path.korea,  &self.game_korea),
+                                (old_config.game.path.japan,  &self.game_japan),
                                 (old_config.components.path,  &self.components),
                                 (old_config.patch.path,       &self.patch)
                             ];
@@ -402,7 +487,12 @@ impl DefaultPathsApp {
         config.game.wine.builds = self.runners.clone();
         config.game.dxvk.builds = self.dxvks.clone();
         config.game.wine.prefix = self.prefix.clone();
-        config.game.path        = self.game.clone();
+        config.game.path.global = self.game_global.clone();
+        config.game.path.sea    = self.game_sea.clone();
+        config.game.path.china  = self.game_china.clone();
+        config.game.path.taiwan = self.game_taiwan.clone();
+        config.game.path.korea  = self.game_korea.clone();
+        config.game.path.japan  = self.game_japan.clone();
         config.components.path  = self.components.clone();
         config.patch.path       = self.patch.clone();
 
