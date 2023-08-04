@@ -9,11 +9,11 @@ launcher-language-description = *再起動後に適用されます。
 
 game-edition = ゲームエディション
 global = グローバル版
-sea = Southeast Asia
+sea = 東南アジア
 china = 中国版
-taiwan = Taiwan
-korea = Korea
-japan = Japan
+taiwan = 台湾
+korea = 韓国
+japan = 日本
 
 game-environment = ゲーム環境
 game-environment-description = 特定の購入方法を利用するために使われます。
