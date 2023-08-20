@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Updated Swedish
 - Improved files migration code. In the best case scenarios, it will work immediately now
+- Updated Chinese game API link
 
 ## [1.4.0] - 04.08.2023
 

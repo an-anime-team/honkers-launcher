@@ -104,21 +104,12 @@ impl SimpleComponent for AboutDialog {
                     "<li>Added Polish</li>",
                 "</ul>",
 
-                "<p>Fixed</p>",
-
-                "<ul>",
-                    "<li>Fixed logo size in the first run window</li>",
-                "</ul>",
-
                 "<p>Changed</p>",
 
                 "<ul>",
-                    "<li>Updated Turkish</li>",
-                    "<li>Updated Italian</li>",
-                    "<li>Updated Japanese</li>",
                     "<li>Updated Swedish</li>",
                     "<li>Improved files migration code</li>",
-                    "<li>Updated wishes url extractor to use new cache storage</li>",
+                    "<li>Updated Chinese game API link</li>",
                 "</ul>",
             ].join("\n"),
 
