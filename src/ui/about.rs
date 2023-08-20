@@ -67,6 +67,7 @@ impl SimpleComponent for AboutDialog {
             set_translator_credits: &[
                 "Русский, English — Nikita Podvirnyy https://github.com/krypt0nn",
                 "Deutsch — Marie Piontek https://github.com/Mar0xy",
+                "Deutsch — @caem",
                 "Français — @zeGolem https://github.com/zeGolem",
                 "Español — Lautaro Garavano https://github.com/Rattlehead15",
                 "Türkçe — @Kaozix https://github.com/Kaozix1776",
@@ -77,6 +78,8 @@ impl SimpleComponent for AboutDialog {
                 "日本語 — @zozonteq https://github.com/zozonteq",
                 // Hungarian?
                 "Svenska — Jakob Fridesjö https://github.com/jakobfridesjo",
+                "Português — @kafushy",
+                "Polski — Dominik Opyd https://github.com/oritwoen"
             ].join("\n"),
 
             set_debug_info: &[
@@ -94,24 +97,19 @@ impl SimpleComponent for AboutDialog {
                 "<p>Added</p>",
 
                 "<ul>",
-                    "<li>Added multi-region support</li>",
-                "</ul>",
-
-                "<p>Fixed</p>",
-
-                "<ul>",
-                    "<li>Fixed logo size in the first run window</li>",
-                    "<li>Fixed 7z dependency check on some systems</li>",
+                    "<li>Added feature to map wine drives</li>",
+                    "<li>Added `%launch_args%` magic word for game launching command</li>",
+                    "<li>Added `--session <name>` flag to switch active session</li>",
+                    "<li>Added Portuguese</li>",
+                    "<li>Added Polish</li>",
                 "</ul>",
 
                 "<p>Changed</p>",
 
                 "<ul>",
-                    "<li>Updated Turkish</li>",
-                    "<li>Updated Italian</li>",
-                    "<li>Updated Japanese</li>",
-                    "<li>Updated Turkish</li>",
-                    "<li>Updated Indonesian</li>",
+                    "<li>Updated Swedish</li>",
+                    "<li>Improved files migration code</li>",
+                    "<li>Updated Chinese game API link</li>",
                 "</ul>",
             ].join("\n"),
 

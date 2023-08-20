@@ -33,7 +33,6 @@ pub struct GeneralApp {
     main_patch: Option<(Version, JadeitePatchStatusVariant)>,
 
     style: LauncherStyle,
-
     languages: Vec<String>
 }
 
@@ -515,7 +514,6 @@ impl SimpleAsyncComponent for GeneralApp {
             main_patch: None,
 
             style: CONFIG.launcher.style,
-
             languages: SUPPORTED_LANGUAGES.iter().map(|lang| tr!(format_lang(lang).as_str())).collect()
         };
 

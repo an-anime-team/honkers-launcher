@@ -382,7 +382,6 @@ impl SimpleComponent for App {
                                             Some(LauncherState::PatchUnsafe) => &["error", "pill"],
 
                                             Some(_) => &["suggested-action", "pill"],
-
                                             None => &["pill"]
                                         },
 
