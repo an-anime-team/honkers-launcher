@@ -185,13 +185,16 @@ impl SimpleAsyncComponent for DefaultPathsApp {
 
                 adw::ActionRow {
                     set_title: &tr!("sea-game-installation-folder"),
-                    set_icon_name: Some("folder-symbolic"),
                     set_activatable: true,
 
                     #[watch]
                     set_subtitle: model.game_sea.to_str().unwrap(),
 
-                    connect_activated => DefaultPathsAppMsg::ChoosePath(Folders::GameSea)
+                    connect_activated => DefaultPathsAppMsg::ChoosePath(Folders::GameSea),
+
+                    add_prefix = &gtk::Image {
+                        set_icon_name: Some("folder-symbolic")
+                    }
                 },
 
                 adw::ActionRow {
@@ -210,35 +213,44 @@ impl SimpleAsyncComponent for DefaultPathsApp {
 
                 adw::ActionRow {
                     set_title: &tr!("taiwanese-game-installation-folder"),
-                    set_icon_name: Some("folder-symbolic"),
                     set_activatable: true,
 
                     #[watch]
                     set_subtitle: model.game_taiwan.to_str().unwrap(),
 
-                    connect_activated => DefaultPathsAppMsg::ChoosePath(Folders::GameTaiwan)
+                    connect_activated => DefaultPathsAppMsg::ChoosePath(Folders::GameTaiwan),
+
+                    add_prefix = &gtk::Image {
+                        set_icon_name: Some("folder-symbolic")
+                    }
                 },
 
                 adw::ActionRow {
                     set_title: &tr!("korean-game-installation-folder"),
-                    set_icon_name: Some("folder-symbolic"),
                     set_activatable: true,
 
                     #[watch]
                     set_subtitle: model.game_korea.to_str().unwrap(),
 
-                    connect_activated => DefaultPathsAppMsg::ChoosePath(Folders::GameKorea)
+                    connect_activated => DefaultPathsAppMsg::ChoosePath(Folders::GameKorea),
+
+                    add_prefix = &gtk::Image {
+                        set_icon_name: Some("folder-symbolic")
+                    }
                 },
 
                 adw::ActionRow {
                     set_title: &tr!("japanese-game-installation-folder"),
-                    set_icon_name: Some("folder-symbolic"),
                     set_activatable: true,
 
                     #[watch]
                     set_subtitle: model.game_japan.to_str().unwrap(),
 
-                    connect_activated => DefaultPathsAppMsg::ChoosePath(Folders::GameJapan)
+                    connect_activated => DefaultPathsAppMsg::ChoosePath(Folders::GameJapan),
+
+                    add_prefix = &gtk::Image {
+                        set_icon_name: Some("folder-symbolic")
+                    }
                 },
 
                 adw::ActionRow {

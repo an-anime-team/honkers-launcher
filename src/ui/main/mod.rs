@@ -390,14 +390,9 @@ impl SimpleComponent for App {
                                         #[watch]
                                         set_tooltip_text: Some(&match &model.state {
                                             Some(LauncherState::PatchNotVerified) => tr!("patch-testing-tooltip"),
-                                            Some(LauncherState::PatchBroken) => tr!("patch-broken-tooltip"),
-                                            Some(LauncherState::PatchUnsafe) => tr!("patch-unsafe-tooltip"),
-
-                                            // TODO: a special tooltip for concerning patch state
-
-                                            Some(LauncherState::PatchConcerning) |
-                                            Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Concerning, .. })
-                                                => tr!("patch-concerning-tooltip"),
+                                            Some(LauncherState::PatchBroken)      => tr!("patch-broken-tooltip"),
+                                            Some(LauncherState::PatchUnsafe)      => tr!("patch-unsafe-tooltip"),
+                                            Some(LauncherState::PatchConcerning)  => tr!("patch-concerning-tooltip"),
 
                                             _ => String::new()
                                         }),
@@ -829,12 +824,6 @@ impl SimpleComponent for App {
                                 sender.input(AppMsg::SetLoadingStatus(Some(Some(tr!("loading-launcher-state--game")))));
                             }
 
-                            StateUpdating::Voice(locale) => {
-                                sender.input(AppMsg::SetLoadingStatus(Some(Some(tr!("loading-launcher-state--voice", {
-                                    "locale" = locale.to_name()
-                                })))));
-                            }
-
                             StateUpdating::Patch => {
                                 sender.input(AppMsg::SetLoadingStatus(Some(Some(tr!("loading-launcher-state--patch")))));
                             }
@@ -864,9 +853,7 @@ impl SimpleComponent for App {
                 if let Some(state) = state {
                     match state {
                         LauncherState::GameUpdateAvailable(_) |
-                        LauncherState::GameNotInstalled(_) |
-                        LauncherState::VoiceUpdateAvailable(_) |
-                        LauncherState::VoiceNotInstalled(_) if perform_on_download_needed => {
+                        LauncherState::GameNotInstalled(_) if perform_on_download_needed => {
                             sender.input(AppMsg::PerformAction);
                         }
 
@@ -928,9 +915,6 @@ impl SimpleComponent for App {
                 match self.state.as_ref().unwrap_unchecked() {
                     LauncherState::PatchNotVerified |
                     LauncherState::PatchConcerning |
-                    LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Verified, .. } |
-                    LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Unverified, .. } |
-                    LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Concerning, .. } |
                     LauncherState::Launch => launch::launch(sender),
 
                     LauncherState::MfplatPatchAvailable => apply_mfplat_patch::apply_mfplat_patch(sender),
@@ -944,9 +928,7 @@ impl SimpleComponent for App {
                     LauncherState::PrefixNotExists => create_prefix::create_prefix(sender),
 
                     LauncherState::GameUpdateAvailable(diff) |
-                    LauncherState::GameNotInstalled(diff) |
-                    LauncherState::VoiceUpdateAvailable(diff) |
-                    LauncherState::VoiceNotInstalled(diff) =>
+                    LauncherState::GameNotInstalled(diff) =>
                         download_diff::download_diff(sender, self.progress_bar.sender().to_owned(), diff.to_owned()),
 
                     _ => ()
