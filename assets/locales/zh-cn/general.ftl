@@ -60,7 +60,7 @@ patch-testing-tooltip = 有测试版补丁可用
 patch-not-applied-tooltip = 补丁未应用
 patch-broken-tooltip = 当前补丁版本已损坏，无法正常工作
 patch-unsafe-tooltip = 当前补丁版本不安全，不应使用
-patch-concerning-tooltip = We have some concerns about the current patch version
+patch-concerning-tooltip = 当前补丁版本可靠性未经验证
 
 apply-mfplat-patch = 应用 mfplat 补丁
 
