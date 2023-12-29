@@ -1,5 +1,4 @@
 use relm4::prelude::*;
-use relm4::component::*;
 
 use gtk::prelude::*;
 use adw::prelude::*;
@@ -312,7 +311,8 @@ impl SimpleAsyncComponent for GeneralApp {
                                 JadeitePatchStatusVariant::Verified => &["success"],
                                 JadeitePatchStatusVariant::Unverified => &["warning"],
                                 JadeitePatchStatusVariant::Broken => &["error"],
-                                JadeitePatchStatusVariant::Unsafe => &["error"]
+                                JadeitePatchStatusVariant::Unsafe => &["error"],
+                                JadeitePatchStatusVariant::Concerning => &["error"]
                             }
 
                             None => &[]
@@ -324,6 +324,7 @@ impl SimpleAsyncComponent for GeneralApp {
                                 JadeitePatchStatusVariant::Unverified => tr!("patch-testing-tooltip"),
                                 JadeitePatchStatusVariant::Broken => tr!("patch-broken-tooltip"),
                                 JadeitePatchStatusVariant::Unsafe => tr!("patch-unsafe-tooltip"),
+                                JadeitePatchStatusVariant::Concerning => tr!("patch-concerning-tooltip"),
 
                                 _ => String::new()
                             }
@@ -557,7 +558,7 @@ impl SimpleAsyncComponent for GeneralApp {
                     self.migrate_installation.widget().set_transient_for(Some(window.widget()));
                 }
 
-                self.migrate_installation.widget().show();
+                self.migrate_installation.widget().present();
             }
 
             GeneralAppMsg::RepairGame => {

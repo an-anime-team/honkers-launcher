@@ -60,6 +60,7 @@ patch-testing-tooltip = La patch di test è disponibile
 patch-not-applied-tooltip = La patch non è applicata
 patch-broken-tooltip = L'attuale versione della patch è difettosa e non funziona correttamente
 patch-unsafe-tooltip = L'attuale versione della patch non è sicura e non dovrebbe essere usata
+patch-concerning-tooltip = Abbiamo alcuni timori sulla versione attuale della patch
 
 apply-mfplat-patch = Apply mfplat patch
 

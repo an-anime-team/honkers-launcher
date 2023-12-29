@@ -1,6 +1,4 @@
 use relm4::prelude::*;
-use relm4::component::*;
-
 use adw::prelude::*;
 
 use anime_launcher_sdk::anime_game_core::prelude::*;
@@ -131,11 +129,13 @@ impl SimpleAsyncComponent for ProgressBar {
 
             ProgressBarMsg::UpdateFromState(state) => {
                 match state {
-                    InstallerUpdate::CheckingFreeSpace(_)  => self.caption = Some(tr!("checking-free-space")),
-                    InstallerUpdate::DownloadingStarted(_) => self.caption = Some(tr!("downloading")),
-                    InstallerUpdate::UnpackingStarted(_)   => self.caption = Some(tr!("unpacking")),
+                    InstallerUpdate::CheckingFreeSpace(_)          => self.caption = Some(tr!("checking-free-space")),
+                    InstallerUpdate::DownloadingStarted(_)         => self.caption = Some(tr!("downloading")),
+                    InstallerUpdate::UpdatingPermissionsStarted(_) => self.caption = Some(tr!("updating-permissions")),
+                    InstallerUpdate::UnpackingStarted(_)           => self.caption = Some(tr!("unpacking")),
 
                     InstallerUpdate::DownloadingProgress(curr, total) |
+                    InstallerUpdate::UpdatingPermissions(curr, total) |
                     InstallerUpdate::UnpackingProgress(curr, total) => {
                         self.fraction = curr as f64 / total as f64;
 
@@ -145,11 +145,12 @@ impl SimpleAsyncComponent for ProgressBar {
                         ));
                     }
 
-                    InstallerUpdate::DownloadingFinished => tracing::info!("Downloading finished"),
-                    InstallerUpdate::UnpackingFinished   => tracing::info!("Unpacking finished"),
+                    InstallerUpdate::DownloadingFinished         => tracing::info!("Downloading finished"),
+                    InstallerUpdate::UpdatingPermissionsFinished => tracing::info!("Updating permissions finished"),
+                    InstallerUpdate::UnpackingFinished           => tracing::info!("Unpacking finished"),
 
                     InstallerUpdate::DownloadingError(err) => tracing::error!("Downloading error: {:?}", err),
-                    InstallerUpdate::UnpackingError(err) => tracing::error!("Unpacking error: {:?}", err)
+                    InstallerUpdate::UnpackingError(err)   => tracing::error!("Unpacking error: {:?}", err)
                 }
             }
 
