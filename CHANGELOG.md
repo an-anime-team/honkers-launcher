@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.6.0] - 29.12.2023
+
 ### Added
 
 - Added Vietnamese
@@ -218,7 +220,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <br>
 
-[unreleased]: https://github.com/an-anime-team/honkers-launcher/compare/1.5.0...next
+[unreleased]: https://github.com/an-anime-team/honkers-launcher/compare/1.6.0...next
+[1.5.0]: https://github.com/an-anime-team/honkers-launcher/compare/1.5.0...1.6.0
 [1.5.0]: https://github.com/an-anime-team/honkers-launcher/compare/1.4.0...1.5.0
 [1.4.0]: https://github.com/an-anime-team/honkers-launcher/compare/1.3.0...1.4.0
 [1.3.0]: https://github.com/an-anime-team/honkers-launcher/compare/1.2.2...1.3.0
