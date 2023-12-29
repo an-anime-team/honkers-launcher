@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added Vietnamese
+- Added Korean
+- Added Dutch
+- Added new `Concerning` patch status
+- Made free space checks resolve symlinks
+- Added `UpdatingPermissions` installation step
+- Downloaders now will skip finished files and truncate them if needed
+- Added new fix for the API responses
+- Added special tooltips for concerning patch status
+
+### Fixed
+
+- Fixed "Kill game process" button
+
+### Changed
+
+- Updated development libraries versions
+- Updated Turkish
+- Updated German
+- Updated Polish
+- Updated Chinese
+
+
 ## [1.5.0] - 20.08.2023
 
 ### Added
