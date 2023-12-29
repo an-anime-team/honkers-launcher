@@ -31,7 +31,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated Polish
 - Updated Chinese
 
-
 ## [1.5.0] - 20.08.2023
 
 ### Added

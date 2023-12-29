@@ -100,19 +100,31 @@ impl SimpleComponent for AboutDialog {
                 "<p>Added</p>",
 
                 "<ul>",
+                    "<li>Added Vietnamese</li>",
+                    "<li>Added Korean</li>",
+                    "<li>Added Dutch</li>",
+                    "<li>Added new `Concerning` patch status</li>",
+                    "<li>Made free space checks resolve symlinks</li>",
                     "<li>Added `UpdatingPermissions` installation step</li>",
                     "<li>Downloaders now will skip finished files and truncate them if needed</li>",
                     "<li>Added new fix for the API responses</li>",
-                    "<li>Added voiceovers repairing support</li>",
                     "<li>Added special tooltips for concerning patch status</li>",
+                "</ul>",
+
+                "<p>Fixed</p>",
+
+                "<ul>",
+                    "<li>Fixed \"Kill game process\" button</li>",
                 "</ul>",
 
                 "<p>Changed</p>",
 
                 "<ul>",
-                    "<li>Updated Swedish</li>",
-                    "<li>Improved files migration code</li>",
-                    "<li>Updated Chinese game API link</li>",
+                    "<li>Updated development libraries versions</li>",
+                    "<li>Updated Turkish</li>",
+                    "<li>Updated German</li>",
+                    "<li>Updated Polish</li>",
+                    "<li>Updated Chinese</li>",
                 "</ul>",
             ].join("\n"),
 
