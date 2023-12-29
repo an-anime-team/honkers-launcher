@@ -16,7 +16,7 @@ korea = Kore
 japan = Japonya
 
 game-environment = Oyun ortamı
-game-environment-description = Ek ödeme yöntemleri gibi özelliklere erişin
+game-environment-description = Ek ödeme yöntemleri gibi özelliklere eriş
 
 game-voiceovers = Oyun içi sesler
 game-voiceovers-description = İndirilmiş oyun seslendirmeleri listesi. Oyun içi ayarlardan seçebilirsiniz
@@ -26,7 +26,7 @@ korean = Korece
 chinese = Çince
 
 migrate-installation = Yüklemeyi aktar
-migrate-installation-description = Oyun yükleme yerini değiştirebileceğiniz özel pencereyi açın
+migrate-installation-description = Oyun yükleme yerinin değiştirilebileceği özel pencereyi aç
 repair-game = Oyunu tamir et
 
 status = Durum
@@ -60,6 +60,7 @@ patch-testing-tooltip = Test yaması mevcut
 patch-not-applied-tooltip = Yama uygulanmamış
 patch-broken-tooltip = Geçerli yama sürümü bozuk ve düzgün çalışmıyor
 patch-unsafe-tooltip = Geçerli yama sürümü güvensiz ve kullanılmamalı
+patch-concerning-tooltip = We have some concerns about the current patch version
 
 apply-mfplat-patch = Mfplay yamasını uygula
 

@@ -14,11 +14,11 @@ system = 系统
 borderless-window = 无边框窗口
 virtual-desktop = 虚拟桌面
 
-map-drive-c = Map drive C:
-map-drive-c-description = Automatically symlink drive_c folder from the wine prefix to the dosdevices
+map-drive-c = 映射 C 盘
+map-drive-c-description = 自动将 Wine prefix 里的 drive_c 文件夹符号链接至 Wine 的 dosdevices 目录里
 
-map-game-folder = Map game folder
-map-game-folder-description = Automatically symlink game folder to the dosdevices
+map-game-folder = 映射游戏文件夹
+map-game-folder-description = 自动将游戏文件夹映射到 Wine 的 dosdevices 目录里
 
 game = 游戏
 
@@ -39,31 +39,19 @@ gamescope-description = Gamescope 是 Valve 开发的工具，可以让游戏运
 
 discord-rpc = Discord RPC
 discord-rpc-description = Discord RPC 可以设置 Discord 状态，让你的好友知道你正在玩游戏
-icon = Icon
+icon = 图标
 title = 标题
 description = 描述
 
 fps-unlocker = 解除帧率限制
-
-enabled = 开启
 fps-unlocker-description = 修改游戏内存，解除渲染帧率限制。可能会触发反作弊检查
 
-power-saving = 省电模式
-power-saving-description = 当游戏失去焦点时 (例如切出游戏) 自动当帧率设为 10, 并降低进程优先级
+enabled = 开启
 
-monitor = 显示器
-monitor-description = 运行游戏的显示器编号
+fps-unlocker-interval = Overwrite interval
+fps-unlocker-interval-description = Delay in milliseconds between overwriting the FPS limit value. Periodic overwrites are necessary to prevent it from resetting
 
 window-mode = 窗口模式
 borderless = 无边框
 popup = 弹出窗口
 fullscreen = 全屏
-
-priority = 优先级
-priority-description = 游戏进程的优先级
-realtime = 实时
-high = 高
-above-normal = 较高
-normal = 正常
-below-normal = 较低
-low = 低

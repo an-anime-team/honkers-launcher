@@ -60,14 +60,15 @@ patch-testing-tooltip = 有测试版补丁可用
 patch-not-applied-tooltip = 补丁未应用
 patch-broken-tooltip = 当前补丁版本已损坏，无法正常工作
 patch-unsafe-tooltip = 当前补丁版本不安全，不应使用
+patch-concerning-tooltip = We have some concerns about the current patch version
 
 apply-mfplat-patch = 应用 mfplat 补丁
 
 ask-superuser-permissions = 请求超级用户权限
 ask-superuser-permissions-description = 启动器需要超级用户权限来修改 hosts 文件。Flatpak 版无需此权限
 
-launcher-behavior = Launcher behavior
-launcher-behavior-description = What should launcher window do when it starts the game
+launcher-behavior = 启动器行为
+launcher-behavior-description = 设定游戏开始后启动器的行为
 
 wine-tools = Wine 工具
 command-line = 命令行

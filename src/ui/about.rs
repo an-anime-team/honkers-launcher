@@ -70,16 +70,19 @@ impl SimpleComponent for AboutDialog {
                 "Deutsch — @caem",
                 "Français — @zeGolem https://github.com/zeGolem",
                 "Español — Lautaro Garavano https://github.com/Rattlehead15",
+                "Português — @kafushy",
+                "Italiano — @QuazarOmega https://github.com/quazar-omega",
                 "Türkçe — @Kaozix https://github.com/Kaozix1776",
                 "Türkçe — Kayra Nachfolger https://github.com/kayranachfolger",
-                "Italiano — @QuazarOmega https://github.com/quazar-omega",
-                "Indonesia — @yumekarisu https://github.com/yumekarisu",
-                "简体中文 — Caibin Chen https://github.com/tigersoldier",
-                "日本語 — @zozonteq https://github.com/zozonteq",
+                "Polski — Dominik Opyd https://github.com/oritwoen",
                 // Hungarian?
                 "Svenska — Jakob Fridesjö https://github.com/jakobfridesjo",
-                "Português — @kafushy",
-                "Polski — Dominik Opyd https://github.com/oritwoen"
+                "Nederlands — @everlyy https://github.com/everlyy",
+                "简体中文 — Caibin Chen https://github.com/tigersoldier",
+                "日本語 — @zozonteq https://github.com/zozonteq",
+                "한국어 — @project-dy https://github.com/project-dy",
+                "Indonesia — @yumekarisu https://github.com/yumekarisu",
+                "Tiếng Việt — Nguyễn Hữu Chánh https://github.com/Chanhnh"
             ].join("\n"),
 
             set_debug_info: &[
@@ -97,11 +100,11 @@ impl SimpleComponent for AboutDialog {
                 "<p>Added</p>",
 
                 "<ul>",
-                    "<li>Added feature to map wine drives</li>",
-                    "<li>Added `%launch_args%` magic word for game launching command</li>",
-                    "<li>Added `--session <name>` flag to switch active session</li>",
-                    "<li>Added Portuguese</li>",
-                    "<li>Added Polish</li>",
+                    "<li>Added `UpdatingPermissions` installation step</li>",
+                    "<li>Downloaders now will skip finished files and truncate them if needed</li>",
+                    "<li>Added new fix for the API responses</li>",
+                    "<li>Added voiceovers repairing support</li>",
+                    "<li>Added special tooltips for concerning patch status</li>",
                 "</ul>",
 
                 "<p>Changed</p>",
@@ -122,7 +125,7 @@ impl SimpleComponent for AboutDialog {
             connect_close_request[sender] => move |_| {
                 sender.input(AboutDialogMsg::Hide);
 
-                gtk::Inhibit(false)
+                gtk::glib::Propagation::Proceed
             }
         }
     }

@@ -1,6 +1,5 @@
 use relm4::{
     prelude::*,
-    component::*,
     actions::*,
     MessageBroker
 };
@@ -306,7 +305,8 @@ impl SimpleComponent for App {
                                             #[watch]
                                             set_icon_name: match &model.state {
                                                 Some(LauncherState::Launch) |
-                                                Some(LauncherState::PatchNotVerified) => "media-playback-start-symbolic",
+                                                Some(LauncherState::PatchNotVerified) |
+                                                Some(LauncherState::PatchConcerning) => "media-playback-start-symbolic",
 
                                                 Some(LauncherState::PatchNotInstalled) |
                                                 Some(LauncherState::PatchUpdateAvailable) => "document-save-symbolic",
@@ -328,7 +328,8 @@ impl SimpleComponent for App {
                                             #[watch]
                                             set_label: &match &model.state {
                                                 Some(LauncherState::Launch) |
-                                                Some(LauncherState::PatchNotVerified) => tr!("launch"),
+                                                Some(LauncherState::PatchNotVerified) |
+                                                Some(LauncherState::PatchConcerning) => tr!("launch"),
 
                                                 Some(LauncherState::MfplatPatchAvailable) => tr!("apply-patch"),
                                                 Some(LauncherState::WineNotInstalled)     => tr!("download-wine"),
@@ -379,7 +380,8 @@ impl SimpleComponent for App {
                                             Some(LauncherState::PatchNotVerified) => &["warning", "pill"],
 
                                             Some(LauncherState::PatchBroken) |
-                                            Some(LauncherState::PatchUnsafe) => &["error", "pill"],
+                                            Some(LauncherState::PatchUnsafe) |
+                                            Some(LauncherState::PatchConcerning) => &["error", "pill"],
 
                                             Some(_) => &["suggested-action", "pill"],
                                             None => &["pill"]
@@ -390,6 +392,12 @@ impl SimpleComponent for App {
                                             Some(LauncherState::PatchNotVerified) => tr!("patch-testing-tooltip"),
                                             Some(LauncherState::PatchBroken) => tr!("patch-broken-tooltip"),
                                             Some(LauncherState::PatchUnsafe) => tr!("patch-unsafe-tooltip"),
+
+                                            // TODO: a special tooltip for concerning patch state
+
+                                            Some(LauncherState::PatchConcerning) |
+                                            Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Concerning, .. })
+                                                => tr!("patch-concerning-tooltip"),
 
                                             _ => String::new()
                                         }),
@@ -431,6 +439,8 @@ impl SimpleComponent for App {
                                             }));
 
                                             let result = std::process::Command::new("pkill")
+                                                .arg("-f") // full text search
+                                                .arg("-i") // case-insensitive
                                                 .arg("BH3\\.exe")
                                                 .spawn();
 
@@ -441,18 +451,26 @@ impl SimpleComponent for App {
                                                 });
                                             }
 
+                                            // Old warning message which I don't really understand now:
+                                            // 
                                             // Doesn't work on all the systems
                                             // e.g. won't work if you didn't install wine system-wide
                                             // there's some reasons for it
+                                            // 
+                                            // UPD: I've tried this, and the problem is that it's completely pointless
+                                            //      For whatever reason it just doesn't work
 
                                             // match Config::get() {
                                             //     Ok(config) => {
                                             //         match config.get_selected_wine() {
                                             //             Ok(Some(version)) => {
-                                            //                 use anime_launcher_sdk::wincompatlib::prelude::*;
+                                            //                 let result = version
+                                            //                     .to_wine(&config.components.path, Some(&config.game.wine.builds.join(&version.name)))
+                                            //                     .with_prefix(config.get_wine_prefix_path())
+                                            //                     .stop_processes(true);
 
-                                            //                 let result = version.to_wine(config.components.path, Some(config.game.wine.builds.join(&version.name)))
-                                            //                     .stop_processes(false);
+                                            //                 dbg!(String::from_utf8_lossy(&result.as_ref().ok().unwrap().stdout));
+                                            //                 dbg!(String::from_utf8_lossy(&result.as_ref().ok().unwrap().stderr));
 
                                             //                 if let Err(err) = result {
                                             //                     sender.input(AppMsg::Toast {
@@ -518,7 +536,7 @@ impl SimpleComponent for App {
                     });
                 }
 
-                gtk::Inhibit::default()
+                gtk::glib::Propagation::Proceed
             }
         }
     }
@@ -811,6 +829,12 @@ impl SimpleComponent for App {
                                 sender.input(AppMsg::SetLoadingStatus(Some(Some(tr!("loading-launcher-state--game")))));
                             }
 
+                            StateUpdating::Voice(locale) => {
+                                sender.input(AppMsg::SetLoadingStatus(Some(Some(tr!("loading-launcher-state--voice", {
+                                    "locale" = locale.to_name()
+                                })))));
+                            }
+
                             StateUpdating::Patch => {
                                 sender.input(AppMsg::SetLoadingStatus(Some(Some(tr!("loading-launcher-state--patch")))));
                             }
@@ -840,7 +864,9 @@ impl SimpleComponent for App {
                 if let Some(state) = state {
                     match state {
                         LauncherState::GameUpdateAvailable(_) |
-                        LauncherState::GameNotInstalled(_) if perform_on_download_needed => {
+                        LauncherState::GameNotInstalled(_) |
+                        LauncherState::VoiceUpdateAvailable(_) |
+                        LauncherState::VoiceNotInstalled(_) if perform_on_download_needed => {
                             sender.input(AppMsg::PerformAction);
                         }
 
@@ -900,8 +926,12 @@ impl SimpleComponent for App {
 
             AppMsg::PerformAction => unsafe {
                 match self.state.as_ref().unwrap_unchecked() {
-                    LauncherState::Launch |
-                    LauncherState::PatchNotVerified => launch::launch(sender),
+                    LauncherState::PatchNotVerified |
+                    LauncherState::PatchConcerning |
+                    LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Verified, .. } |
+                    LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Unverified, .. } |
+                    LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Concerning, .. } |
+                    LauncherState::Launch => launch::launch(sender),
 
                     LauncherState::MfplatPatchAvailable => apply_mfplat_patch::apply_mfplat_patch(sender),
 
@@ -914,7 +944,9 @@ impl SimpleComponent for App {
                     LauncherState::PrefixNotExists => create_prefix::create_prefix(sender),
 
                     LauncherState::GameUpdateAvailable(diff) |
-                    LauncherState::GameNotInstalled(diff) =>
+                    LauncherState::GameNotInstalled(diff) |
+                    LauncherState::VoiceUpdateAvailable(diff) |
+                    LauncherState::VoiceNotInstalled(diff) =>
                         download_diff::download_diff(sender, self.progress_bar.sender().to_owned(), diff.to_owned()),
 
                     _ => ()

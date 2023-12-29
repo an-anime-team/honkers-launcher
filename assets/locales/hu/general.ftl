@@ -60,6 +60,7 @@ patch-testing-tooltip = Teszt patch elérhető
 patch-not-applied-tooltip = A patch nincs alkalmazva
 patch-broken-tooltip = Current patch version is broken and doesn't work properly
 patch-unsafe-tooltip = Current patch version is unsafe and shouldn't be used
+patch-concerning-tooltip = A jelenlegi patch verzióval van pár aggodalmunk
 
 apply-mfplat-patch = Apply mfplat patch
 
