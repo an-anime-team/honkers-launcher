@@ -82,7 +82,9 @@ impl SimpleComponent for AboutDialog {
                 "日本語 — @zozonteq https://github.com/zozonteq",
                 "한국어 — @project-dy https://github.com/project-dy",
                 "Indonesia — @yumekarisu https://github.com/yumekarisu",
-                "Tiếng Việt — Nguyễn Hữu Chánh https://github.com/Chanhnh"
+                "Tiếng Việt — Nguyễn Hữu Chánh https://github.com/Chanhnh",
+                "Українська — Іван Потієнко https://github.com/xxanqw",
+                "ไทย — @thegooglerider https://github.com/TheGoogleRider2"
             ].join("\n"),
 
             set_debug_info: &[
@@ -100,32 +102,26 @@ impl SimpleComponent for AboutDialog {
                 "<p>Added</p>",
 
                 "<ul>",
-                    "<li>Added Vietnamese</li>",
-                    "<li>Added Korean</li>",
-                    "<li>Added Dutch</li>",
-                    "<li>Added new `Concerning` patch status</li>",
-                    "<li>Made free space checks resolve symlinks</li>",
-                    "<li>Added `UpdatingPermissions` installation step</li>",
-                    "<li>Downloaders now will skip finished files and truncate them if needed</li>",
-                    "<li>Added new fix for the API responses</li>",
-                    "<li>Added special tooltips for concerning patch status</li>",
-                "</ul>",
-
-                "<p>Fixed</p>",
-
-                "<ul>",
-                    "<li>Fixed \"Kill game process\" button</li>",
+                    "<li>Bundle applications-system-symbolic icon to the app</li>",
+                    "<li>Added force grab cursor option to the gamescope settings</li>",
+                    "<li>Added Thai</li>",
+                    "<li>Added Ukrainian</li>",
                 "</ul>",
 
                 "<p>Changed</p>",
 
                 "<ul>",
-                    "<li>Updated development libraries versions</li>",
-                    "<li>Updated Turkish</li>",
-                    "<li>Updated German</li>",
-                    "<li>Updated Polish</li>",
-                    "<li>Updated Chinese</li>",
+                    "<li>Update wish url</li>",
+                    "<li>Updated dependencies</li>",
+                    "<li>Improved app args parsing</li>",
+                    "<li>Updated locales</li>",
                 "</ul>",
+
+                "<p>Fixed</p>",
+
+                "<ul>",
+                    "<li>Fixed GtkSwitch UI state representation</li>",
+                "</ul>"
             ].join("\n"),
 
             set_modal: true,
@@ -142,11 +138,7 @@ impl SimpleComponent for AboutDialog {
         }
     }
 
-    fn init(
-        _init: Self::Init,
-        root: &Self::Root,
-        sender: ComponentSender<Self>,
-    ) -> ComponentParts<Self> {
+    fn init(_init: Self::Init, root: Self::Root, sender: ComponentSender<Self>) -> ComponentParts<Self> {
         tracing::info!("Initializing about dialog");
 
         let model = Self {

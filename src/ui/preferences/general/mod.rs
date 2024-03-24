@@ -156,7 +156,7 @@ impl SimpleAsyncComponent for GeneralApp {
 
                         connect_state_notify => |switch| {
                             #[allow(unused_must_use)]
-                            if switch.state() {
+                            if switch.is_active() {
                                 std::fs::remove_file(KEEP_BACKGROUND_FILE.as_path());
                             } else {
                                 std::fs::write(KEEP_BACKGROUND_FILE.as_path(), "");
@@ -491,7 +491,7 @@ impl SimpleAsyncComponent for GeneralApp {
         },
 
         #[local_ref]
-        components_page -> gtk::Box {}
+        components_page -> adw::NavigationPage,
     }
 
     async fn init(
@@ -569,14 +569,14 @@ impl SimpleAsyncComponent for GeneralApp {
                 PREFERENCES_WINDOW.as_ref()
                     .unwrap_unchecked()
                     .widget()
-                    .close_subpage();
+                    .pop_subpage();
             }
 
             GeneralAppMsg::OpenComponentsPage => unsafe {
                 PREFERENCES_WINDOW.as_ref()
                     .unwrap_unchecked()
                     .widget()
-                    .present_subpage(self.components_page.widget());
+                    .push_subpage(self.components_page.widget());
             }
 
             #[allow(unused_must_use)]
