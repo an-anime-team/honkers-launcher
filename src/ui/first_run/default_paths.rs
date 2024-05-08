@@ -419,7 +419,8 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                             self.game_japan  = result.join("Honkai Impact Japan");
                             self.components  = result.join("components");
                             self.patch       = result.join("patch");
-                            self.temp        = result.clone();
+
+                            self.temp.clone_from(&result);
 
                             self.launcher = result;
                         }
@@ -517,19 +518,19 @@ impl DefaultPathsApp {
     pub fn update_config(&self) -> anyhow::Result<()> {
         let mut config = Config::get()?;
 
-        config.game.wine.builds = self.runners.clone();
-        config.game.dxvk.builds = self.dxvks.clone();
-        config.game.wine.prefix = self.prefix.clone();
-        config.game.path.global = self.game_global.clone();
-        config.game.path.sea    = self.game_sea.clone();
-        config.game.path.china  = self.game_china.clone();
-        config.game.path.taiwan = self.game_taiwan.clone();
-        config.game.path.korea  = self.game_korea.clone();
-        config.game.path.japan  = self.game_japan.clone();
-        config.components.path  = self.components.clone();
-        config.patch.path       = self.patch.clone();
+        config.game.wine.builds.clone_from(&self.runners);
+        config.game.dxvk.builds.clone_from(&self.dxvks);
+        config.game.wine.prefix.clone_from(&self.prefix);
+        config.game.path.global.clone_from(&self.game_global);
+        config.game.path.sea.clone_from(&self.game_sea);
+        config.game.path.china.clone_from(&self.game_china);
+        config.game.path.taiwan.clone_from(&self.game_taiwan);
+        config.game.path.korea.clone_from(&self.game_korea);
+        config.game.path.japan.clone_from(&self.game_japan);
+        config.components.path.clone_from(&self.components);
+        config.patch.path.clone_from(&self.patch);
 
-        config.launcher.temp    = Some(self.temp.clone());
+        config.launcher.temp = Some(self.temp.clone());
 
         Config::update_raw(config)
     }
