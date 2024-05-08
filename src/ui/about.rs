@@ -104,6 +104,12 @@ impl SimpleComponent for AboutDialog {
 
                 "<ul>",
                     "<li>Added Czech</li>",
+                "</ul>",
+
+                "<p>Changed</p>",
+
+                "<ul>",
+                    "<li>Updated API links</li>",
                 "</ul>"
             ].join("\n"),
 
