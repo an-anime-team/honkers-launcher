@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added Czech
+
+### Changed
+
+- Updated API links
+
 ## [1.6.1] - 24.03.2024
 
 ### Added
