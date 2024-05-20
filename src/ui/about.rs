@@ -100,16 +100,10 @@ impl SimpleComponent for AboutDialog {
 
             set_release_notes_version: &APP_VERSION,
             set_release_notes: &[
-                "<p>Added</p>",
+                "<p>Fixed</p>",
 
                 "<ul>",
-                    "<li>Added Czech</li>",
-                "</ul>",
-
-                "<p>Changed</p>",
-
-                "<ul>",
-                    "<li>Updated API links</li>",
+                    "<li>Updated background URI API key</li>",
                 "</ul>"
             ].join("\n"),
 
