@@ -10,7 +10,6 @@ use adw::prelude::*;
 use gtk::glib::clone;
 
 mod repair_game;
-mod apply_mfplat_patch;
 mod update_patch;
 mod download_wine;
 mod create_prefix;
@@ -317,8 +316,7 @@ impl SimpleComponent for App {
                                                 Some(LauncherState::PrefixNotExists) => "document-save-symbolic",
 
                                                 Some(LauncherState::GameUpdateAvailable(_)) |
-                                                Some(LauncherState::GameNotInstalled(_)) |
-                                                Some(LauncherState::MfplatPatchAvailable) => "document-save-symbolic",
+                                                Some(LauncherState::GameNotInstalled(_)) => "document-save-symbolic",
 
                                                 Some(LauncherState::PatchBroken) |
                                                 Some(LauncherState::PatchUnsafe) |
@@ -331,7 +329,6 @@ impl SimpleComponent for App {
                                                 Some(LauncherState::PatchNotVerified) |
                                                 Some(LauncherState::PatchConcerning) => tr!("launch"),
 
-                                                Some(LauncherState::MfplatPatchAvailable) => tr!("apply-patch"),
                                                 Some(LauncherState::WineNotInstalled)     => tr!("download-wine"),
                                                 Some(LauncherState::PrefixNotExists)      => tr!("create-prefix"),
                                                 Some(LauncherState::GameNotInstalled(_))  => tr!("download"),
@@ -761,20 +758,6 @@ impl SimpleComponent for App {
                 sender,
 
                 move || {
-                    // Check mfplay patch
-                    match mfplat::is_applied(CONFIG.get_wine_prefix_path()) {
-                        Ok(applied) => sender.input(AppMsg::SetMfplatPatch(applied)),
-
-                        Err(err) => {
-                            tracing::error!("Failed to check mfplat patch status: {err}");
-
-                            sender.input(AppMsg::Toast {
-                                title: tr!("patch-state-check-failed"),
-                                description: Some(err.to_string())
-                            });
-                        }
-                    }
-
                     // Get main patch status
                     sender.input(AppMsg::SetMainPatch(match jadeite::get_metadata() {
                         Ok(metadata) => {
@@ -867,12 +850,6 @@ impl SimpleComponent for App {
                             match state {
                                 StateUpdating::Game => {
                                     sender.input(AppMsg::SetLoadingStatus(Some(Some(tr!("loading-launcher-state--game")))));
-                                }
-
-                                StateUpdating::Voice(locale) => {
-                                    sender.input(AppMsg::SetLoadingStatus(Some(Some(tr!("loading-launcher-state--voice", {
-                                        "locale" = locale.to_name()
-                                    })))));
                                 }
 
                                 StateUpdating::Patch => {
@@ -968,8 +945,6 @@ impl SimpleComponent for App {
                     LauncherState::PatchNotVerified |
                     LauncherState::PatchConcerning |
                     LauncherState::Launch => launch::launch(sender),
-
-                    LauncherState::MfplatPatchAvailable => apply_mfplat_patch::apply_mfplat_patch(sender),
 
                     LauncherState::PatchNotInstalled |
                     LauncherState::PatchUpdateAvailable => update_patch::update_patch(sender, self.progress_bar.sender().to_owned()),

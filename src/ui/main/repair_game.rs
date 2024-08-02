@@ -3,6 +3,8 @@ use relm4::{
     Sender
 };
 
+use gtk::glib::clone;
+
 use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
 
