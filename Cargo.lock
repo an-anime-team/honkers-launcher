@@ -1475,7 +1475,7 @@ dependencies = [
 
 [[package]]
 name = "honkers-launcher"
-version = "1.6.3"
+version = "1.7.0"
 dependencies = [
  "anime-launcher-sdk",
  "anyhow",
@@ -3545,9 +3545,9 @@ dependencies = [
 
 [[package]]
 name = "zstd-safe"
-version = "7.2.0"
+version = "7.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fa556e971e7b568dc775c136fc9de8c779b1c2fc3a63defaafadffdbd3181afa"
+checksum = "54a3ab4db68cea366acc5c897c7b4d4d1b8994a9cd6e6f841f8964566a419059"
 dependencies = [
  "zstd-sys",
 ]
