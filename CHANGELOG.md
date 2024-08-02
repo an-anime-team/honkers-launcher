@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- List missing dependencies on non-standard distros during initial setup
+
+### Fixed
+
+- Fixed Italian localization breaking the launcher
+
+### Changed
+
+- Support new game API
+- Improved background pictures processing
+- Updated desktop file entry to include "hl" keyword
+- Localized `force-grab-cursor` to Ukrainian
+
 ## [1.6.3] - 20.05.2024
 
 ### Fixed
@@ -31,6 +46,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added "force grab cursor" option to the gamescope settings
 - Added Thai
 - Added Ukrainian
+
+### Fixed
+
+- Fixed GtkSwitch UI state representation
 
 ### Changed
 

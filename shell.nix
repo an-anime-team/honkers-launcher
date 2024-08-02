@@ -1,31 +1,39 @@
 let
-    nixpkgs-unstable = builtins.fetchTarball "https://github.com/NixOS/nixpkgs/archive/refs/heads/nixos-unstable.tar.gz";
+    nixpkgs = builtins.fetchGit {
+        name = "nixos-24.05";
+        url = "https://github.com/nixos/nixpkgs";
+        ref = "refs/heads/nixos-24.05";
+    };
 
-    pkgs = import <nixpkgs> {};
+    nixpkgs-unstable = builtins.fetchGit {
+        name = "nixos-unstable";
+        url = "https://github.com/nixos/nixpkgs";
+        ref = "refs/heads/nixos-unstable";
+    };
+
+    pkgs = import nixpkgs {};
     pkgs-unstable = import nixpkgs-unstable {};
 
-in
-
-pkgs.mkShell {
-    nativeBuildInputs = [
-        pkgs-unstable.rustc
-        pkgs-unstable.cargo
+in pkgs.mkShell {
+    nativeBuildInputs = with pkgs; [
+        pkgs-unstable.rustup
+        pkgs-unstable.rustfmt
         pkgs-unstable.clippy
 
-        pkgs.gcc
-        pkgs.cmake
-        pkgs.pkg-config
+        gcc
+        cmake
+        pkg-config
+
+        xdelta
+        libwebp
     ];
 
-    buildInputs = [
-        pkgs.gtk4
-        pkgs.glib
-        pkgs.gdk-pixbuf
-        pkgs.gobject-introspection
+    buildInputs = with pkgs; [
+        gtk4
+        glib
+        gdk-pixbuf
+        gobject-introspection
 
-        pkgs.libadwaita
+        libadwaita
     ];
-
-    RUST_SRC_PATH = "${pkgs-unstable.rust.packages.stable.rustPlatform.rustLibSrc}";
-    RUST_BACKTRACE = 1;
 }
