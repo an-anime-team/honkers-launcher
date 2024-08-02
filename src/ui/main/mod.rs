@@ -76,9 +76,6 @@ pub enum AppMsg {
     /// was retrieved from the API
     SetGameDiff(Option<VersionDiff>),
 
-    /// Supposed to be called automatically on app's run
-    SetMfplatPatch(bool),
-
     /// Supposed to be called automatically on app's run when the latest main patch version
     /// was retrieved from remote repos
     SetMainPatch(Option<(Version, JadeitePatchStatusVariant)>),
@@ -894,11 +891,6 @@ impl SimpleComponent for App {
             #[allow(unused_must_use)]
             AppMsg::SetGameDiff(diff) => unsafe {
                 PREFERENCES_WINDOW.as_ref().unwrap_unchecked().sender().send(PreferencesAppMsg::SetGameDiff(diff));
-            }
-
-            #[allow(unused_must_use)]
-            AppMsg::SetMfplatPatch(applied) => unsafe {
-                PREFERENCES_WINDOW.as_ref().unwrap_unchecked().sender().send(PreferencesAppMsg::SetMfplatPatch(applied));
             }
 
             #[allow(unused_must_use)]
