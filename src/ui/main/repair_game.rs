@@ -3,6 +3,8 @@ use relm4::{
     Sender
 };
 
+use gtk::glib::clone;
+
 use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
 
@@ -52,17 +54,22 @@ pub fn repair_game(sender: ComponentSender<App>, progress_bar_input: Sender<Prog
                     let thread_sender = verify_sender.clone();
                     let game_path = config.game.path.for_edition(config.launcher.edition).to_path_buf();
 
-                    std::thread::spawn(move || {
-                        for file in thread_files {
-                            let status = if config.launcher.repairer.fast {
-                                file.fast_verify(&game_path)
-                            } else {
-                                file.verify(&game_path)
-                            };
+                    std::thread::spawn(clone!(
+                        #[strong]
+                        game_path, 
 
-                            thread_sender.send((file, status)).unwrap();
+                        move || {
+                            for file in thread_files {
+                                let status = if config.launcher.repairer.fast {
+                                    file.fast_verify(&game_path)
+                                } else {
+                                    file.verify(&game_path)
+                                };
+
+                                thread_sender.send((file, status)).unwrap();
+                            }
                         }
-                    });
+                    ));
                 }
 
                 // We have [config.launcher.repairer.threads] copies of this sender + the original one

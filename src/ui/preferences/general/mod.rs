@@ -17,18 +17,15 @@ pub mod components;
 
 use components::*;
 
-use crate::ui::migrate_installation::MigrateInstallationApp;
 use crate::ui::preferences::main::PreferencesAppMsg;
 
 use crate::i18n::*;
 use crate::*;
 
 pub struct GeneralApp {
-    migrate_installation: Controller<MigrateInstallationApp>,
     components_page: AsyncController<ComponentsPage>,
 
     game_diff: Option<VersionDiff>,
-    mfplat_patch: bool,
     main_patch: Option<(Version, JadeitePatchStatusVariant)>,
 
     style: LauncherStyle,
@@ -41,9 +38,6 @@ pub enum GeneralAppMsg {
     /// was retrieved from the API
     SetGameDiff(Option<VersionDiff>),
 
-    /// Supposed to be called automatically on app's run
-    SetMfplatPatch(bool),
-
     /// Supposed to be called automatically on app's run when the latest main patch version
     /// was retrieved from remote repos
     SetMainPatch(Option<(Version, JadeitePatchStatusVariant)>),
@@ -51,7 +45,6 @@ pub enum GeneralAppMsg {
     UpdateDownloadedWine,
     UpdateDownloadedDxvk,
 
-    OpenMigrateInstallation,
     RepairGame,
 
     OpenMainPage,
@@ -232,13 +225,6 @@ impl SimpleAsyncComponent for GeneralApp {
                     set_margin_top: 16,
 
                     gtk::Button {
-                        set_label: &tr!("migrate-installation"),
-                        set_tooltip_text: Some(&tr!("migrate-installation-description")),
-
-                        connect_clicked => GeneralAppMsg::OpenMigrateInstallation
-                    },
-
-                    gtk::Button {
                         set_label: &tr!("repair-game"),
 
                         connect_clicked => GeneralAppMsg::RepairGame
@@ -331,52 +317,6 @@ impl SimpleAsyncComponent for GeneralApp {
 
                             None => String::new()
                         })
-                    }
-                },
-
-                adw::ActionRow {
-                    set_title: &tr!("mfplat-patch-version"),
-                    set_subtitle: &tr!("mfplat-patch-version-description"),
-
-                    add_suffix = &gtk::Label {
-                        #[watch]
-                        set_text: &if model.mfplat_patch {
-                            tr!("applied")
-                        } else {
-                            tr!("not-applied")
-                        },
-
-                        #[watch]
-                        set_css_classes: if model.mfplat_patch {
-                            &["success"]
-                        } else {
-                            &["warning"]
-                        }
-                    }
-                }
-            },
-
-            add = &adw::PreferencesGroup {
-                adw::ActionRow {
-                    set_title: &tr!("apply-mfplat-patch"),
-
-                    add_suffix = &gtk::Switch {
-                        set_valign: gtk::Align::Center,
-
-                        set_state: CONFIG.patch.apply_mfplat,
-
-                        connect_state_notify[sender] => move |switch| {
-                            if is_ready() {
-                                #[allow(unused_must_use)]
-                                if let Ok(mut config) = Config::get() {
-                                    config.patch.apply_mfplat = switch.state();
-
-                                    Config::update(config);
-
-                                    sender.output(PreferencesAppMsg::UpdateLauncherState);
-                                }
-                            }
-                        }
                     }
                 }
             },
@@ -502,16 +442,11 @@ impl SimpleAsyncComponent for GeneralApp {
         tracing::info!("Initializing general settings");
 
         let model = Self {
-            migrate_installation: MigrateInstallationApp::builder()
-                .launch(())
-                .detach(),
-
             components_page: ComponentsPage::builder()
                 .launch(())
                 .forward(sender.input_sender(), std::convert::identity),
 
             game_diff: None,
-            mfplat_patch: false,
             main_patch: None,
 
             style: CONFIG.launcher.style,
@@ -533,10 +468,6 @@ impl SimpleAsyncComponent for GeneralApp {
                 self.game_diff = diff;
             }
 
-            GeneralAppMsg::SetMfplatPatch(applied) => {
-                self.mfplat_patch = applied;
-            }
-
             GeneralAppMsg::SetMainPatch(patch) => {
                 self.main_patch = patch;
             }
@@ -551,14 +482,6 @@ impl SimpleAsyncComponent for GeneralApp {
                 self.components_page.sender()
                     .send(ComponentsPageMsg::UpdateDownloadedDxvk)
                     .unwrap();
-            }
-
-            GeneralAppMsg::OpenMigrateInstallation => unsafe {
-                if let Some(window) = crate::ui::main::PREFERENCES_WINDOW.as_ref() {
-                    self.migrate_installation.widget().set_transient_for(Some(window.widget()));
-                }
-
-                self.migrate_installation.widget().present();
             }
 
             GeneralAppMsg::RepairGame => {
