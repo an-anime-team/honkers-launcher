@@ -103,6 +103,8 @@ impl SimpleComponent for AboutDialog {
                 "<p>Added</p>",
 
                 "<ul>",
+                    "<li>List missing dependencies on non-standard distros during initial setup</li>",
+                    "<li>Handle dwebp re-coding errors</li>",
                     "<li>Added \"Indonesia\" wine language option</li>",
                     "<li>Added writing of the game's output to the \"game.log\" file in the launcher's folder</li>",
                     "<li>Respect root \".version\" file for game version parsing</li>",
@@ -111,13 +113,16 @@ impl SimpleComponent for AboutDialog {
                 "<p>Fixed</p>",
 
                 "<ul>",
-                    "<li>Fixed \"dwebp\" package name for fedora during initial setup</li>",
+                    "<li>Fixed Italian localization breaking the launcher</li>",
                     "<li>Fixed Discord RPC updates</li>",
                 "</ul>",
 
                 "<p>Changed</p>",
 
                 "<ul>",
+                    "<li>Support new game API</li>",
+                    "<li>Updated desktop file entry to include \"hl\" keyword</li>",
+                    "<li>Localized \"force-grab-cursor\" to Ukrainian</li>",
                     "<li>Changed background images processing logic</li>",
                     "<li>Prioritize parsed game version over the API response</li>",
                 "</ul>",
