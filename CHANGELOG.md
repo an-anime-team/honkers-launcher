@@ -10,17 +10,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - List missing dependencies on non-standard distros during initial setup
+- Handle dwebp re-coding errors
+- Added "Indonesia" wine language option
+- Added writing of the game's output to the `game.log` file in the launcher's folder.
+  Size of this file is controlled by the `LAUNCHER_GAME_LOG_FILE_LIMIT` environment variable.
+- Respect root `.version` file for game version parsing
 
 ### Fixed
 
 - Fixed Italian localization breaking the launcher
+- Fixed Discord RPC updates
 
 ### Changed
 
 - Support new game API
-- Improved background pictures processing
 - Updated desktop file entry to include "hl" keyword
 - Localized `force-grab-cursor` to Ukrainian
+- Changed background images processing logic
+- Prioritize parsed game version over the API response
+
+### Removed
+
+- Removed `xdelta3` dependency
+- Removed migrate installation feature
 
 ## [1.6.3] - 20.05.2024
 
