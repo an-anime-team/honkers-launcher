@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.7.1] - 03.08.2024
+
 ### Fixed
 
 - Fixed background picture URI
@@ -293,7 +295,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <br>
 
-[unreleased]: https://github.com/an-anime-team/honkers-launcher/compare/1.7.0...next
+[unreleased]: https://github.com/an-anime-team/honkers-launcher/compare/1.7.1...next
+[1.7.1]: https://github.com/an-anime-team/honkers-launcher/compare/1.7.0...1.7.1
 [1.7.0]: https://github.com/an-anime-team/honkers-launcher/compare/1.6.3...1.7.0
 [1.6.3]: https://github.com/an-anime-team/honkers-launcher/compare/1.6.2...1.6.3
 [1.6.2]: https://github.com/an-anime-team/honkers-launcher/compare/1.6.1...1.6.2

@@ -1,6 +1,6 @@
 [package]
 name = "honkers-launcher"
-version = "1.7.0"
+version = "1.7.1"
 description = "Honkers launcher"
 authors = ["Nikita Podvirnyi <krypt0nn@vk.com>"]
 homepage = "https://github.com/an-anime-team/honkers-launcher"
