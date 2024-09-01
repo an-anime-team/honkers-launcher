@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Apply chmod 755 to extracted files if 7z was used
+
+### Changed
+
+- Reworked gamescope settings
+
+### Fixed
+
+- Create cache folder if it doesn't exist
+- Respect downloaded file size in free space check
+
 ## [1.7.1] - 03.08.2024
 
 ### Fixed

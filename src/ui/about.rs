@@ -100,10 +100,23 @@ impl SimpleComponent for AboutDialog {
 
             set_release_notes_version: &APP_VERSION,
             set_release_notes: &[
+                "<p>Added</p>",
+
+                "<ul>",
+                    "<li>Apply chmod 755 to extracted files if 7z was used</li>",
+                "</ul>",
+
+                "<p>Changed</p>",
+
+                "<ul>",
+                    "<li>Reworked gamescope settings</li>",
+                "</ul>",
+
                 "<p>Fixed</p>",
 
                 "<ul>",
-                    "<li>Fixed background picture URI</li>",
+                    "<li>Create cache folder if it doesn't exist</li>",
+                    "<li>Respect downloaded file size in free space check</li>",
                 "</ul>"
             ].join("\n"),
 
