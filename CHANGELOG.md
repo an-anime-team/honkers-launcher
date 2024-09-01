@@ -17,6 +17,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- Fixed background picture for non-cn editions
 - Create cache folder if it doesn't exist
 - Respect downloaded file size in free space check
 

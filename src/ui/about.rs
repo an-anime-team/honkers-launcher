@@ -115,6 +115,7 @@ impl SimpleComponent for AboutDialog {
                 "<p>Fixed</p>",
 
                 "<ul>",
+                    "<li>Fixed background picture for non-cn editions</li>",
                     "<li>Create cache folder if it doesn't exist</li>",
                     "<li>Respect downloaded file size in free space check</li>",
                 "</ul>"
