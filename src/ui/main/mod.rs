@@ -446,11 +446,11 @@ impl SimpleComponent for App {
                                             }
 
                                             // Old warning message which I don't really understand now:
-                                            // 
+                                            //
                                             // Doesn't work on all the systems
                                             // e.g. won't work if you didn't install wine system-wide
                                             // there's some reasons for it
-                                            // 
+                                            //
                                             // UPD: I've tried this, and the problem is that it's completely pointless
                                             //      For whatever reason it just doesn't work
 
@@ -863,7 +863,7 @@ impl SimpleComponent for App {
                         tracing::error!("Failed to update launcher state: {err}");
 
                         self.toast(tr!("launcher-state-updating-error"), Some(err.to_string()));
-    
+
                         None
                     }
                 };
