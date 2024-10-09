@@ -41,7 +41,7 @@ impl SimpleAsyncComponent for DependenciesApp {
 
                 gtk::Label {
                     set_label: &tr!("missing-dependencies-message"),
-    
+
                     set_justify: gtk::Justification::Center,
                     set_wrap: true,
                     set_margin_top: 32
@@ -134,7 +134,7 @@ impl SimpleAsyncComponent for DependenciesApp {
             add = &adw::PreferencesGroup {
                 set_valign: gtk::Align::Center,
                 set_vexpand: true,
-    
+
                 gtk::Box {
                     set_orientation: gtk::Orientation::Horizontal,
                     set_halign: gtk::Align::Center,
