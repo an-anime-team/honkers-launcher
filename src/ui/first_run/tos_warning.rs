@@ -48,12 +48,12 @@ impl SimpleAsyncComponent for TosWarningApp {
             add = &adw::PreferencesGroup {
                 set_valign: gtk::Align::Center,
                 set_vexpand: true,
-    
+
                 gtk::Box {
                     set_orientation: gtk::Orientation::Horizontal,
                     set_halign: gtk::Align::Center,
                     set_spacing: 8,
-    
+
                     gtk::Button {
                         set_label: &tr!("continue"),
                         set_css_classes: &["suggested-action", "pill"],

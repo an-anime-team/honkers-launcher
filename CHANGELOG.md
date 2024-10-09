@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Removed
+
+- Removed Discord RPC support
+
 ## [1.8.1] - 02.09.2024
 
 ### Fixed
