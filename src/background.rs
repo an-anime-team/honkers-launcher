@@ -11,40 +11,39 @@ pub struct Background {
     pub hash: String
 }
 
-#[cached::proc_macro::cached(result)]
-pub fn get_background_info() -> anyhow::Result<Background> {
+pub fn get_uri() -> String {
     let lang = crate::i18n::get_lang();
 
-    let uri = if lang.language == unic_langid::langid!("zh-cn").language {
-        let api_uri = concat!("https://hyp-api.", "mi", "ho", "yo", ".com/hyp/hyp-connect/api/getAllGameBasicInfo?launcher_id=jGHBHlcOq1");
+    if lang.language == unic_langid::langid!("zh-cn").language {
+        concat!("https://hyp-api.", "mi", "ho", "yo", ".com/hyp/hyp-connect/api/getAllGameBasicInfo?launcher_id=jGHBHlcOq1").to_owned()
+    }
 
-        let json = serde_json::from_slice::<serde_json::Value>(minreq::get(api_uri).send()?.as_bytes())?;
+    else {
+        let uri = concat!("https://sg-hyp-api.", "ho", "yo", "verse", ".com/hyp/hyp-connect/api/getAllGameBasicInfo?launcher_id=VYTpXlbWo8&language=");
 
-        json["data"]["game_info_list"].as_array()
-            .ok_or_else(|| anyhow::anyhow!("Failed to list games in the backgrounds API"))?
-            .iter()
-            .find(|game| {
-                match game["game"]["biz"].as_str() {
-                    Some(biz) => biz.starts_with("bh3_"),
-                    _ => false
-                }
-            })
-            .ok_or_else(|| anyhow::anyhow!("Failed to find the game in the backgrounds API"))?["backgrounds"]
-            .as_array()
-            .and_then(|backgrounds| backgrounds.iter().next())
-            .and_then(|background| background["background"]["url"].as_str())
-            .map(|background| background.to_owned())
-    } else {
-        let api_uri = concat!("https://bh3-launcher.", "ho", "yo", "verse", ".com/bh3_global/mdk/launcher/api/content?filter_adv=true&key=dpz65xJ3&launcher_id=10&language=");
+        uri.to_owned() + &crate::i18n::format_lang(lang)
+    }
+}
 
-        let json = serde_json::from_slice::<serde_json::Value>(minreq::get(api_uri.to_string() + &crate::i18n::format_lang(lang)).send()?.as_bytes())?;
+#[cached::proc_macro::cached(result)]
+pub fn get_background_info() -> anyhow::Result<Background> {
+    let json = serde_json::from_slice::<serde_json::Value>(minreq::get(get_uri()).send()?.as_bytes())?;
 
-        json["data"]["adv"]["background"].as_str().map(|background| background.to_owned())
-    };
-    
-    let Some(uri) = uri else {
-        anyhow::bail!("Failed to get background picture url");
-    };
+    let uri = json["data"]["game_info_list"].as_array()
+        .ok_or_else(|| anyhow::anyhow!("Failed to list games in the backgrounds API"))?
+        .iter()
+        .find(|game| {
+            match game["game"]["biz"].as_str() {
+                Some(biz) => biz.starts_with("bh3_"),
+                _ => false
+            }
+        })
+        .ok_or_else(|| anyhow::anyhow!("Failed to find the game in the backgrounds API"))?["backgrounds"]
+        .as_array()
+        .and_then(|backgrounds| backgrounds.iter().next())
+        .and_then(|background| background["background"]["url"].as_str())
+        .ok_or_else(|| anyhow::anyhow!("Failed to get background picture url"))?
+        .to_string();
 
     let hash = uri.split('/')
         .last()
