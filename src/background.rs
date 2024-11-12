@@ -30,35 +30,7 @@ pub fn get_background_info() -> anyhow::Result<Background> {
     let lang = crate::i18n::get_lang();
     let gameid: &str;
     
-    if lang.language == unic_langid::langid!("en-us").language
-    {
-        gameid = "5TIVvvcwtM"
-    }
-    else if lang.language == unic_langid::langid!("ru-ru").language
-    {
-        gameid = "5TIVvvcwtM"
-    }
-    else if lang.language == unic_langid::langid!("de-de").language
-    {
-        gameid = "5TIVvvcwtM"
-    }
-    else if lang.language == unic_langid::langid!("fr-fr").language
-    {
-        gameid = "5TIVvvcwtM"
-    }
-    else if lang.language == unic_langid::langid!("es-es").language
-    {
-        gameid = "5TIVvvcwtM"
-    }
-    else if lang.language == unic_langid::langid!("tr-tr").language
-    {
-        gameid = "5TIVvvcwtM"
-    }
-    else if lang.language == unic_langid::langid!("it-it").language
-    {
-        gameid = "5TIVvvcwtM"
-    }
-    else if lang.language == unic_langid::langid!("zh-cn").language
+    if lang.language == unic_langid::langid!("zh-cn").language
     {
         gameid = "osvnlOc0S8"
     }
