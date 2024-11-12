@@ -28,70 +28,63 @@ pub fn get_uri() -> String {
 #[cached::proc_macro::cached(result)]
 pub fn get_background_info() -> anyhow::Result<Background> {
     let lang = crate::i18n::get_lang();
+    let gameid: &str;
+    
     if lang.language == unic_langid::langid!("en-us").language
     {
-        let gameid = "5TIVvvcwtM";
-        let bgid = "fbwQurHDcs";
+        gameid = "5TIVvvcwtM"
     }
     else if lang.language == unic_langid::langid!("ru-ru").language
     {
-        let gameid = "5TIVvvcwtM";
-        let bgid = "leRCQKF15s";
+        gameid = "5TIVvvcwtM"
     }
     else if lang.language == unic_langid::langid!("de-de").language
     {
-        let gameid = "5TIVvvcwtM";
-        let bgid = "OhoenPvEh6";
+        gameid = "5TIVvvcwtM"
     }
     else if lang.language == unic_langid::langid!("fr-fr").language
     {
-        let gameid = "5TIVvvcwtM";
-        let bgid = "Unc0cPndqv";
+        gameid = "5TIVvvcwtM"
     }
     else if lang.language == unic_langid::langid!("es-es").language
     {
-        let gameid = "5TIVvvcwtM";
-        let bgid = "toeETy4CzB";
+        gameid = "5TIVvvcwtM"
     }
     else if lang.language == unic_langid::langid!("tr-tr").language
     {
-        let gameid = "5TIVvvcwtM";
-        let bgid = "vt5uLr7FZK";
+        gameid = "5TIVvvcwtM"
     }
     else if lang.language == unic_langid::langid!("it-it").language
     {
-        let gameid = "5TIVvvcwtM";
-        let bgid = "JnypvGMwdi";
+        gameid = "5TIVvvcwtM"
     }
-    else if lang.language == unic_langid::langid!("id-id").language
+    else if lang.language == unic_langid::langid!("zh-cn").language
     {
-        let gameid = "5TIVvvcwtM";
-        let bgid = "4FSfWnEy8k";
+        gameid = "osvnlOc0S8"
     }
     else if lang.language == unic_langid::langid!("ja-jp").language
     {
-        let gameid = "g0mMIvshDb";
-        let bgid = "8UVTQB5f37";
+        gameid = "g0mMIvshDb"
     }
     else if lang.language == unic_langid::langid!("ko-kr").language
     {
-        let gameid = "uxB4MC7nzC";
-        let bgid = "uyBfZfkFo2";
+        gameid = "uxB4MC7nzC"
+    }
+    else if lang.language == unic_langid::langid!("id-id").language
+    {
+        gameid = "bxPTXSET5t"
     }
     else if lang.language == unic_langid::langid!("vi-vn").language
     {
-        let gameid = "bxPTXSET5t";
-        let bgid = "V7MQ05c4SO";
+        gameid = "bxPTXSET5t"
     }
     else if lang.language == unic_langid::langid!("th-th").language
     {        
-        let gameid = "bxPTXSET5t";
-        let bgid = "M5XMQXkex7";
+        gameid = "bxPTXSET5t"
     }
     else
     {
-        let gameid = "5TIVvvcwtM";
-        let id = "NP669OkoXo";
+        gameid = "5TIVvvcwtM"
     }
 
 
