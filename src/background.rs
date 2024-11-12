@@ -27,14 +27,82 @@ pub fn get_uri() -> String {
 
 #[cached::proc_macro::cached(result)]
 pub fn get_background_info() -> anyhow::Result<Background> {
+    let lang = crate::i18n::get_lang();
+    if lang.language == unic_langid::langid!("en-us").language
+    {
+        let gameid = "5TIVvvcwtM"
+        let bgid = "fbwQurHDcs"
+    }
+    else if lang.language == unic_langid::langid!("ru-ru").language
+    {
+        let gameid = "5TIVvvcwtM"
+        let bgid = "leRCQKF15s"
+    }
+    else if lang.language == unic_langid::langid!("de-de").language
+    {
+        let gameid = "5TIVvvcwtM"
+        let bgid = "OhoenPvEh6"
+    }
+    else if lang.language == unic_langid::langid!("fr-fr").language
+    {
+        let gameid = "5TIVvvcwtM"
+        let bgid = "Unc0cPndqv"
+    }
+    else if lang.language == unic_langid::langid!("es-es").language
+    {
+        let gameid = "5TIVvvcwtM"
+        let bgid = "toeETy4CzB"
+    }
+    else if lang.language == unic_langid::langid!("tr-tr").language
+    {
+        let gameid = "5TIVvvcwtM"
+        let bgid = "vt5uLr7FZK"
+    }
+    else if lang.language == unic_langid::langid!("it-it").language
+    {
+        let gameid = "5TIVvvcwtM"
+        let bgid = "JnypvGMwdi"
+    }
+    else if lang.language == unic_langid::langid!("id-id").language
+    {
+        let gameid = "5TIVvvcwtM"
+        let bgid = "4FSfWnEy8k"
+    }
+    else if lang.language == unic_langid::langid!("ja-jp").language
+    {
+        let gameid = "g0mMIvshDb"
+        let bgid = "8UVTQB5f37"
+    }
+    else if lang.language == unic_langid::langid!("ko-kr").language
+    {
+        let gameid = "uxB4MC7nzC"
+        let bgid = "uyBfZfkFo2"
+    }
+    else if lang.language == unic_langid::langid!("vi-vn").language
+    {
+        let gameid = "bxPTXSET5t"
+        let bgid = "V7MQ05c4SO"
+    }
+    else if lang.language == unic_langid::langid!("th-th").language
+    {        
+        let gameid = "bxPTXSET5t"
+        let bgid = "M5XMQXkex7"
+    }
+    else
+    {
+        let gameid = "5TIVvvcwtM"
+        let id = "NP669OkoXo"
+    }
+
+
     let json = serde_json::from_slice::<serde_json::Value>(minreq::get(get_uri()).send()?.as_bytes())?;
 
     let uri = json["data"]["game_info_list"].as_array()
         .ok_or_else(|| anyhow::anyhow!("Failed to list games in the backgrounds API"))?
         .iter()
         .find(|game| {
-            match game["game"]["biz"].as_str() {
-                Some(biz) => biz.starts_with("bh3_"),
+            match game["game"]["id"].as_str() {
+                Some(id) => id.starts_with(gameid),
                 _ => false
             }
         })
