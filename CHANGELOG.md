@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added support for new API format for non-CN game editions
+- Updated background image choosing logic
 
 ## [1.9.0] - 09.10.2024
 

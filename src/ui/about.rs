@@ -104,6 +104,7 @@ impl SimpleComponent for AboutDialog {
 
                 "<ul>",
                     "<li>Added support for new API format for non-CN game editions</li>",
+                    "<li>Updated background image choosing logic</li>",
                 "</ul>"
             ].join("\n"),
 
