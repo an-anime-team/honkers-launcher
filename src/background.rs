@@ -20,10 +20,15 @@ fn get_expected_edition(lang: &LanguageIdentifier) -> GameEdition {
 
         "zh" => {
             match lang.region {
-                Some(region) if region.as_str() == "cn" => GameEdition::China,
-                Some(region) if region.as_str() == "tw" => GameEdition::Taiwan,
+                Some(region) => {
+                    if region.as_str().to_ascii_lowercase() == "tw" {
+                        GameEdition::Taiwan
+                    } else {
+                        GameEdition::China
+                    }
+                }
 
-                _ => GameEdition::China
+                None => GameEdition::China
             }
         },
 
