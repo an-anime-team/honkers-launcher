@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added support for new API format for non-CN game editions
+
 ## [1.9.0] - 09.10.2024
 
 ### Removed
@@ -273,7 +277,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Now launcher applies selected session before launching the game.
   This should fix issues when you switch wine prefix, for example, by downloading a proton build
-- Mfplat patch is now disabled by default 
+- Mfplat patch is now disabled by default
 
 ### Fixed
 
