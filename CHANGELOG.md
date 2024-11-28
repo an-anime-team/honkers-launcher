@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.10.0] - 28.11.2024
 
+### Fixed
+
+- Fixed a typo in the background image chooser
+
+## [1.10.0] - 28.11.2024
+
 ### Added
 
 - Added support for new API format for non-CN game editions

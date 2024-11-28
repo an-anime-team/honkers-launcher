@@ -15,7 +15,7 @@ pub struct Background {
 
 fn get_expected_edition(lang: &LanguageIdentifier) -> GameEdition {
     match lang.language.as_str() {
-        "ja" => GameEdition::China,
+        "ja" => GameEdition::Japan,
         "ko" => GameEdition::Korea,
 
         "zh" => {

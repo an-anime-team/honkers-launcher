@@ -100,11 +100,10 @@ impl SimpleComponent for AboutDialog {
 
             set_release_notes_version: &APP_VERSION,
             set_release_notes: &[
-                "<p>Added</p>",
+                "<p>Fixed</p>",
 
                 "<ul>",
-                    "<li>Added support for new API format for non-CN game editions</li>",
-                    "<li>Updated background image choosing logic</li>",
+                    "<li>Fixed a typo in the background image chooser</li>",
                 "</ul>"
             ].join("\n"),
 
