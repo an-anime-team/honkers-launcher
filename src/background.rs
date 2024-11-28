@@ -7,6 +7,8 @@ use anime_launcher_sdk::anime_game_core::minreq;
 use md5::{Md5, Digest};
 use unic_langid::LanguageIdentifier;
 
+use crate::i18n::format_lang;
+
 #[derive(Debug, Clone)]
 pub struct Background {
     pub uri: String,
@@ -45,8 +47,13 @@ pub fn get_background_info() -> anyhow::Result<Background> {
     let expected_edition = get_expected_edition(lang);
 
     let uri = match expected_edition {
-        GameEdition::China => concat!("https://hyp-api.", "mi", "ho", "yo", ".com/hyp/hyp-connect/api/getAllGameBasicInfo?launcher_id=jGHBHlcOq1"),
-        _ => concat!("https://sg-hyp-api.", "ho", "yo", "verse", ".com/hyp/hyp-connect/api/getAllGameBasicInfo?launcher_id=VYTpXlbWo8")
+        GameEdition::China => concat!("https://hyp-api.", "mi", "ho", "yo", ".com/hyp/hyp-connect/api/getAllGameBasicInfo?launcher_id=jGHBHlcOq1").to_string(),
+
+        _ => {
+            let uri = concat!("https://sg-hyp-api.", "ho", "yo", "verse", ".com/hyp/hyp-connect/api/getAllGameBasicInfo?launcher_id=VYTpXlbWo8&language=");
+
+            format!("{uri}{}", format_lang(lang))
+        }
     };
 
     let json = serde_json::from_slice::<serde_json::Value>(minreq::get(uri).send()?.as_bytes())?;
@@ -54,7 +61,7 @@ pub fn get_background_info() -> anyhow::Result<Background> {
     let uri = json["data"]["game_info_list"].as_array()
         .ok_or_else(|| anyhow::anyhow!("Failed to list games in the backgrounds API"))?
         .iter()
-        .find(|game| game["game"]["biz"].as_str() == Some(expected_edition.api_game_id()))
+        .find(|game| game["game"]["id"].as_str() == Some(expected_edition.api_game_id()))
         .ok_or_else(|| anyhow::anyhow!("Failed to find the game in the backgrounds API"))?["backgrounds"]
         .as_array()
         .and_then(|backgrounds| backgrounds.iter().next())
