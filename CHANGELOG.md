@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.10.0] - 28.11.2024
+
 ### Added
 
 - Added support for new API format for non-CN game editions
@@ -328,7 +330,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <br>
 
-[unreleased]: https://github.com/an-anime-team/honkers-launcher/compare/1.9.0...next
+[unreleased]: https://github.com/an-anime-team/honkers-launcher/compare/1.10.0...next
+[1.10.0]: https://github.com/an-anime-team/honkers-launcher/compare/1.9.0...1.10.0
 [1.9.0]: https://github.com/an-anime-team/honkers-launcher/compare/1.8.1...1.9.0
 [1.8.1]: https://github.com/an-anime-team/honkers-launcher/compare/1.8.0...1.8.1
 [1.8.0]: https://github.com/an-anime-team/honkers-launcher/compare/1.7.1...1.8.0
