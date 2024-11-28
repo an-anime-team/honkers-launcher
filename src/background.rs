@@ -46,7 +46,7 @@ pub fn get_background_info() -> anyhow::Result<Background> {
 
     let uri = match expected_edition {
         GameEdition::China => concat!("https://hyp-api.", "mi", "ho", "yo", ".com/hyp/hyp-connect/api/getAllGameBasicInfo?launcher_id=jGHBHlcOq1"),
-        _ => concat!("https://sg-hyp-api.", "ho", "yo", "verse", ".com/hyp/hyp-connect/api/getAllGameBasicInfo?launcher_id=jGHBHlcOq1")
+        _ => concat!("https://sg-hyp-api.", "ho", "yo", "verse", ".com/hyp/hyp-connect/api/getAllGameBasicInfo?launcher_id=VYTpXlbWo8")
     };
 
     let json = serde_json::from_slice::<serde_json::Value>(minreq::get(uri).send()?.as_bytes())?;
