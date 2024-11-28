@@ -1,9 +1,11 @@
 use std::process::Command;
 
+use anime_launcher_sdk::anime_game_core::honkai::prelude::*;
 use anime_launcher_sdk::anime_game_core::installer::downloader::Downloader;
 use anime_launcher_sdk::anime_game_core::minreq;
 
 use md5::{Md5, Digest};
+use unic_langid::LanguageIdentifier;
 
 #[derive(Debug, Clone)]
 pub struct Background {
@@ -11,37 +13,49 @@ pub struct Background {
     pub hash: String
 }
 
+fn get_expected_edition(lang: &LanguageIdentifier) -> GameEdition {
+    match lang.language.as_str() {
+        "ja" => GameEdition::China,
+        "ko" => GameEdition::Korea,
+
+        "zh" => {
+            match lang.region {
+                Some(region) if region.as_str() == "cn" => GameEdition::China,
+                Some(region) if region.as_str() == "tw" => GameEdition::Taiwan,
+
+                _ => GameEdition::China
+            }
+        },
+
+        "vi" | "th" | "id" => GameEdition::Sea,
+
+        _ => GameEdition::Global
+    }
+}
+
 #[cached::proc_macro::cached(result)]
 pub fn get_background_info() -> anyhow::Result<Background> {
     let lang = crate::i18n::get_lang();
 
-    let uri = if lang.language == unic_langid::langid!("zh-cn").language {
-        let api_uri = concat!("https://hyp-api.", "mi", "ho", "yo", ".com/hyp/hyp-connect/api/getAllGameBasicInfo?launcher_id=jGHBHlcOq1");
+    let expected_edition = get_expected_edition(lang);
 
-        let json = serde_json::from_slice::<serde_json::Value>(minreq::get(api_uri).send()?.as_bytes())?;
-
-        json["data"]["game_info_list"].as_array()
-            .ok_or_else(|| anyhow::anyhow!("Failed to list games in the backgrounds API"))?
-            .iter()
-            .find(|game| {
-                match game["game"]["biz"].as_str() {
-                    Some(biz) => biz.starts_with("bh3_"),
-                    _ => false
-                }
-            })
-            .ok_or_else(|| anyhow::anyhow!("Failed to find the game in the backgrounds API"))?["backgrounds"]
-            .as_array()
-            .and_then(|backgrounds| backgrounds.iter().next())
-            .and_then(|background| background["background"]["url"].as_str())
-            .map(|background| background.to_owned())
-    } else {
-        let api_uri = concat!("https://bh3-launcher.", "ho", "yo", "verse", ".com/bh3_global/mdk/launcher/api/content?filter_adv=true&key=dpz65xJ3&launcher_id=10&language=");
-
-        let json = serde_json::from_slice::<serde_json::Value>(minreq::get(api_uri.to_string() + &crate::i18n::format_lang(lang)).send()?.as_bytes())?;
-
-        json["data"]["adv"]["background"].as_str().map(|background| background.to_owned())
+    let uri = match expected_edition {
+        GameEdition::China => concat!("https://hyp-api.", "mi", "ho", "yo", ".com/hyp/hyp-connect/api/getAllGameBasicInfo?launcher_id=jGHBHlcOq1"),
+        _ => concat!("https://sg-hyp-api.", "ho", "yo", "verse", ".com/hyp/hyp-connect/api/getAllGameBasicInfo?launcher_id=jGHBHlcOq1")
     };
-    
+
+    let json = serde_json::from_slice::<serde_json::Value>(minreq::get(uri).send()?.as_bytes())?;
+
+    let uri = json["data"]["game_info_list"].as_array()
+        .ok_or_else(|| anyhow::anyhow!("Failed to list games in the backgrounds API"))?
+        .iter()
+        .find(|game| game["game"]["biz"].as_str() == Some(expected_edition.api_game_id()))
+        .ok_or_else(|| anyhow::anyhow!("Failed to find the game in the backgrounds API"))?["backgrounds"]
+        .as_array()
+        .and_then(|backgrounds| backgrounds.iter().next())
+        .and_then(|background| background["background"]["url"].as_str())
+        .map(|background| background.to_owned());
+
     let Some(uri) = uri else {
         anyhow::bail!("Failed to get background picture url");
     };
