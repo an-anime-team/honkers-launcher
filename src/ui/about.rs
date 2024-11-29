@@ -103,7 +103,7 @@ impl SimpleComponent for AboutDialog {
                 "<p>Fixed</p>",
 
                 "<ul>",
-                    "<li>Fixed a typo in the background image chooser</li>",
+                    "<li>Fixed a bug caused by untested merge request</li>",
                 "</ul>"
             ].join("\n"),
 
