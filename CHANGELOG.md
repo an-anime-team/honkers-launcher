@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.10.2] - 29.11.2024
+
 ### Fixed
 
 - Fixed a bug caused by untested merge request
@@ -340,7 +342,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <br>
 
-[unreleased]: https://github.com/an-anime-team/honkers-launcher/compare/1.10.1...next
+[unreleased]: https://github.com/an-anime-team/honkers-launcher/compare/1.10.2...next
+[1.10.2]: https://github.com/an-anime-team/honkers-launcher/compare/1.10.2...1.10.2
 [1.10.1]: https://github.com/an-anime-team/honkers-launcher/compare/1.10.0...1.10.1
 [1.10.0]: https://github.com/an-anime-team/honkers-launcher/compare/1.9.0...1.10.0
 [1.9.0]: https://github.com/an-anime-team/honkers-launcher/compare/1.8.1...1.9.0
