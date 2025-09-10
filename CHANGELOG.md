@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Removed Proton support
+
 ## [1.10.2] - 29.11.2024
 
 ### Fixed
