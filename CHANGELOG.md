@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.11.0] - 13.09.2025
+
 ### Changed
 
 - Removed support for launching with Proton from the launcher.
@@ -347,8 +349,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <br>
 
-[unreleased]: https://github.com/an-anime-team/honkers-launcher/compare/1.10.2...next
-[1.10.2]: https://github.com/an-anime-team/honkers-launcher/compare/1.10.2...1.10.2
+[unreleased]: https://github.com/an-anime-team/honkers-launcher/compare/1.11.0...next
+[1.10.2]: https://github.com/an-anime-team/honkers-launcher/compare/1.10.2...1.11.0
+[1.10.2]: https://github.com/an-anime-team/honkers-launcher/compare/1.10.1...1.10.2
 [1.10.1]: https://github.com/an-anime-team/honkers-launcher/compare/1.10.0...1.10.1
 [1.10.0]: https://github.com/an-anime-team/honkers-launcher/compare/1.9.0...1.10.0
 [1.9.0]: https://github.com/an-anime-team/honkers-launcher/compare/1.8.1...1.9.0
