@@ -100,10 +100,10 @@ impl SimpleComponent for AboutDialog {
 
             set_release_notes_version: &APP_VERSION,
             set_release_notes: &[
-                "<p>Fixed</p>",
+                "<p>Changed</p>",
 
                 "<ul>",
-                    "<li>Fixed a bug caused by untested merge request</li>",
+                    "<li>Removed support for launching with Proton from the launcher. Launching with proton externally is unaffected.</li>",
                 "</ul>"
             ].join("\n"),
 
