@@ -100,10 +100,10 @@ impl SimpleComponent for AboutDialog {
 
             set_release_notes_version: &APP_VERSION,
             set_release_notes: &[
-                "<p>Changed</p>",
+                "<p>Added</p>",
 
                 "<ul>",
-                    "<li>Removed support for launching with Proton from the launcher. Launching with proton externally is unaffected.</li>",
+                    "<li>Added DXVK installation check for broken dxvk installations/li>",
                 "</ul>"
             ].join("\n"),
 

@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.12.0] - 22.09.2025
+
+### Added
+
+- Added DXVK installation check for broken dxvk installations
+
+
 ## [1.11.0] - 13.09.2025
 
 ### Changed
@@ -349,8 +356,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <br>
 
-[unreleased]: https://github.com/an-anime-team/honkers-launcher/compare/1.11.0...next
-[1.10.2]: https://github.com/an-anime-team/honkers-launcher/compare/1.10.2...1.11.0
+[unreleased]: https://github.com/an-anime-team/honkers-launcher/compare/1.12.0...next
+[1.12.0]: https://github.com/an-anime-team/honkers-launcher/compare/1.11.0...1.12.0
+[1.11.0]: https://github.com/an-anime-team/honkers-launcher/compare/1.10.2...1.11.0
 [1.10.2]: https://github.com/an-anime-team/honkers-launcher/compare/1.10.1...1.10.2
 [1.10.1]: https://github.com/an-anime-team/honkers-launcher/compare/1.10.0...1.10.1
 [1.10.0]: https://github.com/an-anime-team/honkers-launcher/compare/1.9.0...1.10.0
