@@ -1,16 +1,11 @@
 use relm4::prelude::*;
-
 use gtk::prelude::*;
 use adw::prelude::*;
-
 use anime_launcher_sdk::wincompatlib::prelude::*;
-
 use anime_launcher_sdk::anime_game_core::prelude::*;
-
 use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
-use anime_launcher_sdk::honkai::config::schema::launcher::{LauncherStyle, LauncherBehavior};
-
+use anime_launcher_sdk::honkai::config::schema::launcher::{LauncherBehavior, LauncherStyle};
 use anime_launcher_sdk::anime_game_core::honkai::consts::GameEdition;
 
 pub mod components;
@@ -18,7 +13,6 @@ pub mod components;
 use components::*;
 
 use crate::ui::preferences::main::PreferencesAppMsg;
-
 use crate::i18n::*;
 use crate::*;
 
@@ -34,12 +28,12 @@ pub struct GeneralApp {
 
 #[derive(Debug, Clone)]
 pub enum GeneralAppMsg {
-    /// Supposed to be called automatically on app's run when the latest game version
-    /// was retrieved from the API
+    /// Supposed to be called automatically on app's run when the latest game
+    /// version was retrieved from the API
     SetGameDiff(Option<VersionDiff>),
 
-    /// Supposed to be called automatically on app's run when the latest main patch version
-    /// was retrieved from remote repos
+    /// Supposed to be called automatically on app's run when the latest main
+    /// patch version was retrieved from remote repos
     SetMainPatch(Option<(Version, JadeitePatchStatusVariant)>),
 
     UpdateDownloadedWine,
@@ -182,7 +176,7 @@ impl SimpleAsyncComponent for GeneralApp {
                                 config.launcher.language = crate::i18n::format_lang(SUPPORTED_LANGUAGES
                                     .get(row.selected() as usize)
                                     .unwrap_or(&SUPPORTED_LANGUAGES[0]));
-    
+
                                 Config::update(config);
                             }
                         }
@@ -437,7 +431,7 @@ impl SimpleAsyncComponent for GeneralApp {
     async fn init(
         _init: Self::Init,
         root: Self::Root,
-        sender: AsyncComponentSender<Self>,
+        sender: AsyncComponentSender<Self>
     ) -> AsyncComponentParts<Self> {
         tracing::info!("Initializing general settings");
 
@@ -450,14 +444,20 @@ impl SimpleAsyncComponent for GeneralApp {
             main_patch: None,
 
             style: CONFIG.launcher.style,
-            languages: SUPPORTED_LANGUAGES.iter().map(|lang| tr!(format_lang(lang).as_str())).collect()
+            languages: SUPPORTED_LANGUAGES
+                .iter()
+                .map(|lang| tr!(format_lang(lang).as_str()))
+                .collect()
         };
 
         let components_page = model.components_page.widget();
 
         let widgets = view_output!();
 
-        AsyncComponentParts { model, widgets }
+        AsyncComponentParts {
+            model,
+            widgets
+        }
     }
 
     async fn update(&mut self, msg: Self::Input, sender: AsyncComponentSender<Self>) {
@@ -473,13 +473,15 @@ impl SimpleAsyncComponent for GeneralApp {
             }
 
             GeneralAppMsg::UpdateDownloadedWine => {
-                self.components_page.sender()
+                self.components_page
+                    .sender()
                     .send(ComponentsPageMsg::UpdateDownloadedWine)
                     .unwrap();
             }
 
             GeneralAppMsg::UpdateDownloadedDxvk => {
-                self.components_page.sender()
+                self.components_page
+                    .sender()
                     .send(ComponentsPageMsg::UpdateDownloadedDxvk)
                     .unwrap();
             }
@@ -489,18 +491,20 @@ impl SimpleAsyncComponent for GeneralApp {
             }
 
             GeneralAppMsg::OpenMainPage => unsafe {
-                PREFERENCES_WINDOW.as_ref()
+                PREFERENCES_WINDOW
+                    .as_ref()
                     .unwrap_unchecked()
                     .widget()
                     .pop_subpage();
-            }
+            },
 
             GeneralAppMsg::OpenComponentsPage => unsafe {
-                PREFERENCES_WINDOW.as_ref()
+                PREFERENCES_WINDOW
+                    .as_ref()
                     .unwrap_unchecked()
                     .widget()
                     .push_subpage(self.components_page.widget());
-            }
+            },
 
             #[allow(unused_must_use)]
             GeneralAppMsg::UpdateLauncherStyle(style) => {
@@ -533,7 +537,10 @@ impl SimpleAsyncComponent for GeneralApp {
 
                 if let Ok(Some(wine)) = config.get_selected_wine() {
                     let result = wine
-                        .to_wine(config.components.path, Some(config.game.wine.builds.join(&wine.name)))
+                        .to_wine(
+                            config.components.path,
+                            Some(config.game.wine.builds.join(&wine.name))
+                        )
                         .with_prefix(config.game.wine.prefix)
                         .with_loader(WineLoader::Current)
                         .with_arch(WineArch::Win64)
@@ -541,9 +548,7 @@ impl SimpleAsyncComponent for GeneralApp {
 
                     if let Err(err) = result {
                         sender.input(GeneralAppMsg::Toast {
-                            title: tr!("wine-run-error", {
-                                "executable" = executable.join(" ")
-                            }),
+                            title: tr!("wine-run-error", { "executable" = executable.join(" ") }),
                             description: Some(err.to_string())
                         });
 
@@ -553,8 +558,14 @@ impl SimpleAsyncComponent for GeneralApp {
             }
 
             #[allow(unused_must_use)]
-            GeneralAppMsg::Toast { title, description } => {
-                sender.output(Self::Output::Toast { title, description });
+            GeneralAppMsg::Toast {
+                title,
+                description
+            } => {
+                sender.output(Self::Output::Toast {
+                    title,
+                    description
+                });
             }
         }
     }

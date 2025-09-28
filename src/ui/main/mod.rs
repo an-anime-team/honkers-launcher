@@ -1,12 +1,8 @@
-use relm4::{
-    prelude::*,
-    actions::*,
-    MessageBroker
-};
-
+use relm4::MessageBroker;
+use relm4::actions::*;
+use relm4::prelude::*;
 use gtk::prelude::*;
 use adw::prelude::*;
-
 use gtk::glib::clone;
 
 mod repair_game;
@@ -19,18 +15,14 @@ mod disable_telemetry;
 mod launch;
 
 use anime_launcher_sdk::components::loader::ComponentsLoader;
-
 use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
-
 use anime_launcher_sdk::honkai::config::schema::launcher::LauncherStyle;
-
 use anime_launcher_sdk::honkai::states::*;
 use anime_launcher_sdk::honkai::consts::*;
 
 use crate::*;
 use crate::ui::components::*;
-
 use super::preferences::main::*;
 use super::about::*;
 
@@ -73,15 +65,16 @@ pub enum AppMsg {
         show_status_page: bool
     },
 
-    /// Supposed to be called automatically on app's run when the latest game version
-    /// was retrieved from the API
+    /// Supposed to be called automatically on app's run when the latest game
+    /// version was retrieved from the API
     SetGameDiff(Option<VersionDiff>),
 
-    /// Supposed to be called automatically on app's run when the latest main patch version
-    /// was retrieved from remote repos
+    /// Supposed to be called automatically on app's run when the latest main
+    /// patch version was retrieved from remote repos
     SetMainPatch(Option<(Version, JadeitePatchStatusVariant)>),
 
-    /// Supposed to be called automatically on app's run when the launcher state was chosen
+    /// Supposed to be called automatically on app's run when the launcher state
+    /// was chosen
     SetLauncherState(Option<LauncherState>),
 
     SetLauncherStyle(LauncherStyle),
@@ -538,7 +531,11 @@ impl SimpleComponent for App {
         }
     }
 
-    fn init(_init: Self::Init, root: Self::Root, sender: ComponentSender<Self>) -> ComponentParts<Self> {
+    fn init(
+        _init: Self::Init,
+        root: Self::Root,
+        sender: ComponentSender<Self>
+    ) -> ComponentParts<Self> {
         tracing::info!("Initializing main window");
 
         let model = App {
@@ -575,14 +572,18 @@ impl SimpleComponent for App {
         unsafe {
             MAIN_WINDOW = Some(widgets.main_window.clone());
 
-            PREFERENCES_WINDOW = Some(PreferencesApp::builder()
-                .launch(widgets.main_window.clone().into())
-                .forward(sender.input_sender(), std::convert::identity));
+            PREFERENCES_WINDOW = Some(
+                PreferencesApp::builder()
+                    .launch(widgets.main_window.clone().into())
+                    .forward(sender.input_sender(), std::convert::identity)
+            );
 
-            ABOUT_DIALOG = Some(AboutDialog::builder()
-                .transient_for(widgets.main_window.clone())
-                .launch_with_broker((), &about_dialog_broker)
-                .detach());
+            ABOUT_DIALOG = Some(
+                AboutDialog::builder()
+                    .transient_for(widgets.main_window.clone())
+                    .launch_with_broker((), &about_dialog_broker)
+                    .detach()
+            );
         }
 
         let mut group = RelmActionGroup::<WindowActionGroup>::new();
@@ -592,7 +593,6 @@ impl SimpleComponent for App {
         group.add_action::<LauncherFolder>(RelmAction::new_stateless(clone!(
             #[strong]
             sender,
-
             move |_| {
                 if let Err(err) = open::that(LAUNCHER_FOLDER.as_path()) {
                     sender.input(AppMsg::Toast {
@@ -608,11 +608,18 @@ impl SimpleComponent for App {
         group.add_action::<GameFolder>(RelmAction::new_stateless(clone!(
             #[strong]
             sender,
-
             move |_| {
                 let path = match Config::get() {
-                    Ok(config) => config.game.path.for_edition(config.launcher.edition).to_path_buf(),
-                    Err(_) => CONFIG.game.path.for_edition(CONFIG.launcher.edition).to_path_buf(),
+                    Ok(config) => config
+                        .game
+                        .path
+                        .for_edition(config.launcher.edition)
+                        .to_path_buf(),
+                    Err(_) => CONFIG
+                        .game
+                        .path
+                        .for_edition(CONFIG.launcher.edition)
+                        .to_path_buf()
                 };
 
                 if let Err(err) = open::that(path) {
@@ -629,7 +636,6 @@ impl SimpleComponent for App {
         group.add_action::<ConfigFile>(RelmAction::new_stateless(clone!(
             #[strong]
             sender,
-
             move |_| {
                 if let Ok(file) = config_file() {
                     if let Err(err) = open::that(file) {
@@ -647,7 +653,6 @@ impl SimpleComponent for App {
         group.add_action::<DebugFile>(RelmAction::new_stateless(clone!(
             #[strong]
             sender,
-
             move |_| {
                 if let Err(err) = open::that(crate::DEBUG_FILE.as_os_str()) {
                     sender.input(AppMsg::Toast {
@@ -664,11 +669,14 @@ impl SimpleComponent for App {
             about_dialog_broker.send(AboutDialogMsg::Show);
         }));
 
-        widgets.main_window.insert_action_group("win", Some(&group.into_action_group()));
+        widgets
+            .main_window
+            .insert_action_group("win", Some(&group.into_action_group()));
 
         tracing::info!("Main window initialized");
 
-        let download_picture = model.style == LauncherStyle::Classic && !KEEP_BACKGROUND_FILE.exists();
+        let download_picture =
+            model.style == LauncherStyle::Classic && !KEEP_BACKGROUND_FILE.exists();
 
         // Initialize some heavy tasks
         std::thread::spawn(move || {
@@ -682,7 +690,6 @@ impl SimpleComponent for App {
                 tasks.push(std::thread::spawn(clone!(
                     #[strong]
                     sender,
-
                     move || {
                         if let Err(err) = crate::background::download_background() {
                             tracing::error!("Failed to download background picture: {err}");
@@ -701,7 +708,6 @@ impl SimpleComponent for App {
             tasks.push(std::thread::spawn(clone!(
                 #[strong]
                 sender,
-
                 move || {
                     let components = ComponentsLoader::new(&CONFIG.components.path);
 
@@ -717,10 +723,13 @@ impl SimpleComponent for App {
                                             description: if changes.is_empty() {
                                                 None
                                             } else {
-                                                Some(changes.into_iter()
-                                                    .map(|line| format!("- {line}"))
-                                                    .collect::<Vec<_>>()
-                                                    .join("\n"))
+                                                Some(
+                                                    changes
+                                                        .into_iter()
+                                                        .map(|line| format!("- {line}"))
+                                                        .collect::<Vec<_>>()
+                                                        .join("\n")
+                                                )
                                             }
                                         });
 
@@ -756,12 +765,12 @@ impl SimpleComponent for App {
             tasks.push(std::thread::spawn(clone!(
                 #[strong]
                 sender,
-
                 move || {
                     // Get main patch status
                     sender.input(AppMsg::SetMainPatch(match jadeite::get_metadata() {
                         Ok(metadata) => {
-                            let status = GAME.get_version()
+                            let status = GAME
+                                .get_version()
                                 .map(|version| metadata.games.hsr.global.get_status(version))
                                 .unwrap_or(metadata.games.hsr.global.status);
 
@@ -789,7 +798,6 @@ impl SimpleComponent for App {
             tasks.push(std::thread::spawn(clone!(
                 #[strong]
                 sender,
-
                 move || {
                     sender.input(AppMsg::SetGameDiff(match GAME.try_get_diff() {
                         Ok(diff) => Some(diff),
@@ -826,7 +834,10 @@ impl SimpleComponent for App {
             tracing::info!("App is ready");
         });
 
-        ComponentParts { model, widgets }
+        ComponentParts {
+            model,
+            widgets
+        }
     }
 
     fn update(&mut self, msg: Self::Input, sender: ComponentSender<Self>) {
@@ -834,9 +845,14 @@ impl SimpleComponent for App {
 
         match msg {
             // TODO: make function from this message like with toast
-            AppMsg::UpdateLauncherState { perform_on_download_needed, show_status_page } => {
+            AppMsg::UpdateLauncherState {
+                perform_on_download_needed,
+                show_status_page
+            } => {
                 if show_status_page {
-                    sender.input(AppMsg::SetLoadingStatus(Some(Some(tr!("loading-launcher-state")))));
+                    sender.input(AppMsg::SetLoadingStatus(Some(Some(tr!(
+                        "loading-launcher-state"
+                    )))));
                 } else {
                     self.disabled_buttons = true;
                 }
@@ -844,16 +860,19 @@ impl SimpleComponent for App {
                 let updater = clone!(
                     #[strong]
                     sender,
-
                     move |state| {
                         if show_status_page {
                             match state {
                                 StateUpdating::Game => {
-                                    sender.input(AppMsg::SetLoadingStatus(Some(Some(tr!("loading-launcher-state--game")))));
+                                    sender.input(AppMsg::SetLoadingStatus(Some(Some(tr!(
+                                        "loading-launcher-state--game"
+                                    )))));
                                 }
 
                                 StateUpdating::Patch => {
-                                    sender.input(AppMsg::SetLoadingStatus(Some(Some(tr!("loading-launcher-state--patch")))));
+                                    sender.input(AppMsg::SetLoadingStatus(Some(Some(tr!(
+                                        "loading-launcher-state--patch"
+                                    )))));
                                 }
                             }
                         }
@@ -881,8 +900,10 @@ impl SimpleComponent for App {
 
                 if let Some(state) = state {
                     match state {
-                        LauncherState::GameUpdateAvailable(_) |
-                        LauncherState::GameNotInstalled(_) if perform_on_download_needed => {
+                        LauncherState::GameUpdateAvailable(_)
+                        | LauncherState::GameNotInstalled(_)
+                            if perform_on_download_needed =>
+                        {
                             sender.input(AppMsg::PerformAction);
                         }
 
@@ -893,13 +914,21 @@ impl SimpleComponent for App {
 
             #[allow(unused_must_use)]
             AppMsg::SetGameDiff(diff) => unsafe {
-                PREFERENCES_WINDOW.as_ref().unwrap_unchecked().sender().send(PreferencesAppMsg::SetGameDiff(diff));
-            }
+                PREFERENCES_WINDOW
+                    .as_ref()
+                    .unwrap_unchecked()
+                    .sender()
+                    .send(PreferencesAppMsg::SetGameDiff(diff));
+            },
 
             #[allow(unused_must_use)]
             AppMsg::SetMainPatch(patch) => unsafe {
-                PREFERENCES_WINDOW.as_ref().unwrap_unchecked().sender().send(PreferencesAppMsg::SetMainPatch(patch));
-            }
+                PREFERENCES_WINDOW
+                    .as_ref()
+                    .unwrap_unchecked()
+                    .sender()
+                    .send(PreferencesAppMsg::SetMainPatch(patch));
+            },
 
             AppMsg::SetLauncherState(state) => {
                 self.state = state;
@@ -930,46 +959,63 @@ impl SimpleComponent for App {
             }
 
             AppMsg::OpenPreferences => unsafe {
-                PREFERENCES_WINDOW.as_ref().unwrap_unchecked().widget().present();
-            }
+                PREFERENCES_WINDOW
+                    .as_ref()
+                    .unwrap_unchecked()
+                    .widget()
+                    .present();
+            },
 
-            AppMsg::RepairGame => repair_game::repair_game(sender, self.progress_bar.sender().to_owned()),
+            AppMsg::RepairGame => {
+                repair_game::repair_game(sender, self.progress_bar.sender().to_owned())
+            }
 
             AppMsg::PerformAction => unsafe {
                 match self.state.as_ref().unwrap_unchecked() {
-                    LauncherState::PatchNotVerified |
-                    LauncherState::PatchConcerning |
-                    LauncherState::Launch => launch::launch(sender),
+                    LauncherState::PatchNotVerified
+                    | LauncherState::PatchConcerning
+                    | LauncherState::Launch => launch::launch(sender),
 
-                    LauncherState::PatchNotInstalled |
-                    LauncherState::PatchUpdateAvailable => update_patch::update_patch(sender, self.progress_bar.sender().to_owned()),
+                    LauncherState::PatchNotInstalled | LauncherState::PatchUpdateAvailable => {
+                        update_patch::update_patch(sender, self.progress_bar.sender().to_owned())
+                    }
 
-                    LauncherState::TelemetryNotDisabled => disable_telemetry::disable_telemetry(sender),
+                    LauncherState::TelemetryNotDisabled => {
+                        disable_telemetry::disable_telemetry(sender)
+                    }
 
-                    LauncherState::WineNotInstalled => download_wine::download_wine(sender, self.progress_bar.sender().to_owned()),
+                    LauncherState::WineNotInstalled => {
+                        download_wine::download_wine(sender, self.progress_bar.sender().to_owned())
+                    }
                     LauncherState::PrefixNotExists => create_prefix::create_prefix(sender),
 
                     LauncherState::DxvkNotInstalled => {
                         install_dxvk::install_dxvk(sender, self.progress_bar.sender().to_owned())
                     }
 
-                    LauncherState::GameUpdateAvailable(diff) |
-                    LauncherState::GameNotInstalled(diff) =>
-                        download_diff::download_diff(sender, self.progress_bar.sender().to_owned(), diff.to_owned()),
+                    LauncherState::GameUpdateAvailable(diff)
+                    | LauncherState::GameNotInstalled(diff) => download_diff::download_diff(
+                        sender,
+                        self.progress_bar.sender().to_owned(),
+                        diff.to_owned()
+                    ),
 
                     _ => ()
                 }
-            }
+            },
 
             AppMsg::HideWindow => unsafe {
                 MAIN_WINDOW.as_ref().unwrap_unchecked().set_visible(false);
-            }
+            },
 
             AppMsg::ShowWindow => unsafe {
                 MAIN_WINDOW.as_ref().unwrap_unchecked().present();
-            }
+            },
 
-            AppMsg::Toast { title, description } => self.toast(title, description)
+            AppMsg::Toast {
+                title,
+                description
+            } => self.toast(title, description)
         }
     }
 }
