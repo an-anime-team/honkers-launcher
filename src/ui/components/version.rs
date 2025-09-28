@@ -1,14 +1,10 @@
 use std::path::PathBuf;
 
 use relm4::prelude::*;
-
 use gtk::prelude::*;
 use adw::prelude::*;
-
 use gtk::glib::clone;
-
 use anime_launcher_sdk::anime_game_core::prelude::*;
-
 use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
 
@@ -80,7 +76,7 @@ impl SimpleAsyncComponent for ComponentVersion {
     async fn init(
         init: Self::Init,
         root: Self::Root,
-        _sender: AsyncComponentSender<Self>,
+        _sender: AsyncComponentSender<Self>
     ) -> AsyncComponentParts<Self> {
         let mut model = ComponentVersion {
             name: init.0.name.clone(),
@@ -89,7 +85,10 @@ impl SimpleAsyncComponent for ComponentVersion {
 
             download_uri: init.0.uri,
             download_folder: init.1,
-            download_filename: init.0.format.map(|format| format!("{}.{format}", init.0.name)),
+            download_filename: init
+                .0
+                .format
+                .map(|format| format!("{}.{format}", init.0.name)),
 
             show_recommended_only: true,
             state: VersionState::NotDownloaded,
@@ -99,7 +98,7 @@ impl SimpleAsyncComponent for ComponentVersion {
                     caption: None,
                     display_progress: true,
                     display_fraction: false,
-                    visible: false,
+                    visible: false
                 })
                 .detach()
         };
@@ -118,7 +117,10 @@ impl SimpleAsyncComponent for ComponentVersion {
 
         widgets.row.add_suffix(model.progress_bar.widget());
 
-        AsyncComponentParts { model, widgets }
+        AsyncComponentParts {
+            model,
+            widgets
+        }
     }
 
     async fn update(&mut self, msg: Self::Input, sender: AsyncComponentSender<Self>) {
@@ -140,7 +142,8 @@ impl SimpleAsyncComponent for ComponentVersion {
 
                         self.state = VersionState::NotDownloaded;
 
-                        #[allow(unused_must_use)] {
+                        #[allow(unused_must_use)]
+                        {
                             sender.output(ComponentGroupMsg::CallOnDeleted);
                         }
                     }
@@ -150,7 +153,9 @@ impl SimpleAsyncComponent for ComponentVersion {
                             // todo
                             let mut installer = Installer::new(&self.download_uri)
                                 .expect("Failed to create installer instance for this version")
-                                .with_temp_folder(config.launcher.temp.unwrap_or_else(std::env::temp_dir));
+                                .with_temp_folder(
+                                    config.launcher.temp.unwrap_or_else(std::env::temp_dir)
+                                );
 
                             if let Some(filename) = &self.download_filename {
                                 installer = installer.with_filename(filename.to_owned());
@@ -164,32 +169,37 @@ impl SimpleAsyncComponent for ComponentVersion {
                             std::thread::spawn(clone!(
                                 #[strong(rename_to = download_folder)]
                                 self.download_folder,
-
                                 move || {
                                     progress_bar_sender.send(ProgressBarMsg::Reset);
                                     progress_bar_sender.send(ProgressBarMsg::SetVisible(true));
 
                                     installer.install(download_folder, move |state| {
                                         match &state {
-                                            InstallerUpdate::UnpackingFinished |
-                                            InstallerUpdate::DownloadingError(_) |
-                                            InstallerUpdate::UnpackingError(_) => {
-                                                progress_bar_sender.send(ProgressBarMsg::SetVisible(false));
+                                            InstallerUpdate::UnpackingFinished
+                                            | InstallerUpdate::DownloadingError(_)
+                                            | InstallerUpdate::UnpackingError(_) => {
+                                                progress_bar_sender
+                                                    .send(ProgressBarMsg::SetVisible(false));
 
                                                 if let InstallerUpdate::UnpackingFinished = &state {
-                                                    sender.input(ComponentVersionMsg::SetState(VersionState::Downloaded));
-                                                    sender.output(ComponentGroupMsg::CallOnDownloaded);
+                                                    sender.input(ComponentVersionMsg::SetState(
+                                                        VersionState::Downloaded
+                                                    ));
+                                                    sender.output(
+                                                        ComponentGroupMsg::CallOnDownloaded
+                                                    );
+                                                } else {
+                                                    sender.input(ComponentVersionMsg::SetState(
+                                                        VersionState::NotDownloaded
+                                                    ));
                                                 }
-
-                                                else {
-                                                    sender.input(ComponentVersionMsg::SetState(VersionState::NotDownloaded));
-                                                }
-                                            },
+                                            }
 
                                             _ => ()
                                         }
 
-                                        progress_bar_sender.send(ProgressBarMsg::UpdateFromState(state));
+                                        progress_bar_sender
+                                            .send(ProgressBarMsg::UpdateFromState(state));
                                     });
                                 }
                             ));
