@@ -198,8 +198,9 @@ impl SimpleAsyncComponent for ComponentVersion {
                                             _ => ()
                                         }
 
-                                        progress_bar_sender
-                                            .send(ProgressBarMsg::UpdateFromState(state));
+                                        progress_bar_sender.send(ProgressBarMsg::UpdateFromState(
+                                            honkai::DiffUpdate::Installer(state)
+                                        ));
                                     });
                                 }
                             ));

@@ -310,6 +310,7 @@ impl SimpleComponent for App {
                                                 Some(LauncherState::GameUpdateAvailable(_)) |
                                                 Some(LauncherState::GameNotInstalled(_)) => "document-save-symbolic",
 
+                                                Some(LauncherState::GameOutdated(_)) |
                                                 Some(LauncherState::PatchBroken) |
                                                 Some(LauncherState::PatchUnsafe) |
                                                 None => "window-close-symbolic"
@@ -334,6 +335,7 @@ impl SimpleComponent for App {
                                                 Some(LauncherState::PatchBroken) => tr!("patch-broken"),
                                                 Some(LauncherState::PatchUnsafe) => tr!("patch-unsafe"),
 
+                                                Some(LauncherState::GameOutdated(diff)) |
                                                 Some(LauncherState::GameUpdateAvailable(diff)) => {
                                                     match (Config::get(), diff.file_name()) {
                                                         (Ok(config), Some(filename)) => {

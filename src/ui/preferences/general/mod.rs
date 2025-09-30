@@ -237,7 +237,9 @@ impl SimpleAsyncComponent for GeneralApp {
                         set_text: &match model.game_diff.as_ref() {
                             Some(diff) => match diff {
                                 VersionDiff::Latest(current) |
-                                VersionDiff::Diff { current, .. } => current.to_string(),
+                                VersionDiff::Diff { current, .. } |
+                                VersionDiff::Outdated {current, ..}
+                                => current.to_string(),
 
                                 VersionDiff::NotInstalled { .. } => tr!("game-not-installed")
                             }
@@ -250,6 +252,7 @@ impl SimpleAsyncComponent for GeneralApp {
                             Some(diff) => match diff {
                                 VersionDiff::Latest(_) => &["success"],
                                 VersionDiff::Diff { .. } => &["warning"],
+                                VersionDiff::Outdated { .. } => &["error"],
                                 VersionDiff::NotInstalled { .. } => &[]
                             }
 
@@ -262,6 +265,10 @@ impl SimpleAsyncComponent for GeneralApp {
                                 VersionDiff::Diff { current, latest, .. } => tr!("game-update-available", {
                                     "old" = current.to_string(),
                                     "new" = latest.to_string()
+                                }),
+
+                                VersionDiff::Outdated { latest, ..} => tr!("game-outdated", {
+                                    "latest" = latest.to_string()
                                 }),
 
                                 VersionDiff::Latest(_) |

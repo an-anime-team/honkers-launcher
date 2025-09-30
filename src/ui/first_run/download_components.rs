@@ -426,8 +426,9 @@ impl SimpleAsyncComponent for DownloadComponentsApp {
                                         _ => ()
                                     }
 
-                                    progress_bar_input
-                                        .send(ProgressBarMsg::UpdateFromState(update));
+                                    progress_bar_input.send(ProgressBarMsg::UpdateFromState(
+                                        DiffUpdate::Installer(update)
+                                    ));
                                 });
                             }
 
@@ -540,8 +541,9 @@ impl SimpleAsyncComponent for DownloadComponentsApp {
                                         _ => ()
                                     }
 
-                                    progress_bar_input
-                                        .send(ProgressBarMsg::UpdateFromState(update));
+                                    progress_bar_input.send(ProgressBarMsg::UpdateFromState(
+                                        DiffUpdate::Installer(update)
+                                    ));
                                 });
                             }
 

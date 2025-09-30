@@ -36,7 +36,7 @@ pub fn download_diff(
                 sender,
                 move |state| {
                     match &state {
-                        InstallerUpdate::DownloadingError(err) => {
+                        DiffUpdate::Installer(InstallerUpdate::DownloadingError(err)) => {
                             tracing::error!("Downloading failed: {err}");
 
                             sender.input(AppMsg::Toast {
@@ -45,7 +45,7 @@ pub fn download_diff(
                             });
                         }
 
-                        InstallerUpdate::UnpackingError(err) => {
+                        DiffUpdate::Installer(InstallerUpdate::UnpackingError(err)) => {
                             tracing::error!("Unpacking failed: {err}");
 
                             sender.input(AppMsg::Toast {

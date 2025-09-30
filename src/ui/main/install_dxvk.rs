@@ -81,8 +81,11 @@ pub fn install_dxvk(sender: ComponentSender<App>, progress_bar_input: Sender<Pro
 
                                             #[allow(unused_must_use)]
                                             {
-                                                progress_bar_input
-                                                    .send(ProgressBarMsg::UpdateFromState(state));
+                                                progress_bar_input.send(
+                                                    ProgressBarMsg::UpdateFromState(
+                                                        DiffUpdate::Installer(state)
+                                                    )
+                                                );
                                             }
                                         }
                                     )
