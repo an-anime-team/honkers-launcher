@@ -30,7 +30,7 @@ pub fn download_diff(
 
         let result = diff.install_to(
             game_path,
-            1,
+            config.launcher.sophon.threads as usize,
             clone!(
                 #[strong]
                 sender,
