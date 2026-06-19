@@ -1,6 +1,5 @@
 use relm4::prelude::*;
 use adw::prelude::*;
-
 use anime_launcher_sdk::anime_game_core::prelude::*;
 
 use crate::*;
@@ -40,7 +39,7 @@ pub enum ProgressBarMsg {
     DisplayProgress(bool),
     DisplayFraction(bool),
 
-    /// (current bytes, total bytes) 
+    /// (current bytes, total bytes)
     UpdateProgress(u64, u64),
 
     UpdateFromState(InstallerUpdate),
@@ -90,7 +89,7 @@ impl SimpleAsyncComponent for ProgressBar {
     async fn init(
         init: Self::Init,
         root: Self::Root,
-        _sender: AsyncComponentSender<Self>,
+        _sender: AsyncComponentSender<Self>
     ) -> AsyncComponentParts<Self> {
         let model = ProgressBar {
             fraction: 0.0,
@@ -103,7 +102,10 @@ impl SimpleAsyncComponent for ProgressBar {
 
         let widgets = view_output!();
 
-        AsyncComponentParts { model, widgets }
+        AsyncComponentParts {
+            model,
+            widgets
+        }
     }
 
     async fn update(&mut self, msg: Self::Input, _sender: AsyncComponentSender<Self>) {
@@ -121,38 +123,40 @@ impl SimpleAsyncComponent for ProgressBar {
             ProgressBarMsg::UpdateProgress(curr, total) => {
                 self.fraction = curr as f64 / total as f64;
 
-                self.downloaded = Some((
-                    prettify_bytes(curr),
-                    prettify_bytes(total)
-                ));
+                self.downloaded = Some((prettify_bytes(curr), prettify_bytes(total)));
             }
 
-            ProgressBarMsg::UpdateFromState(state) => {
-                match state {
-                    InstallerUpdate::CheckingFreeSpace(_)          => self.caption = Some(tr!("checking-free-space")),
-                    InstallerUpdate::DownloadingStarted(_)         => self.caption = Some(tr!("downloading")),
-                    InstallerUpdate::UpdatingPermissionsStarted(_) => self.caption = Some(tr!("updating-permissions")),
-                    InstallerUpdate::UnpackingStarted(_)           => self.caption = Some(tr!("unpacking")),
-
-                    InstallerUpdate::DownloadingProgress(curr, total) |
-                    InstallerUpdate::UpdatingPermissions(curr, total) |
-                    InstallerUpdate::UnpackingProgress(curr, total) => {
-                        self.fraction = curr as f64 / total as f64;
-
-                        self.downloaded = Some((
-                            prettify_bytes(curr),
-                            prettify_bytes(total)
-                        ));
-                    }
-
-                    InstallerUpdate::DownloadingFinished         => tracing::info!("Downloading finished"),
-                    InstallerUpdate::UpdatingPermissionsFinished => tracing::info!("Updating permissions finished"),
-                    InstallerUpdate::UnpackingFinished           => tracing::info!("Unpacking finished"),
-
-                    InstallerUpdate::DownloadingError(err) => tracing::error!("Downloading error: {:?}", err),
-                    InstallerUpdate::UnpackingError(err)   => tracing::error!("Unpacking error: {:?}", err)
+            ProgressBarMsg::UpdateFromState(state) => match state {
+                InstallerUpdate::CheckingFreeSpace(_) => {
+                    self.caption = Some(tr!("checking-free-space"))
                 }
-            }
+                InstallerUpdate::DownloadingStarted(_) => self.caption = Some(tr!("downloading")),
+                InstallerUpdate::UpdatingPermissionsStarted(_) => {
+                    self.caption = Some(tr!("updating-permissions"))
+                }
+                InstallerUpdate::UnpackingStarted(_) => self.caption = Some(tr!("unpacking")),
+
+                InstallerUpdate::DownloadingProgress(curr, total)
+                | InstallerUpdate::UpdatingPermissions(curr, total)
+                | InstallerUpdate::UnpackingProgress(curr, total) => {
+                    self.fraction = curr as f64 / total as f64;
+
+                    self.downloaded = Some((prettify_bytes(curr), prettify_bytes(total)));
+                }
+
+                InstallerUpdate::DownloadingFinished => tracing::info!("Downloading finished"),
+                InstallerUpdate::UpdatingPermissionsFinished => {
+                    tracing::info!("Updating permissions finished")
+                }
+                InstallerUpdate::UnpackingFinished => tracing::info!("Unpacking finished"),
+
+                InstallerUpdate::DownloadingError(err) => {
+                    tracing::error!("Downloading error: {:?}", err)
+                }
+                InstallerUpdate::UnpackingError(err) => {
+                    tracing::error!("Unpacking error: {:?}", err)
+                }
+            },
 
             ProgressBarMsg::SetVisible(visible) => self.visible = visible
         }

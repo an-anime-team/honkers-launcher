@@ -3,8 +3,7 @@ use std::process::Command;
 use anime_launcher_sdk::anime_game_core::honkai::prelude::*;
 use anime_launcher_sdk::anime_game_core::installer::downloader::Downloader;
 use anime_launcher_sdk::anime_game_core::minreq;
-
-use md5::{Md5, Digest};
+use md5::{Digest, Md5};
 use unic_langid::LanguageIdentifier;
 
 use crate::i18n::format_lang;
@@ -20,18 +19,17 @@ fn get_expected_edition(lang: &LanguageIdentifier) -> GameEdition {
         "ja" => GameEdition::Japan,
         "ko" => GameEdition::Korea,
 
-        "zh" => {
-            match lang.region {
-                Some(region) => {
-                    if region.as_str().to_ascii_lowercase() == "tw" {
-                        GameEdition::Taiwan
-                    } else {
-                        GameEdition::China
-                    }
+        "zh" => match lang.region {
+            Some(region) => {
+                if region.as_str().to_ascii_lowercase() == "tw" {
+                    GameEdition::Taiwan
                 }
-
-                None => GameEdition::China
+                else {
+                    GameEdition::China
+                }
             }
+
+            None => GameEdition::China
         },
 
         "vi" | "th" | "id" => GameEdition::Sea,
@@ -47,10 +45,23 @@ pub fn get_background_info() -> anyhow::Result<Background> {
     let expected_edition = get_expected_edition(lang);
 
     let uri = match expected_edition {
-        GameEdition::China => concat!("https://hyp-api.", "mi", "ho", "yo", ".com/hyp/hyp-connect/api/getAllGameBasicInfo?launcher_id=jGHBHlcOq1").to_string(),
+        GameEdition::China => concat!(
+            "https://hyp-api.",
+            "mi",
+            "ho",
+            "yo",
+            ".com/hyp/hyp-connect/api/getAllGameBasicInfo?launcher_id=jGHBHlcOq1"
+        )
+        .to_string(),
 
         _ => {
-            let uri = concat!("https://sg-hyp-api.", "ho", "yo", "verse", ".com/hyp/hyp-connect/api/getAllGameBasicInfo?launcher_id=VYTpXlbWo8&language=");
+            let uri = concat!(
+                "https://sg-hyp-api.",
+                "ho",
+                "yo",
+                "verse",
+                ".com/hyp/hyp-connect/api/getAllGameBasicInfo?launcher_id=VYTpXlbWo8&language="
+            );
 
             format!("{uri}{}", format_lang(lang))
         }
@@ -68,11 +79,13 @@ pub fn get_background_info() -> anyhow::Result<Background> {
         .and_then(|background| background["background"]["url"].as_str())
         .map(|background| background.to_owned());
 
-    let Some(uri) = uri else {
+    let Some(uri) = uri
+    else {
         anyhow::bail!("Failed to get background picture url");
     };
 
-    let hash = uri.split('/')
+    let hash = uri
+        .split('/')
         .last()
         .unwrap_or_default()
         .split('_')
@@ -126,12 +139,17 @@ pub fn download_background() -> anyhow::Result<()> {
         // Will happen with HSR because devs apparently named
         // their background image ".webp" while it's JPEG
         if !crate::PROCESSED_BACKGROUND_FILE.exists() {
-            std::fs::copy(crate::BACKGROUND_FILE.as_path(), crate::PROCESSED_BACKGROUND_FILE.as_path())?;
+            std::fs::copy(
+                crate::BACKGROUND_FILE.as_path(),
+                crate::PROCESSED_BACKGROUND_FILE.as_path()
+            )?;
         }
     }
-
     else {
-        std::fs::copy(crate::BACKGROUND_FILE.as_path(), crate::PROCESSED_BACKGROUND_FILE.as_path())?;
+        std::fs::copy(
+            crate::BACKGROUND_FILE.as_path(),
+            crate::PROCESSED_BACKGROUND_FILE.as_path()
+        )?;
     }
 
     Ok(())

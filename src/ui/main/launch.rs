@@ -1,19 +1,18 @@
 use relm4::prelude::*;
 use gtk::prelude::*;
-
 use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
 use anime_launcher_sdk::honkai::config::schema::prelude::LauncherBehavior;
 
 use crate::*;
-
 use super::{App, AppMsg};
 
 pub fn launch(sender: ComponentSender<App>) {
     let config = Config::get().unwrap();
 
     match config.launcher.behavior {
-        // Disable launch button and show kill game button if behavior set to "Nothing" to prevent sussy actions
+        // Disable launch button and show kill game button if behavior set to "Nothing" to prevent
+        // sussy actions
         LauncherBehavior::Nothing => {
             sender.input(AppMsg::DisableButtons(true));
             sender.input(AppMsg::SetKillGameButton(true));
@@ -34,7 +33,8 @@ pub fn launch(sender: ComponentSender<App>) {
         }
 
         match config.launcher.behavior {
-            // Enable launch button and hide kill game button if behavior set to "Nothing" after the game has closed
+            // Enable launch button and hide kill game button if behavior set to "Nothing" after the
+            // game has closed
             LauncherBehavior::Nothing => {
                 sender.input(AppMsg::DisableButtons(false));
                 sender.input(AppMsg::SetKillGameButton(false));
@@ -44,7 +44,8 @@ pub fn launch(sender: ComponentSender<App>) {
             LauncherBehavior::Hide => sender.input(AppMsg::ShowWindow),
 
             // Otherwise close the launcher if behavior set to "Close" and the game has closed
-            // We're calling quit method from the main context here because otherwise app won't be closed properly
+            // We're calling quit method from the main context here because otherwise app won't be
+            // closed properly
             LauncherBehavior::Close => gtk::glib::MainContext::default().invoke(|| {
                 relm4::main_application().quit();
             })

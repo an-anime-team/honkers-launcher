@@ -1,16 +1,11 @@
-use relm4::{
-    prelude::*,
-    Sender
-};
-
+use relm4::Sender;
+use relm4::prelude::*;
 use gtk::glib::clone;
-
 use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
 
 use crate::*;
 use crate::ui::components::*;
-
 use super::{App, AppMsg};
 
 #[allow(unused_must_use)]
@@ -52,17 +47,21 @@ pub fn repair_game(sender: ComponentSender<App>, progress_bar_input: Sender<Prog
                     }
 
                     let thread_sender = verify_sender.clone();
-                    let game_path = config.game.path.for_edition(config.launcher.edition).to_path_buf();
+                    let game_path = config
+                        .game
+                        .path
+                        .for_edition(config.launcher.edition)
+                        .to_path_buf();
 
                     std::thread::spawn(clone!(
                         #[strong]
-                        game_path, 
-
+                        game_path,
                         move || {
                             for file in thread_files {
                                 let status = if config.launcher.repairer.fast {
                                     file.fast_verify(&game_path)
-                                } else {
+                                }
+                                else {
                                     file.verify(&game_path)
                                 };
 
@@ -72,10 +71,12 @@ pub fn repair_game(sender: ComponentSender<App>, progress_bar_input: Sender<Prog
                     ));
                 }
 
-                // We have [config.launcher.repairer.threads] copies of this sender + the original one
-                // receiver will return Err when all the senders will be dropped.
-                // [config.launcher.repairer.threads] senders will be dropped when threads will finish verifying files
-                // but this one will live as long as current thread exists so we should drop it manually
+                // We have [config.launcher.repairer.threads] copies of this sender + the
+                // original one receiver will return Err when all the senders
+                // will be dropped. [config.launcher.repairer.threads] senders
+                // will be dropped when threads will finish verifying files
+                // but this one will live as long as current thread exists so we should drop it
+                // manually
                 drop(verify_sender);
 
                 let mut broken = Vec::new();
@@ -94,16 +95,23 @@ pub fn repair_game(sender: ComponentSender<App>, progress_bar_input: Sender<Prog
                 if !broken.is_empty() {
                     let total = broken.len() as u64;
 
-                    progress_bar_input.send(ProgressBarMsg::UpdateCaption(Some(tr!("repairing-files"))));
+                    progress_bar_input
+                        .send(ProgressBarMsg::UpdateCaption(Some(tr!("repairing-files"))));
                     progress_bar_input.send(ProgressBarMsg::DisplayFraction(false));
                     progress_bar_input.send(ProgressBarMsg::UpdateProgress(0, total));
 
-                    tracing::warn!("Found broken files:\n{}", broken.iter().fold(String::new(), |acc, file| acc + &format!("- {}\n", file.path.to_string_lossy())));
+                    tracing::warn!(
+                        "Found broken files:\n{}",
+                        broken.iter().fold(String::new(), |acc, file| acc
+                            + &format!("- {}\n", file.path.to_string_lossy()))
+                    );
 
                     for (i, file) in broken.into_iter().enumerate() {
                         tracing::debug!("Repairing file: {}", file.path.to_string_lossy());
 
-                        if let Err(err) = file.repair(config.game.path.for_edition(config.launcher.edition)) {
+                        if let Err(err) =
+                            file.repair(config.game.path.for_edition(config.launcher.edition))
+                        {
                             sender.input(AppMsg::Toast {
                                 title: tr!("game-file-repairing-error"),
                                 description: Some(err.to_string())
@@ -112,7 +120,8 @@ pub fn repair_game(sender: ComponentSender<App>, progress_bar_input: Sender<Prog
                             tracing::error!("Failed to repair game file: {err}");
                         }
 
-                        progress_bar_input.send(ProgressBarMsg::UpdateProgress(i as u64 + 1, total));
+                        progress_bar_input
+                            .send(ProgressBarMsg::UpdateProgress(i as u64 + 1, total));
                     }
 
                     progress_bar_input.send(ProgressBarMsg::DisplayFraction(true));
