@@ -296,22 +296,33 @@ impl SimpleComponent for App {
                                             set_icon_name: match &model.state {
                                                 Some(LauncherState::Launch) |
                                                 Some(LauncherState::PatchNotVerified) |
-                                                Some(LauncherState::PatchConcerning) => "media-playback-start-symbolic",
+                                                Some(LauncherState::PatchConcerning) |
+                                                Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Verified, .. }) |
+                                                Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Unverified, .. }) |
+                                                Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Concerning, .. })
+                                                    => "media-playback-start-symbolic",
 
                                                 Some(LauncherState::PatchNotInstalled) |
-                                                Some(LauncherState::PatchUpdateAvailable) => "document-save-symbolic",
+                                                Some(LauncherState::PatchUpdateAvailable)
+                                                    => "document-save-symbolic",
 
-                                                Some(LauncherState::TelemetryNotDisabled) => "security-high-symbolic",
+                                                Some(LauncherState::TelemetryNotDisabled)
+                                                    => "security-high-symbolic",
 
                                                 Some(LauncherState::WineNotInstalled) |
                                                 Some(LauncherState::PrefixNotExists) |
-                                                Some(LauncherState::DxvkNotInstalled) => "document-save-symbolic",
+                                                Some(LauncherState::DxvkNotInstalled)
+                                                    => "document-save-symbolic",
 
                                                 Some(LauncherState::GameUpdateAvailable(_)) |
-                                                Some(LauncherState::GameNotInstalled(_)) => "document-save-symbolic",
+                                                Some(LauncherState::GameNotInstalled(_))
+                                                    => "document-save-symbolic",
 
+                                                Some(LauncherState::GameOutdated(_)) |
                                                 Some(LauncherState::PatchBroken) |
                                                 Some(LauncherState::PatchUnsafe) |
+                                                Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Broken, .. }) |
+                                                Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Unsafe, .. }) |
                                                 None => "window-close-symbolic"
                                             },
 
@@ -319,22 +330,35 @@ impl SimpleComponent for App {
                                             set_label: &match &model.state {
                                                 Some(LauncherState::Launch) |
                                                 Some(LauncherState::PatchNotVerified) |
-                                                Some(LauncherState::PatchConcerning) => tr!("launch"),
+                                                Some(LauncherState::PatchConcerning)|
+                                                Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Verified, .. }) |
+                                                Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Unverified, .. }) |
+                                                Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Concerning, .. })
+                                                    => tr!("launch"),
+
+                                                Some(LauncherState::PatchNotInstalled) |
+                                                Some(LauncherState::PatchUpdateAvailable)
+                                                    => tr!("download-patch"),
+
+                                                Some(LauncherState::TelemetryNotDisabled)
+                                                    => tr!("disable-telemetry"),
 
                                                 Some(LauncherState::WineNotInstalled)     => tr!("download-wine"),
                                                 Some(LauncherState::PrefixNotExists)      => tr!("create-prefix"),
                                                 Some(LauncherState::DxvkNotInstalled)     => tr!("install-dxvk"),
                                                 Some(LauncherState::GameNotInstalled(_))  => tr!("download"),
 
-                                                Some(LauncherState::PatchNotInstalled) |
-                                                Some(LauncherState::PatchUpdateAvailable) => tr!("download-patch"),
+                                                Some(LauncherState::PatchBroken) |
+                                                Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Broken, .. })
+                                                    => tr!("patch-broken"),
 
-                                                Some(LauncherState::TelemetryNotDisabled) => tr!("disable-telemetry"),
+                                                Some(LauncherState::PatchUnsafe) |
+                                                Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Unsafe, .. })
+                                                    => tr!("patch-unsafe"),
 
-                                                Some(LauncherState::PatchBroken) => tr!("patch-broken"),
-                                                Some(LauncherState::PatchUnsafe) => tr!("patch-unsafe"),
-
-                                                Some(LauncherState::GameUpdateAvailable(diff)) => {
+                                                Some(LauncherState::GameUpdateAvailable(diff)) |
+                                                Some(LauncherState::GameOutdated(diff))
+                                                    => {
                                                     match (Config::get(), diff.file_name()) {
                                                         (Ok(config), Some(filename)) => {
                                                             let temp = config.launcher.temp.unwrap_or_else(std::env::temp_dir);
@@ -358,8 +382,12 @@ impl SimpleComponent for App {
 
                                         #[watch]
                                         set_sensitive: !model.disabled_buttons && match &model.state {
+                                            Some(LauncherState::GameOutdated { .. }) |
                                             Some(LauncherState::PatchBroken) |
-                                            Some(LauncherState::PatchUnsafe) => false,
+                                            Some(LauncherState::PatchUnsafe) |
+                                            Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Broken, .. }) |
+                                            Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Unsafe, .. })
+                                                => false,
 
                                             Some(_) => true,
                                             None => false
@@ -367,11 +395,17 @@ impl SimpleComponent for App {
 
                                         #[watch]
                                         set_css_classes: match &model.state {
-                                            Some(LauncherState::PatchNotVerified) => &["warning", "pill"],
+                                            Some(LauncherState::GameOutdated { .. }) |
+                                            Some(LauncherState::PatchNotVerified)
+                                                => &["warning", "pill"],
 
                                             Some(LauncherState::PatchBroken) |
                                             Some(LauncherState::PatchUnsafe) |
-                                            Some(LauncherState::PatchConcerning) => &["error", "pill"],
+                                            Some(LauncherState::PatchConcerning) |
+                                            Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Broken, .. }) |
+                                            Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Unsafe, .. }) |
+                                            Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Concerning, .. })
+                                                => &["error", "pill"],
 
                                             Some(_) => &["suggested-action", "pill"],
                                             None => &["pill"]
@@ -379,10 +413,17 @@ impl SimpleComponent for App {
 
                                         #[watch]
                                         set_tooltip_text: Some(&match &model.state {
-                                            Some(LauncherState::PatchNotVerified) => tr!("patch-testing-tooltip"),
-                                            Some(LauncherState::PatchBroken)      => tr!("patch-broken-tooltip"),
-                                            Some(LauncherState::PatchUnsafe)      => tr!("patch-unsafe-tooltip"),
-                                            Some(LauncherState::PatchConcerning)  => tr!("patch-concerning-tooltip"),
+                                            Some(LauncherState::GameOutdated { .. }) => tr!("main-window--version-outdated-tooltip"),
+                                            Some(LauncherState::PatchNotVerified)    => tr!("patch-testing-tooltip"),
+                                            Some(LauncherState::PatchBroken) |
+                                            Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Broken, .. })
+                                                => tr!("patch-broken-tooltip"),
+                                            Some(LauncherState::PatchUnsafe) |
+                                            Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Unsafe, .. })
+                                                => tr!("patch-unsafe-tooltip"),
+                                            Some(LauncherState::PatchConcerning) |
+                                            Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Concerning, .. })
+                                                => tr!("patch-concerning-tooltip"),
 
                                             _ => String::new()
                                         }),

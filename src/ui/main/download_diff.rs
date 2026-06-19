@@ -4,6 +4,8 @@ use anime_launcher_sdk::honkai::config::Config;
 use gtk::glib::clone;
 use relm4::Sender;
 use relm4::prelude::*;
+use anime_launcher_sdk::anime_game_core::sophon::installer::Update as SophonInstallerUpdate;
+use anime_launcher_sdk::anime_game_core::sophon::updater::Update as SophonPatcherUpdate;
 
 use super::{App, AppMsg};
 use crate::ui::components::*;
@@ -24,19 +26,30 @@ pub fn download_diff(
             .for_edition(config.launcher.edition)
             .to_path_buf();
 
+        if !game_path.exists() {
+            if let Err(err) = std::fs::create_dir(&game_path) {
+                tracing::error!(?err, "Failed to create game directory");
+                sender.input(AppMsg::Toast {
+                    title: tr!("downloading-failed"),
+                    description: Some(err.to_string())
+                });
+            }
+        }
+
         if let Some(temp) = config.launcher.temp {
             diff = diff.with_temp_folder(temp);
         }
 
         let result = diff.install_to(
             game_path,
-            1,
+            config.launcher.sophon.threads as usize,
             clone!(
                 #[strong]
                 sender,
                 move |state| {
                     match &state {
-                        InstallerUpdate::DownloadingError(err) => {
+                        DiffUpdate::Installer(SophonInstallerUpdate::DownloadingError(err))
+                        | DiffUpdate::Patcher(SophonPatcherUpdate::DownloadingError(err)) => {
                             tracing::error!("Downloading failed: {err}");
 
                             sender.input(AppMsg::Toast {
@@ -45,21 +58,12 @@ pub fn download_diff(
                             });
                         }
 
-                        InstallerUpdate::UnpackingError(err) => {
-                            tracing::error!("Unpacking failed: {err}");
-
-                            sender.input(AppMsg::Toast {
-                                title: tr!("unpacking-failed"),
-                                description: Some(err.clone())
-                            });
-                        }
-
                         _ => ()
                     }
 
                     #[allow(unused_must_use)]
                     {
-                        progress_bar_input.send(ProgressBarMsg::UpdateFromState(state));
+                        progress_bar_input.send(ProgressBarMsg::UpdateFromDiffState(state));
                     }
                 }
             )

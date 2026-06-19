@@ -238,8 +238,11 @@ impl SimpleAsyncComponent for GeneralApp {
                         #[watch]
                         set_text: &match model.game_diff.as_ref() {
                             Some(diff) => match diff {
-                                VersionDiff::Latest(current) |
-                                VersionDiff::Diff { current, .. } => current.to_string(),
+                                VersionDiff::Latest { version: current, .. } |
+                                VersionDiff::Predownload { current, .. } |
+                                VersionDiff::Diff { current, .. } |
+                                VersionDiff::Outdated { current, .. }
+                                    => current.to_string(),
 
                                 VersionDiff::NotInstalled { .. } => tr!("game-not-installed")
                             }
@@ -250,8 +253,10 @@ impl SimpleAsyncComponent for GeneralApp {
                         #[watch]
                         set_css_classes: match model.game_diff.as_ref() {
                             Some(diff) => match diff {
-                                VersionDiff::Latest(_) => &["success"],
-                                VersionDiff::Diff { .. } => &["warning"],
+                                VersionDiff::Latest { .. }       => &["success"],
+                                VersionDiff::Predownload { .. }  => &["accent"],
+                                VersionDiff::Diff { .. }         => &["warning"],
+                                VersionDiff::Outdated { .. }     => &["error"],
                                 VersionDiff::NotInstalled { .. } => &[]
                             }
 
@@ -266,7 +271,14 @@ impl SimpleAsyncComponent for GeneralApp {
                                     "new" = latest.to_string()
                                 }),
 
-                                VersionDiff::Latest(_) |
+                                VersionDiff::Predownload { current, latest, .. } => tr!("game-predownload-available", {
+                                    "old" = current.to_string(),
+                                    "new" = latest.to_string()
+                                }),
+
+                                VersionDiff::Outdated { latest, .. } => tr!("game-outdated", { "latest" = latest.to_string() }),
+
+                                VersionDiff::Latest { .. } |
                                 VersionDiff::NotInstalled { .. } => String::new()
                             }
 
