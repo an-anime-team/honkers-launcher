@@ -145,7 +145,7 @@ fn main() -> anyhow::Result<()> {
     }
 
     // Force debug output
-    let mut force_debug = false;
+    let mut force_debug = 0;
 
     // Run the game
     let mut run_game = false;
@@ -162,7 +162,7 @@ fn main() -> anyhow::Result<()> {
     // Parse arguments
     for i in 0..args.len() {
         match args[i].as_str() {
-            "--debug" => force_debug = true,
+            "--debug" => force_debug += 1,
             "--run-game" => run_game = true,
             "--just-run-game" => just_run_game = true,
             "--no-verbose-tracing" => no_verbose_tracing = true,
@@ -182,15 +182,22 @@ fn main() -> anyhow::Result<()> {
     let stdout = tracing_subscriber::fmt::layer()
         .pretty()
         .with_filter({
-            if APP_DEBUG || force_debug {
+            if force_debug >= 2 {
                 LevelFilter::TRACE
+            }
+            else if APP_DEBUG || force_debug >= 1 {
+                LevelFilter::DEBUG
             }
             else {
                 LevelFilter::WARN
             }
         })
         .with_filter(filter_fn(move |metadata| {
-            !metadata.target().contains("rustls") && !no_verbose_tracing
+            !metadata.target().contains("rustls")
+                && !metadata.target().contains("reqwest")
+                && !metadata.target().contains("h2")
+                && !metadata.target().contains("hyper_util")
+                && !no_verbose_tracing
         }));
 
     // Prepare debug file logger
@@ -200,7 +207,20 @@ fn main() -> anyhow::Result<()> {
         .pretty()
         .with_ansi(false)
         .with_writer(std::sync::Arc::new(file))
-        .with_filter(filter_fn(|metadata| !metadata.target().contains("rustls")));
+        .with_filter({
+            if force_debug >= 2 {
+                LevelFilter::TRACE
+            }
+            else {
+                LevelFilter::DEBUG
+            }
+        })
+        .with_filter(filter_fn(|metadata| {
+            !metadata.target().contains("rustls")
+                && !metadata.target().contains("reqwest")
+                && !metadata.target().contains("h2")
+                && !metadata.target().contains("hyper_util")
+        }));
 
     tracing_subscriber::registry()
         .with(stdout)
