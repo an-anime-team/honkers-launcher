@@ -40,23 +40,14 @@ pub fn repair_game(sender: ComponentSender<App>, progress_bar_input: Sender<Prog
         )
         .expect("failed to get game info");
 
-        let game_download_info = downloads
-            .manifests
-            .iter()
-            .find(|download_info| download_info.matching_field == "game")
-            .cloned()
-            .expect("failed to get game download info");
-
-        let mut manifests = vec![game_download_info];
-
         let game_path = config.game.path.for_edition(config.launcher.edition);
-
-        let game = Game::new(game_path, config.launcher.edition);
 
         let repairer_temp = config.launcher.temp.unwrap_or_else(std::env::temp_dir);
 
-        for manifest in manifests {
-            let mut repairer = SophonInstaller::new(client.clone(), &manifest, &repairer_temp)
+        for manifest in downloads.manifests.iter().filter(|download_info| {
+            download_info.matching_field == "game" || download_info.matching_field == "asb"
+        }) {
+            let mut repairer = SophonInstaller::new(client.clone(), manifest, &repairer_temp)
                 .expect("failed to initialize sophon repairer");
             repairer.mode_repair = true;
 
