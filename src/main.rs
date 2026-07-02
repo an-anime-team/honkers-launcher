@@ -319,7 +319,11 @@ fn main() -> anyhow::Result<()> {
                     return Ok(());
                 }
 
-                LauncherState::PatchNotVerified | LauncherState::PatchUpdateAvailable => {
+                LauncherState::PatchNotVerified
+                | LauncherState::PatchUpdateAvailable
+                | LauncherState::PredownloadAvailable {
+                    ..
+                } => {
                     if just_run_game {
                         anime_launcher_sdk::honkai::game::run().expect("Failed to run the game");
 

@@ -88,6 +88,7 @@ pub enum AppMsg {
     OpenPreferences,
     RepairGame,
 
+    PredownloadUpdate,
     PerformAction,
 
     HideWindow,
@@ -283,6 +284,103 @@ impl SimpleComponent for App {
 
                                 set_margin_top: 64,
                                 set_spacing: 8,
+
+                                adw::Bin {
+                                    set_css_classes: &["background", "round-bin"],
+
+                                    gtk::Button {
+                                        set_width_request: 44,
+
+                                        #[watch]
+                                        set_tooltip_text: Some(&tr!("predownload-update", {
+                                            "version" = match model.state.as_ref() {
+                                                Some(LauncherState::PredownloadAvailable { game, .. }) => game.latest().to_string(),
+                                                _ => String::from("?")
+                                            },
+
+                                            "size" = match model.state.as_ref() {
+                                                Some(LauncherState::PredownloadAvailable { game, .. }) => {
+                                                    let mut size = game.downloaded_size().unwrap_or(0);
+
+                                                    prettify_bytes(size)
+                                                }
+
+                                                _ => String::from("?")
+                                            }
+                                        })),
+
+                                        #[watch]
+                                        set_visible: matches!(model.state.as_ref(), Some(LauncherState::PredownloadAvailable { .. })),
+
+                                        #[watch]
+                                        set_sensitive: match model.state.as_ref() {
+                                            Some(LauncherState::PredownloadAvailable { game, .. }) => {
+                                                let config = Config::get().unwrap();
+                                                let temp = config.launcher.temp.unwrap_or_else(std::env::temp_dir);
+
+                                                let game_downloaded = temp
+                                                    .join("updating-game")
+                                                    .join(".predownloadcomplete")
+                                                    .metadata()
+                                                    .is_ok();
+                                                let asb_downloaded = temp
+                                                    .join("updating-asb")
+                                                    .join(".predownloadcomplete")
+                                                    .metadata()
+                                                    .is_ok();
+
+                                                !(game_downloaded && asb_downloaded)
+                                            }
+
+                                            _ => false
+                                        },
+
+                                        #[watch]
+                                        set_css_classes: match model.state.as_ref() {
+                                            Some(LauncherState::PredownloadAvailable { game, .. }) => {
+                                                let config = Config::get().unwrap();
+                                                let temp = config.launcher.temp.unwrap_or_else(std::env::temp_dir);
+
+                                                // this is only going to check in `updating`
+                                                let mut downloaded = temp
+                                                    .join(format!("updating-{}", game.matching_field()
+                                                            .expect("VersionDiff is Predownload, must return Some")))
+                                                    .join(".predownloadcomplete")
+                                                    .metadata()
+                                                    .is_ok();
+
+                                                if downloaded {
+                                                    for voice in voices {
+                                                        downloaded = temp
+                                                            .join(format!("updating-{}",
+                                                                    voice.matching_field()
+                                                                    .expect("VersionDiff is Predownload, must return Some")))
+                                                            .join(".predownloadcomplete")
+                                                            .metadata()
+                                                            .is_ok();
+
+                                                        if !downloaded {
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+
+                                                if downloaded {
+                                                    &["success", "circular"]
+                                                } else {
+                                                    &["warning", "circular"]
+                                                }
+                                            }
+
+                                            _ => &["warning", "circular"]
+                                        },
+
+                                        set_icon_name: "document-save-symbolic",
+                                        set_hexpand: false,
+
+                                        connect_clicked => AppMsg::PredownloadUpdate
+                                    }
+                                },
 
                                 adw::Bin {
                                     set_css_classes: &["background", "round-bin"],
@@ -1014,11 +1112,75 @@ impl SimpleComponent for App {
                 repair_game::repair_game(sender, self.progress_bar.sender().to_owned())
             }
 
+            #[allow(unused_must_use)]
+            AppMsg::PredownloadUpdate => {
+                if let Some(LauncherState::PredownloadAvailable {
+                    game, ..
+                }) = self.state.clone()
+                {
+                    let tmp = Config::get()
+                        .unwrap()
+                        .launcher
+                        .temp
+                        .unwrap_or_else(std::env::temp_dir);
+
+                    self.downloading = true;
+
+                    let progress_bar_input = self.progress_bar.sender().clone();
+
+                    progress_bar_input
+                        .send(ProgressBarMsg::UpdateCaption(Some(tr!("downloading"))));
+
+                    std::thread::spawn(move || {
+                        let mut diff = game.with_temp_folder(tmp.clone());
+
+                        let result = diff.download_to(
+                            &tmp,
+                            clone!(
+                                #[strong]
+                                progress_bar_input,
+                                move |curr, total| {
+                                    progress_bar_input
+                                        .send(ProgressBarMsg::UpdateProgress(curr, total));
+                                }
+                            )
+                        );
+
+                        if let Err(err) = result {
+                            sender.input(AppMsg::Toast {
+                                title: tr!("downloading-failed"),
+                                description: Some(err.to_string())
+                            });
+
+                            tracing::error!("Failed to predownload update: {err}");
+                        }
+
+                        sender.input(AppMsg::SetDownloading(false));
+                        sender.input(AppMsg::UpdateLauncherState {
+                            perform_on_download_needed: false,
+                            show_status_page: true
+                        });
+                    });
+                }
+            }
+
             AppMsg::PerformAction => unsafe {
                 match self.state.as_ref().unwrap_unchecked() {
                     LauncherState::PatchNotVerified
                     | LauncherState::PatchConcerning
-                    | LauncherState::Launch => launch::launch(sender),
+                    | LauncherState::Launch
+                    | LauncherState::PredownloadAvailable {
+                        patch: JadeitePatchStatusVariant::Verified,
+                        ..
+                    }
+                    | LauncherState::PredownloadAvailable {
+                        patch: JadeitePatchStatusVariant::Unverified,
+                        ..
+                    }
+                    | LauncherState::PredownloadAvailable {
+                        patch: JadeitePatchStatusVariant::Concerning,
+                        ..
+                    } => launch::launch(sender),
 
                     LauncherState::PatchNotInstalled | LauncherState::PatchUpdateAvailable => {
                         update_patch::update_patch(sender, self.progress_bar.sender().to_owned())
