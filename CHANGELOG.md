@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added support for the new download method
+- Added support for predownloads (if they ever appear in the API)
 
 ### Fixed
 
