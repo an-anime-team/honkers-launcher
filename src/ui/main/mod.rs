@@ -341,31 +341,18 @@ impl SimpleComponent for App {
                                                 let config = Config::get().unwrap();
                                                 let temp = config.launcher.temp.unwrap_or_else(std::env::temp_dir);
 
-                                                // this is only going to check in `updating`
-                                                let mut downloaded = temp
-                                                    .join(format!("updating-{}", game.matching_field()
-                                                            .expect("VersionDiff is Predownload, must return Some")))
+                                                let game_downloaded = temp
+                                                    .join("updating-game")
+                                                    .join(".predownloadcomplete")
+                                                    .metadata()
+                                                    .is_ok();
+                                                let asb_downloaded = temp
+                                                    .join("updating-asb")
                                                     .join(".predownloadcomplete")
                                                     .metadata()
                                                     .is_ok();
 
-                                                if downloaded {
-                                                    for voice in voices {
-                                                        downloaded = temp
-                                                            .join(format!("updating-{}",
-                                                                    voice.matching_field()
-                                                                    .expect("VersionDiff is Predownload, must return Some")))
-                                                            .join(".predownloadcomplete")
-                                                            .metadata()
-                                                            .is_ok();
-
-                                                        if !downloaded {
-                                                            break;
-                                                        }
-                                                    }
-                                                }
-
-                                                if downloaded {
+                                                if game_downloaded && asb_downloaded {
                                                     &["success", "circular"]
                                                 } else {
                                                     &["warning", "circular"]
