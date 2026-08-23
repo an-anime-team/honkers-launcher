@@ -44,7 +44,6 @@ global-game-installation-folder = Globalny folder instalacji wersji gry
 chinese-game-installation-folder = Chiński folder instalacji wersji gry
 fps-unlocker-folder = Folder odblokowywania FPS
 components-index = Indeks komponentów
-patch-folder = Folder łatki
 temp-folder = Folder tymczasowy
 
 migrate = Migracja

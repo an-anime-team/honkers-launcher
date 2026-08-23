@@ -33,11 +33,9 @@ loading-data = Načítám data
 downloading-background-picture = Stahuji tapetu
 updating-components-index = Aktualizuji seznam komponent
 loading-game-version = Načítám verzi hry
-loading-patch-status = Načítám stav patche
 loading-launcher-state = Načítám stav launcheru
 loading-launcher-state--game = Načítám stav launcheru: ověřuji verzi hry
 loading-launcher-state--voice = Načítám stav launcheru: ověřuji dabing - {$locale}
-loading-launcher-state--patch = Načítám stav launcheru: ověřuji nainstalovaný patch
 
 
 checking-free-space = Kontroluji volné místo
@@ -57,7 +55,6 @@ components-index-updated = Seznam komponent byl aktualizován
 launch = Hrát
 migrate-folders = Přemístit složky
 migrate-folders-tooltip = Aktualizovat strukturu složek hry
-apply-patch = Aplikovat patch
 disable-telemetry = Vypnout telemetrii
 download-wine = Stáhnout Wine
 create-prefix = Vytvořit Wine prefix
@@ -67,8 +64,6 @@ predownload-update = Předbězně stáhnout aktualizaci {$version} ({$size})
 
 kill-game-process = Zabít procesy hry
 
-main-window--patch-unavailable-tooltip = Opravné servery jsou nedostupné a launcher nemůže ověřit stav oprav hry. Hru smíte spustit pouze na vlastní nebezpečí
-main-window--patch-outdated-tooltip = Patch je zastaralý nebo ve stavu přípravy, takže není k dispozici pro použití. Vraťte se později, abyste viděli jeho stav
 main-window--version-outdated-tooltip = Verze je příliš zastaralá a nelze ji aktualizovat
 
 preferences = Nastavení

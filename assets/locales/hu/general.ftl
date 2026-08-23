@@ -38,31 +38,6 @@ game-predownload-available = Játékfrissítés előtöltés elérhető: {$old} 
 game-update-available = Játékfrissítés elérhető: {$old} -> {$new}
 game-outdated = A játékverzió túl régi és nem frissíthető. Legfrissebb: {$latest}
 
-player-patch-version = Játékos patch verzió
-player-patch-version-description = A fő patch amivel játszhatsz Linuxon
-
-mfplat-patch-version = Mfplat patch version
-mfplat-patch-version-description = Additional patch that may fix video playing issues
-
-applied = applied
-not-applied = not applied
-
-patch-not-available = nem elérhető
-patch-not-available-tooltip = A patch szerverek nem elérhetőek
-
-patch-outdated = elavult ({$current})
-patch-outdated-tooltip = A patch elavult: {$current} -> {$latest}
-
-patch-preparation = előkészítés
-patch-preparation-tooltip = A patch fejlesztés alatt áll
-
-patch-testing-tooltip = Teszt patch elérhető
-patch-not-applied-tooltip = A patch nincs alkalmazva
-patch-broken-tooltip = Current patch version is broken and doesn't work properly
-patch-unsafe-tooltip = Current patch version is unsafe and shouldn't be used
-patch-concerning-tooltip = A jelenlegi patch verzióval van pár aggodalmunk
-
-apply-mfplat-patch = Apply mfplat patch
 
 ask-superuser-permissions = Superuser engedély kérése
 ask-superuser-permissions-description =  A Launcher autómatikusan használni fogja hogy frissítse a hosts fájlodat. A Flatpak verzióhoz nem kell

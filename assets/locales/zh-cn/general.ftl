@@ -38,31 +38,6 @@ game-predownload-available = 可以预下载游戏更新: {$old} -> {$new}
 game-update-available = 游戏版本更新: {$old} -> {$new}
 game-outdated = 游戏版本过旧，无法更新。最新版本: {$latest}
 
-player-patch-version = 主补丁版本
-player-patch-version-description = UnitPlayer.dll 的补丁，在 Linux 上运行游戏必备
-
-mfplat-patch-version = Mfplat 补丁版本
-mfplat-patch-version-description = 可能解决视频播放问题的额外补丁
-
-applied = 已应用
-not-applied = 未应用
-
-patch-not-available = 不可用
-patch-not-available-tooltip = 无法连接补丁服务器
-
-patch-outdated = 过旧 ({$current})
-patch-outdated-tooltip = 补丁版本过旧: {$current} -> {$latest}
-
-patch-preparation = 开发中
-patch-preparation-tooltip = 补丁还在开发中
-
-patch-testing-tooltip = 有测试版补丁可用
-patch-not-applied-tooltip = 补丁未应用
-patch-broken-tooltip = 当前补丁版本已损坏，无法正常工作
-patch-unsafe-tooltip = 当前补丁版本不安全，不应使用
-patch-concerning-tooltip = 当前补丁版本可靠性未经验证
-
-apply-mfplat-patch = 应用 mfplat 补丁
 
 ask-superuser-permissions = 请求超级用户权限
 ask-superuser-permissions-description = 启动器需要超级用户权限来修改 hosts 文件。Flatpak 版无需此权限

@@ -27,7 +27,6 @@ dxvk-install-failed = Falha ao instalar DXVK
 voice-package-deletion-error = Falha ao deletar o pacote de vozes
 
 game-diff-finding-error = Falha ao encontrar diff do jogo
-patch-info-fetching-error = Falha ao pegar info do patch
 launcher-state-updating-error = Falha ao atualizar estado do launcher
 
 package-not-available = Pacote não está disponível: {$package}
@@ -40,8 +39,6 @@ dxvk-apply-error = Falha ao aplicar DXVK
 
 downloaded-wine-list-failed = Falha ao listar versões wine
 
-patch-sync-failed = Falha ao sincronizar pasta do patch
-patch-state-check-failed = Falha ao checar estado da pasta do patch
 game-patching-error = Falha ao patchear jogo
 
 # Desativar telemetria

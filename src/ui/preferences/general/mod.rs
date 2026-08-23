@@ -2,7 +2,6 @@ use relm4::prelude::*;
 use gtk::prelude::*;
 use adw::prelude::*;
 use anime_launcher_sdk::wincompatlib::prelude::*;
-use anime_launcher_sdk::anime_game_core::prelude::*;
 use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
 use anime_launcher_sdk::honkai::config::schema::launcher::{LauncherBehavior, LauncherStyle};
@@ -20,7 +19,6 @@ pub struct GeneralApp {
     components_page: AsyncController<ComponentsPage>,
 
     game_diff: Option<VersionDiff>,
-    main_patch: Option<(Version, JadeitePatchStatusVariant)>,
 
     style: LauncherStyle,
     languages: Vec<String>
@@ -31,10 +29,6 @@ pub enum GeneralAppMsg {
     /// Supposed to be called automatically on app's run when the latest game
     /// version was retrieved from the API
     SetGameDiff(Option<VersionDiff>),
-
-    /// Supposed to be called automatically on app's run when the latest main
-    /// patch version was retrieved from remote repos
-    SetMainPatch(Option<(Version, JadeitePatchStatusVariant)>),
 
     UpdateDownloadedWine,
     UpdateDownloadedDxvk,
@@ -285,47 +279,6 @@ impl SimpleAsyncComponent for GeneralApp {
                             None => String::new()
                         })
                     }
-                },
-
-                adw::ActionRow {
-                    // TODO: main patch version
-                    set_title: &tr!("player-patch-version"),
-                    set_subtitle: &tr!("player-patch-version-description"),
-
-                    add_suffix = &gtk::Label {
-                        #[watch]
-                        set_text: &match model.main_patch.as_ref() {
-                            Some((version, _)) => version.to_string(),
-                            None => String::from("?")
-                        },
-
-                        #[watch]
-                        set_css_classes: match model.main_patch.as_ref() {
-                            Some((_, status)) => match status {
-                                JadeitePatchStatusVariant::Verified => &["success"],
-                                JadeitePatchStatusVariant::Unverified => &["warning"],
-                                JadeitePatchStatusVariant::Broken => &["error"],
-                                JadeitePatchStatusVariant::Unsafe => &["error"],
-                                JadeitePatchStatusVariant::Concerning => &["error"]
-                            }
-
-                            None => &[]
-                        },
-
-                        #[watch]
-                        set_tooltip_text: Some(&match model.main_patch.as_ref() {
-                            Some((_, status)) => match status {
-                                JadeitePatchStatusVariant::Unverified => tr!("patch-testing-tooltip"),
-                                JadeitePatchStatusVariant::Broken => tr!("patch-broken-tooltip"),
-                                JadeitePatchStatusVariant::Unsafe => tr!("patch-unsafe-tooltip"),
-                                JadeitePatchStatusVariant::Concerning => tr!("patch-concerning-tooltip"),
-
-                                _ => String::new()
-                            }
-
-                            None => String::new()
-                        })
-                    }
                 }
             },
 
@@ -455,7 +408,6 @@ impl SimpleAsyncComponent for GeneralApp {
                 .forward(sender.input_sender(), std::convert::identity),
 
             game_diff: None,
-            main_patch: None,
 
             style: CONFIG.launcher.style,
             languages: SUPPORTED_LANGUAGES
@@ -480,10 +432,6 @@ impl SimpleAsyncComponent for GeneralApp {
         match msg {
             GeneralAppMsg::SetGameDiff(diff) => {
                 self.game_diff = diff;
-            }
-
-            GeneralAppMsg::SetMainPatch(patch) => {
-                self.main_patch = patch;
             }
 
             GeneralAppMsg::UpdateDownloadedWine => {

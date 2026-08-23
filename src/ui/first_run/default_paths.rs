@@ -26,7 +26,6 @@ pub struct DefaultPathsApp {
     game_korea: PathBuf,
     game_japan: PathBuf,
     components: PathBuf,
-    patch: PathBuf,
     temp: PathBuf
 }
 
@@ -43,7 +42,6 @@ pub enum Folders {
     GameKorea,
     GameJapan,
     Components,
-    Patch,
     Temp
 }
 
@@ -264,20 +262,6 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                 },
 
                 adw::ActionRow {
-                    set_title: &tr!("patch-folder"),
-                    set_activatable: true,
-
-                    #[watch]
-                    set_subtitle: model.patch.to_str().unwrap(),
-
-                    connect_activated => DefaultPathsAppMsg::ChoosePath(Folders::Patch),
-
-                    add_prefix = &gtk::Image {
-                        set_icon_name: Some("folder-symbolic")
-                    }
-                },
-
-                adw::ActionRow {
                     set_title: &tr!("temp-folder"),
                     set_activatable: true,
 
@@ -368,7 +352,6 @@ impl SimpleAsyncComponent for DefaultPathsApp {
             game_korea: CONFIG.game.path.korea.clone(),
             game_japan: CONFIG.game.path.japan.clone(),
             components: CONFIG.components.path.clone(),
-            patch: CONFIG.patch.path.clone(),
 
             temp: CONFIG
                 .launcher
@@ -415,7 +398,6 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                             self.game_korea = result.join("Honkai Impact Korea");
                             self.game_japan = result.join("Honkai Impact Japan");
                             self.components = result.join("components");
-                            self.patch = result.join("patch");
 
                             self.temp.clone_from(&result);
 
@@ -432,7 +414,6 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                         Folders::GameKorea => self.game_korea = result,
                         Folders::GameJapan => self.game_japan = result,
                         Folders::Components => self.components = result,
-                        Folders::Patch => self.patch = result,
                         Folders::Temp => self.temp = result
                     }
                 }
@@ -473,7 +454,6 @@ impl DefaultPathsApp {
         config.game.path.korea.clone_from(&self.game_korea);
         config.game.path.japan.clone_from(&self.game_japan);
         config.components.path.clone_from(&self.components);
-        config.patch.path.clone_from(&self.patch);
 
         config.launcher.temp = Some(self.temp.clone());
 

@@ -33,11 +33,9 @@ loading-data = Data aan het laden
 downloading-background-picture = Achtergrondafbeelding downloaden
 updating-components-index = Componentenindex bijwerken
 loading-game-version = Spelversie laden
-loading-patch-status = Patchstatus laden
 loading-launcher-state = Status de launcher wordt geladen
 loading-launcher-state--game = Laadstatus van de launcher: spelversie verifiëren
 loading-launcher-state--voice = Laadstatus van de launcher: verificatie van de voice-over van {$locale}
-loading-launcher-state--patch = Laadstatus van de launcher: geïnstalleerde patch verifiëren
 
 
 checking-free-space = Vrije ruimte controleren
@@ -57,7 +55,6 @@ components-index-updated = Componentenindex is bijgewerkt
 launch = Start
 migrate-folders = Migreer mappen
 migrate-folders-tooltip = Update de structuur van spelmappen
-apply-patch = Pas patch toe
 disable-telemetry = Schakel telemetrie uit
 download-wine = Download Wine
 create-prefix = Creër prefix
@@ -67,8 +64,6 @@ predownload-update = Update van {$version} ({$size}) vooraf downloaden
 
 kill-game-process = Stop het spelproces
 
-main-window--patch-unavailable-tooltip = Patchservers zijn niet beschikbaar en de launcher kan de patchstatus van de game niet verifiëren. Je mag het spel op eigen risico uitvoeren
-main-window--patch-outdated-tooltip = Patch is oud of in voorbereiding, dus niet beschikbaar voor gebruik. Kom later terug om de status ervan te bekijken
 main-window--version-outdated-tooltip = De versie is te oud en kan niet worden bijgewerkt
 
 preferences = Voorkeuren

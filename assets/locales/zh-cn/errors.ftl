@@ -27,7 +27,6 @@ dxvk-install-failed = 安装 DXVK 失败
 voice-package-deletion-error = 删除语音包失败
 
 game-diff-finding-error = 查找游戏 diff 失败
-patch-info-fetching-error = 获取补丁信息失败
 launcher-state-updating-error = 更新启动器状态失败
 
 package-not-available = 缺失依赖包: {$package}
@@ -40,13 +39,8 @@ dxvk-apply-error = 应用 DXVK 失败
 
 downloaded-wine-list-failed = 列举 Wine 版本失败
 
-patch-sync-failed = 同步补丁文件夹失败
-patch-state-check-failed = 检查补丁文件夹失败
 game-patching-error = 应用游戏补丁失败
 
-# Update main patch
-
-main-patch-update-failed = 下载最新补丁版本失败
 
 # Disable telemetry
 

@@ -1,7 +1,6 @@
 use relm4::prelude::*;
 use gtk::prelude::*;
 use adw::prelude::*;
-use anime_launcher_sdk::anime_game_core::prelude::*;
 use anime_launcher_sdk::anime_game_core::honkai::prelude::*;
 use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
@@ -23,10 +22,6 @@ pub enum PreferencesAppMsg {
     /// Supposed to be called automatically on app's run when the latest game
     /// version was retrieved from the API
     SetGameDiff(Option<VersionDiff>),
-
-    /// Supposed to be called automatically on app's run when the latest main
-    /// patch version was retrieved from remote repos
-    SetMainPatch(Option<(Version, JadeitePatchStatusVariant)>),
 
     SetLauncherStyle(LauncherStyle),
 
@@ -114,13 +109,6 @@ impl SimpleAsyncComponent for PreferencesApp {
         match msg {
             PreferencesAppMsg::SetGameDiff(diff) => {
                 self.general.emit(GeneralAppMsg::SetGameDiff(diff));
-            }
-
-            #[allow(unused_must_use)]
-            PreferencesAppMsg::SetMainPatch(patch) => {
-                self.general
-                    .sender()
-                    .send(GeneralAppMsg::SetMainPatch(patch));
             }
 
             #[allow(unused_must_use)]

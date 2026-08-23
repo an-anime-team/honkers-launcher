@@ -38,31 +38,6 @@ game-predownload-available = Pra-unduh pembaruan game tersedia: {$old} -> {$new}
 game-update-available = Pembaruan game tersedia: {$old} -> {$new}
 game-outdated = Versi game terlalu lama dan tidak dapat diperbarui. Versi terbaru: {$latest}
 
-player-patch-version = Versi patch
-player-patch-version-description = Patch utama yang membuat game bisa dimainkan di Linux
-
-mfplat-patch-version = Mfplat patch version
-mfplat-patch-version-description = Additional patch that may fix video playing issues
-
-applied = applied
-not-applied = not applied
-
-patch-not-available = Tidak tersedia
-patch-not-available-tooltip = Server patch tidak bisa dijangkau
-
-patch-outdated = Tertingal ({$current})
-patch-outdated-tooltip = Patch tertinggal: {$current} -> {$latest}
-
-patch-preparation = persiapan
-patch-preparation-tooltip = Patch masih dalam pengembangan
-
-patch-testing-tooltip = Patch tes tersedia
-patch-not-applied-tooltip = Patch tidak diterapkan
-patch-broken-tooltip = Patch versi saat ini rusak dan tidak dapat bekerja dengan semestinya
-patch-unsafe-tooltip = Patch versi saat ini tidak aman dan sebaiknya tidak digunakan
-patch-concerning-tooltip = Kami khawatir dengan kondisi patch versi saat ini
-
-apply-mfplat-patch = Apply mfplat patch
 
 ask-superuser-permissions = Minta izin dari admin
 ask-superuser-permissions-description = Launcher akan otomatis memperbarui file hosts Anda. Opsi ini tidak diperlukan jika Anda memakai edisi flatpak 

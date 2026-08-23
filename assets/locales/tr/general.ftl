@@ -38,31 +38,6 @@ game-predownload-available = Güncelleme önceden indirilebilir: {$old} -> {$new
 game-update-available = Güncelleme mevcut: {$old} -> {$new}
 game-outdated = Oyun çok eski, bu yüzden güncellenemez. En son sürüm: {$latest}
 
-player-patch-version = Ana yama versiyonu
-player-patch-version-description = Oyunu Linux'ta oynamanıza izin veren ana yama
-
-mfplat-patch-version = Mfplat yama sürümü
-mfplat-patch-version-description = Video oynatma sorunlarını çözebilecek ek yama
-
-applied = Uygulandı
-not-applied = Uygulanmadı
-
-patch-not-available = Mevcut değil
-patch-not-available-tooltip = Yama sunucularına erişilemiyor
-
-patch-outdated = zamanı geçmiş ({$current})
-patch-outdated-tooltip = Yamanın zamanı geçmiş: {$current} -> {$latest}
-
-patch-preparation = Hazırlık
-patch-preparation-tooltip = Yama hala geliştiriliyor
-
-patch-testing-tooltip = Test yaması mevcut
-patch-not-applied-tooltip = Yama uygulanmamış
-patch-broken-tooltip = Geçerli yama sürümü bozuk ve düzgün çalışmıyor
-patch-unsafe-tooltip = Geçerli yama sürümü güvensiz ve kullanılmamalı
-patch-concerning-tooltip = We have some concerns about the current patch version
-
-apply-mfplat-patch = Mfplay yamasını uygula
 
 ask-superuser-permissions = Yönetici izinlerini sor
 ask-superuser-permissions-description = İstemci yönetici iznini hostunuzun dosyalarını güncellemek için otomatik olarak kullanacaktır. Buna flatpak versiyonunda gerek yoktur

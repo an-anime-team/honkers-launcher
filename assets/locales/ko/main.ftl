@@ -33,11 +33,9 @@ loading-data = 데이터 로드 중
 downloading-background-picture = 배경 사진 다운로드 중
 updating-components-index = 구성 요소 목록 업데이트 중
 loading-game-version = 게임 버전 로드 중
-loading-patch-status = 패치 상태 로드 중
 loading-launcher-state = 런처 상태 로딩 중
 loading-launcher-state--game = 런처 상태 로딩 중: 게임 버전 확인 중
 loading-launcher-state--voice = 런처 상태 로드 중: {$locale} 음성 확인 중
-loading-launcher-state--patch = 런처 상태 로드 중: 설치된 패치 확인 중
 
 
 checking-free-space = 여유 공간 확인 중
@@ -57,7 +55,6 @@ components-index-updated = 구성 요소 목록이 업데이트되었습니다
 launch = 실행
 migrate-folders = 폴더 마이그레이션
 migrate-folders-tooltip = 게임 폴더 구조 변경
-apply-patch = 패치 적용
 disable-telemetry = 원격 측정 비활성화
 download-wine = Wine 다운로드
 create-prefix = Prefix 생성
@@ -67,8 +64,6 @@ predownload-update = {$version}업데이트 사전 다운로드 ({$size})
 
 kill-game-process = 게임 프로세스 종료
 
-main-window--patch-unavailable-tooltip = 패치 서버를 사용할 수 없으며 런처에서 게임의 패치 상태를 확인할 수 없습니다. 사용자 책임 하에 게임을 실행할 수 있습니다
-main-window--patch-outdated-tooltip = 패치가 오래되었거나 준비 중이므로 사용할 수 없습니다. 나중에 다시 돌아와서 상태를 확인하세요
 main-window--version-outdated-tooltip = Version is too outdated and can't be updated
 
 preferences = 버전이 너무 오래되어 업데이트할 수 없습니다

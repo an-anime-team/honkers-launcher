@@ -49,7 +49,6 @@ korean-game-installation-folder = Korean game version installation folder
 japanese-game-installation-folder = Japanese game version installation folder
 fps-unlocker-folder = Emplacement des fichiers du débloqueur de FPS
 components-index = Indice des composants
-patch-folder = Emplacement du patch
 temp-folder = Dossier temporaire
 
 migrate = Migrate

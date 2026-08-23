@@ -50,7 +50,6 @@ korean-game-installation-folder = Folder pemasangan game versi Korea
 japanese-game-installation-folder = Folder pemasangan game versi Jepang
 fps-unlocker-folder = Folder FPS unlocker
 components-index = Indeks komponen
-patch-folder = Folder patch
 temp-folder = Folder sementara
 
 migrate = Pindahkan 

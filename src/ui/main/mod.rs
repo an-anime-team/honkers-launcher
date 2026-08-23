@@ -6,7 +6,6 @@ use adw::prelude::*;
 use gtk::glib::clone;
 
 mod repair_game;
-mod update_patch;
 mod download_wine;
 mod install_dxvk;
 mod create_prefix;
@@ -68,10 +67,6 @@ pub enum AppMsg {
     /// Supposed to be called automatically on app's run when the latest game
     /// version was retrieved from the API
     SetGameDiff(Option<VersionDiff>),
-
-    /// Supposed to be called automatically on app's run when the latest main
-    /// patch version was retrieved from remote repos
-    SetMainPatch(Option<(Version, JadeitePatchStatusVariant)>),
 
     /// Supposed to be called automatically on app's run when the launcher state
     /// was chosen
@@ -380,16 +375,8 @@ impl SimpleComponent for App {
                                             #[watch]
                                             set_icon_name: match &model.state {
                                                 Some(LauncherState::Launch) |
-                                                Some(LauncherState::PatchNotVerified) |
-                                                Some(LauncherState::PatchConcerning) |
-                                                Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Verified, .. }) |
-                                                Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Unverified, .. }) |
-                                                Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Concerning, .. })
+                                                Some(LauncherState::PredownloadAvailable { .. })
                                                     => "media-playback-start-symbolic",
-
-                                                Some(LauncherState::PatchNotInstalled) |
-                                                Some(LauncherState::PatchUpdateAvailable)
-                                                    => "document-save-symbolic",
 
                                                 Some(LauncherState::TelemetryNotDisabled)
                                                     => "security-high-symbolic",
@@ -404,26 +391,14 @@ impl SimpleComponent for App {
                                                     => "document-save-symbolic",
 
                                                 Some(LauncherState::GameOutdated(_)) |
-                                                Some(LauncherState::PatchBroken) |
-                                                Some(LauncherState::PatchUnsafe) |
-                                                Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Broken, .. }) |
-                                                Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Unsafe, .. }) |
                                                 None => "window-close-symbolic"
                                             },
 
                                             #[watch]
                                             set_label: &match &model.state {
                                                 Some(LauncherState::Launch) |
-                                                Some(LauncherState::PatchNotVerified) |
-                                                Some(LauncherState::PatchConcerning)|
-                                                Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Verified, .. }) |
-                                                Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Unverified, .. }) |
-                                                Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Concerning, .. })
+                                                Some(LauncherState::PredownloadAvailable { .. })
                                                     => tr!("launch"),
-
-                                                Some(LauncherState::PatchNotInstalled) |
-                                                Some(LauncherState::PatchUpdateAvailable)
-                                                    => tr!("download-patch"),
 
                                                 Some(LauncherState::TelemetryNotDisabled)
                                                     => tr!("disable-telemetry"),
@@ -432,14 +407,6 @@ impl SimpleComponent for App {
                                                 Some(LauncherState::PrefixNotExists)      => tr!("create-prefix"),
                                                 Some(LauncherState::DxvkNotInstalled)     => tr!("install-dxvk"),
                                                 Some(LauncherState::GameNotInstalled(_))  => tr!("download"),
-
-                                                Some(LauncherState::PatchBroken) |
-                                                Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Broken, .. })
-                                                    => tr!("patch-broken"),
-
-                                                Some(LauncherState::PatchUnsafe) |
-                                                Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Unsafe, .. })
-                                                    => tr!("patch-unsafe"),
 
                                                 Some(LauncherState::GameUpdateAvailable(diff)) |
                                                 Some(LauncherState::GameOutdated(diff))
@@ -467,12 +434,7 @@ impl SimpleComponent for App {
 
                                         #[watch]
                                         set_sensitive: !model.disabled_buttons && match &model.state {
-                                            Some(LauncherState::GameOutdated { .. }) |
-                                            Some(LauncherState::PatchBroken) |
-                                            Some(LauncherState::PatchUnsafe) |
-                                            Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Broken, .. }) |
-                                            Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Unsafe, .. })
-                                                => false,
+                                            Some(LauncherState::GameOutdated { .. }) => false,
 
                                             Some(_) => true,
                                             None => false
@@ -480,17 +442,7 @@ impl SimpleComponent for App {
 
                                         #[watch]
                                         set_css_classes: match &model.state {
-                                            Some(LauncherState::GameOutdated { .. }) |
-                                            Some(LauncherState::PatchNotVerified)
-                                                => &["warning", "pill"],
-
-                                            Some(LauncherState::PatchBroken) |
-                                            Some(LauncherState::PatchUnsafe) |
-                                            Some(LauncherState::PatchConcerning) |
-                                            Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Broken, .. }) |
-                                            Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Unsafe, .. }) |
-                                            Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Concerning, .. })
-                                                => &["error", "pill"],
+                                            Some(LauncherState::GameOutdated { .. }) => &["warning", "pill"],
 
                                             Some(_) => &["suggested-action", "pill"],
                                             None => &["pill"]
@@ -499,16 +451,6 @@ impl SimpleComponent for App {
                                         #[watch]
                                         set_tooltip_text: Some(&match &model.state {
                                             Some(LauncherState::GameOutdated { .. }) => tr!("main-window--version-outdated-tooltip"),
-                                            Some(LauncherState::PatchNotVerified)    => tr!("patch-testing-tooltip"),
-                                            Some(LauncherState::PatchBroken) |
-                                            Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Broken, .. })
-                                                => tr!("patch-broken-tooltip"),
-                                            Some(LauncherState::PatchUnsafe) |
-                                            Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Unsafe, .. })
-                                                => tr!("patch-unsafe-tooltip"),
-                                            Some(LauncherState::PatchConcerning) |
-                                            Some(LauncherState::PredownloadAvailable { patch: JadeitePatchStatusVariant::Concerning, .. })
-                                                => tr!("patch-concerning-tooltip"),
 
                                             _ => String::new()
                                         }),
@@ -887,39 +829,6 @@ impl SimpleComponent for App {
                 }
             )));
 
-            // Update initial patch status
-
-            tasks.push(std::thread::spawn(clone!(
-                #[strong]
-                sender,
-                move || {
-                    // Get main patch status
-                    sender.input(AppMsg::SetMainPatch(match jadeite::get_metadata() {
-                        Ok(metadata) => {
-                            let status = GAME
-                                .get_version()
-                                .map(|version| metadata.games.hsr.global.get_status(version))
-                                .unwrap_or(metadata.games.hsr.global.status);
-
-                            Some((metadata.jadeite.version, status))
-                        }
-
-                        Err(err) => {
-                            tracing::error!("Failed to fetch patch metadata: {err}");
-
-                            sender.input(AppMsg::Toast {
-                                title: tr!("patch-info-fetching-error"),
-                                description: Some(err.to_string())
-                            });
-
-                            None
-                        }
-                    }));
-
-                    tracing::info!("Updated patch status");
-                }
-            )));
-
             // Update initial game version status
 
             tasks.push(std::thread::spawn(clone!(
@@ -996,12 +905,6 @@ impl SimpleComponent for App {
                                         "loading-launcher-state--game"
                                     )))));
                                 }
-
-                                StateUpdating::Patch => {
-                                    sender.input(AppMsg::SetLoadingStatus(Some(Some(tr!(
-                                        "loading-launcher-state--patch"
-                                    )))));
-                                }
                             }
                         }
                     }
@@ -1048,15 +951,6 @@ impl SimpleComponent for App {
                     .unwrap_unchecked()
                     .sender()
                     .send(PreferencesAppMsg::SetGameDiff(diff));
-            },
-
-            #[allow(unused_must_use)]
-            AppMsg::SetMainPatch(patch) => unsafe {
-                PREFERENCES_WINDOW
-                    .as_ref()
-                    .unwrap_unchecked()
-                    .sender()
-                    .send(PreferencesAppMsg::SetMainPatch(patch));
             },
 
             AppMsg::SetLauncherState(state) => {
@@ -1153,25 +1047,10 @@ impl SimpleComponent for App {
 
             AppMsg::PerformAction => unsafe {
                 match self.state.as_ref().unwrap_unchecked() {
-                    LauncherState::PatchNotVerified
-                    | LauncherState::PatchConcerning
-                    | LauncherState::Launch
+                    LauncherState::Launch
                     | LauncherState::PredownloadAvailable {
-                        patch: JadeitePatchStatusVariant::Verified,
-                        ..
-                    }
-                    | LauncherState::PredownloadAvailable {
-                        patch: JadeitePatchStatusVariant::Unverified,
-                        ..
-                    }
-                    | LauncherState::PredownloadAvailable {
-                        patch: JadeitePatchStatusVariant::Concerning,
                         ..
                     } => launch::launch(sender),
-
-                    LauncherState::PatchNotInstalled | LauncherState::PatchUpdateAvailable => {
-                        update_patch::update_patch(sender, self.progress_bar.sender().to_owned())
-                    }
 
                     LauncherState::TelemetryNotDisabled => {
                         disable_telemetry::disable_telemetry(sender)

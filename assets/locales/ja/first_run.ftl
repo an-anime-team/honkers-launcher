@@ -50,7 +50,6 @@ korean-game-installation-folder = 韓国版インストールフォルダ
 japanese-game-installation-folder = 日本版インストールフォルダ
 fps-unlocker-folder = FPSアンロッカーフォルダー
 components-index = コンポーネントインデックス
-patch-folder = パッチフォルダー
 temp-folder = 一時的なフォルダ
 
 migrate = Migrate

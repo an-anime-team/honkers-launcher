@@ -37,31 +37,6 @@ game-predownload-available = Tải xuống trước bản cập nhật trò chơ
 game-update-available = Đã có bản cập nhật trò chơi: {$old} -> {$new}
 game-outdated = Trò chơi đã quá lỗi thời và không thể cập nhật. Phiên bản mới nhất: {$latest}
 
-player-patch-version = Phiên bản vá của người chơi
-player-patch-version-description = Bản vá chính cho phép bạn chơi trò chơi trên Linux
-
-mfplat-patch-version = Bản vá Mfplat
-mfplat-patch-version-description = Bản vá bổ sung có thể khắc phục sự cố phát video
-
-applied = áp dụng
-not-applied = không áp dụng
-
-patch-not-available = không có sẵn
-patch-not-available-tooltip = Máy chủ bản vá không thể truy cập
-
-patch-outdated = lỗi thời ({$current})
-patch-outdated-tooltip = Bản vá lỗi thời: {$current} -> {$latest}
-
-patch-preparation = chuẩn bị
-patch-preparation-tooltip = Bản vá đang được phát triển
-
-patch-testing-tooltip = Đã có bản vá thử nghiệm
-patch-not-applied-tooltip = Bản vá không được áp dụng
-patch-broken-tooltip = Bản vá hiện tại bị hỏng và không hoạt động bình thường
-patch-unsafe-tooltip = Bản vá hiện tại không an toàn và không nên sử dụng
-patch-concerning-tooltip = We have some concerns about the current patch version
-
-apply-mfplat-patch = Áp dụng bản vá mfplat
 
 ask-superuser-permissions = Hỏi quyền admin
 ask-superuser-permissions-description = Launcher sẽ sử dụng chúng để tự động cập nhật tệp máy chủ của bạn, không cần thiết trong phiên bản Flatpak

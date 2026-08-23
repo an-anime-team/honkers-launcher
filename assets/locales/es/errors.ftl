@@ -27,7 +27,6 @@ dxvk-install-failed = Fallo al instalar DXVK
 voice-package-deletion-error = Fallo al borrar paquete de voz
 
 game-diff-finding-error = Fallo al buscar diff del juego
-patch-info-fetching-error = Fallo al buscar info del parche
 launcher-state-updating-error = Fallo al actualizar estado del launcher
 
 package-not-available = El paquete no está disponible: {$package}
@@ -40,13 +39,8 @@ dxvk-apply-error = Fallo al aplicar DXVK
 
 downloaded-wine-list-failed = Fallo al listar versiones descargadas de Wine
 
-patch-sync-failed = Fallo al sincronizar carpeta del parche
-patch-state-check-failed = Fallo al comprobar estado de carpeta del parche
 game-patching-error = Fallo al parchear el juego
 
-# Update main patch
-
-main-patch-update-failed = Fallo al descargar la última versión del parche
 
 # Disable telemetry
 
