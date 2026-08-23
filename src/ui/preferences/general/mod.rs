@@ -240,7 +240,7 @@ impl SimpleAsyncComponent for GeneralApp {
                             Some(diff) => match diff {
                                 VersionDiff::Latest { version: current, .. } |
                                 VersionDiff::Predownload { current, .. } |
-                                VersionDiff::Diff { current, .. } |
+                                VersionDiff::Update { current, .. } |
                                 VersionDiff::Outdated { current, .. }
                                     => current.to_string(),
 
@@ -255,7 +255,7 @@ impl SimpleAsyncComponent for GeneralApp {
                             Some(diff) => match diff {
                                 VersionDiff::Latest { .. }       => &["success"],
                                 VersionDiff::Predownload { .. }  => &["accent"],
-                                VersionDiff::Diff { .. }         => &["warning"],
+                                VersionDiff::Update { .. }         => &["warning"],
                                 VersionDiff::Outdated { .. }     => &["error"],
                                 VersionDiff::NotInstalled { .. } => &[]
                             }
@@ -266,7 +266,7 @@ impl SimpleAsyncComponent for GeneralApp {
                         #[watch]
                         set_tooltip_text: Some(&match model.game_diff.as_ref() {
                             Some(diff) => match diff {
-                                VersionDiff::Diff { current, latest, .. } => tr!("game-update-available", {
+                                VersionDiff::Update { current, latest, .. } => tr!("game-update-available", {
                                     "old" = current.to_string(),
                                     "new" = latest.to_string()
                                 }),
