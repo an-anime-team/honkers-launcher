@@ -19,8 +19,8 @@ glib-build-tools = "0.20"
 
 [dependencies.anime-launcher-sdk]
 git = "https://github.com/an-anime-team/anime-launcher-sdk"
-tag = "1.32.0"
-features = ["all", "honkai", "honkai-patch"]
+tag = "1.36.7"
+features = ["all", "honkai"]
 
 # path = "../anime-launcher-sdk" # ! for dev purposes only
 

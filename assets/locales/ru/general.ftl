@@ -38,31 +38,6 @@ game-predownload-available = Доступна предзагрузка обно�
 game-update-available = Доступно обновление игры: {$old} -> {$new}
 game-outdated = Версия игры слишком устаревшая и не может быть обновлена. Последняя версия: {$latest}
 
-player-patch-version = Версия основного патча
-player-patch-version-description = Основной патч, позволяющий вам играть в игру на линуксе
-
-mfplat-patch-version = Версия патча mfplat
-mfplat-patch-version-description = Дополнительный патч, который может исправить проблему исполнения видео
-
-applied = применен
-not-applied = не применен
-
-patch-not-available = недоступен
-patch-not-available-tooltip = Серверы патча недоступны
-
-patch-outdated = устарел ({$current})
-patch-outdated-tooltip = Версия патча устарела: {$current} -> {$latest}
-
-patch-preparation = подготовка
-patch-preparation-tooltip = Патч в разработке
-
-patch-testing-tooltip = Доступна тестовая версия патча
-patch-not-applied-tooltip = Патч не применен
-patch-broken-tooltip = Текущая версия патча работает неисправно
-patch-unsafe-tooltip = Текущая версия патча небезопасна и не должна быть использована
-patch-concerning-tooltip = У нас есть некоторые беспокойства о текущей версии патча
-
-apply-mfplat-patch = Применить патч mfplat
 
 ask-superuser-permissions = Запрашивать права суперпользователя
 ask-superuser-permissions-description = Лаунчер будет использовать их чтобы автоматически обновлять ваш hosts файл для отключения телеметрии игры. Не требуется при использовании flatpak

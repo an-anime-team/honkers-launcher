@@ -1,7 +1,8 @@
 use relm4::prelude::*;
 use adw::prelude::*;
-
 use anime_launcher_sdk::anime_game_core::prelude::*;
+use anime_launcher_sdk::anime_game_core::sophon::installer::Update as SophonInstallerUpdate;
+use anime_launcher_sdk::anime_game_core::sophon::updater::Update as SophonPatcherUpdate;
 
 use crate::*;
 
@@ -40,10 +41,13 @@ pub enum ProgressBarMsg {
     DisplayProgress(bool),
     DisplayFraction(bool),
 
-    /// (current bytes, total bytes) 
+    /// (current bytes, total bytes)
     UpdateProgress(u64, u64),
+    /// (items done, total items)
+    UpdateProgressCounter(u64, u64),
 
     UpdateFromState(InstallerUpdate),
+    UpdateFromDiffState(DiffUpdate),
     SetVisible(bool)
 }
 
@@ -90,7 +94,7 @@ impl SimpleAsyncComponent for ProgressBar {
     async fn init(
         init: Self::Init,
         root: Self::Root,
-        _sender: AsyncComponentSender<Self>,
+        _sender: AsyncComponentSender<Self>
     ) -> AsyncComponentParts<Self> {
         let model = ProgressBar {
             fraction: 0.0,
@@ -103,7 +107,10 @@ impl SimpleAsyncComponent for ProgressBar {
 
         let widgets = view_output!();
 
-        AsyncComponentParts { model, widgets }
+        AsyncComponentParts {
+            model,
+            widgets
+        }
     }
 
     async fn update(&mut self, msg: Self::Input, _sender: AsyncComponentSender<Self>) {
@@ -121,38 +128,139 @@ impl SimpleAsyncComponent for ProgressBar {
             ProgressBarMsg::UpdateProgress(curr, total) => {
                 self.fraction = curr as f64 / total as f64;
 
-                self.downloaded = Some((
-                    prettify_bytes(curr),
-                    prettify_bytes(total)
-                ));
+                self.downloaded = Some((prettify_bytes(curr), prettify_bytes(total)));
             }
 
-            ProgressBarMsg::UpdateFromState(state) => {
-                match state {
-                    InstallerUpdate::CheckingFreeSpace(_)          => self.caption = Some(tr!("checking-free-space")),
-                    InstallerUpdate::DownloadingStarted(_)         => self.caption = Some(tr!("downloading")),
-                    InstallerUpdate::UpdatingPermissionsStarted(_) => self.caption = Some(tr!("updating-permissions")),
-                    InstallerUpdate::UnpackingStarted(_)           => self.caption = Some(tr!("unpacking")),
+            ProgressBarMsg::UpdateProgressCounter(curr, total) => {
+                self.fraction = curr as f64 / total as f64;
 
-                    InstallerUpdate::DownloadingProgress(curr, total) |
-                    InstallerUpdate::UpdatingPermissions(curr, total) |
-                    InstallerUpdate::UnpackingProgress(curr, total) => {
-                        self.fraction = curr as f64 / total as f64;
+                self.downloaded = Some((curr.to_string(), total.to_string()))
+            }
 
-                        self.downloaded = Some((
-                            prettify_bytes(curr),
-                            prettify_bytes(total)
-                        ));
-                    }
-
-                    InstallerUpdate::DownloadingFinished         => tracing::info!("Downloading finished"),
-                    InstallerUpdate::UpdatingPermissionsFinished => tracing::info!("Updating permissions finished"),
-                    InstallerUpdate::UnpackingFinished           => tracing::info!("Unpacking finished"),
-
-                    InstallerUpdate::DownloadingError(err) => tracing::error!("Downloading error: {:?}", err),
-                    InstallerUpdate::UnpackingError(err)   => tracing::error!("Unpacking error: {:?}", err)
+            ProgressBarMsg::UpdateFromState(state) => match state {
+                InstallerUpdate::CheckingFreeSpace(_) => {
+                    self.caption = Some(tr!("checking-free-space"))
                 }
-            }
+                InstallerUpdate::DownloadingStarted(_) => self.caption = Some(tr!("downloading")),
+                InstallerUpdate::UpdatingPermissionsStarted(_) => {
+                    self.caption = Some(tr!("updating-permissions"))
+                }
+                InstallerUpdate::UnpackingStarted(_) => self.caption = Some(tr!("unpacking")),
+
+                InstallerUpdate::DownloadingProgress(curr, total)
+                | InstallerUpdate::UpdatingPermissions(curr, total)
+                | InstallerUpdate::UnpackingProgress(curr, total) => {
+                    self.fraction = curr as f64 / total as f64;
+
+                    self.downloaded = Some((prettify_bytes(curr), prettify_bytes(total)));
+                }
+
+                InstallerUpdate::DownloadingFinished => tracing::info!("Downloading finished"),
+                InstallerUpdate::UpdatingPermissionsFinished => {
+                    tracing::info!("Updating permissions finished")
+                }
+                InstallerUpdate::UnpackingFinished => tracing::info!("Unpacking finished"),
+
+                InstallerUpdate::DownloadingError(err) => {
+                    tracing::error!("Downloading error: {:?}", err)
+                }
+                InstallerUpdate::UnpackingError(err) => {
+                    tracing::error!("Unpacking error: {:?}", err)
+                }
+            },
+
+            ProgressBarMsg::UpdateFromDiffState(state) => match state {
+                // checking free space
+                DiffUpdate::Installer(SophonInstallerUpdate::CheckingFreeSpace(_))
+                | DiffUpdate::Patcher(SophonPatcherUpdate::CheckingFreeSpace(_)) => {
+                    self.caption = Some(tr!("checking-free-space"))
+                }
+
+                // checking files
+                DiffUpdate::Installer(SophonInstallerUpdate::CheckingFiles {
+                    ..
+                })
+                | DiffUpdate::Patcher(SophonPatcherUpdate::CheckingFilesStarted) => {
+                    self.caption = Some(tr!("verifying-files"));
+                    self.display_fraction = false;
+                }
+
+                DiffUpdate::Installer(SophonInstallerUpdate::CheckingFilesProgress {
+                    passed,
+                    total
+                }) => self.fraction = passed as f64 / total as f64,
+
+                // download started
+                DiffUpdate::Installer(SophonInstallerUpdate::DownloadingStarted {
+                    ..
+                })
+                | DiffUpdate::Patcher(SophonPatcherUpdate::DownloadingStarted(_)) => {
+                    self.caption = Some(tr!("downloading"));
+                    self.display_fraction = true;
+                }
+
+                // download progress
+                DiffUpdate::Installer(SophonInstallerUpdate::DownloadingProgressBytes {
+                    downloaded_bytes,
+                    total_bytes
+                })
+                | DiffUpdate::Patcher(SophonPatcherUpdate::DownloadingProgressBytes {
+                    downloaded_bytes,
+                    total_bytes
+                }) => {
+                    self.fraction = downloaded_bytes as f64 / total_bytes as f64;
+
+                    self.downloaded = Some((
+                        prettify_bytes(downloaded_bytes),
+                        prettify_bytes(total_bytes)
+                    ));
+                }
+
+                // finish
+                DiffUpdate::Installer(SophonInstallerUpdate::DownloadingFinished)
+                | DiffUpdate::Patcher(SophonPatcherUpdate::DownloadingFinished) => {
+                    tracing::info!("Downloading finished")
+                }
+                DiffUpdate::Patcher(SophonPatcherUpdate::DeletingFinished) => {
+                    tracing::info!("Finished deleting unused files")
+                }
+                DiffUpdate::Patcher(SophonPatcherUpdate::PatchingFinished) => {
+                    tracing::info!("Patching finished")
+                }
+
+                // error
+                DiffUpdate::Installer(SophonInstallerUpdate::DownloadingError(err))
+                | DiffUpdate::Patcher(SophonPatcherUpdate::DownloadingError(err)) => {
+                    tracing::error!("Downloading error: {:?}", err)
+                }
+                DiffUpdate::Patcher(SophonPatcherUpdate::PatchingError(err)) => {
+                    tracing::error!("Patching error: {err}")
+                }
+                DiffUpdate::Patcher(SophonPatcherUpdate::FileHashCheckFailed(path)) => {
+                    tracing::error!("Failed to perform hash check for file {}", path.display())
+                }
+
+                // other progress metrics
+                DiffUpdate::Installer(SophonInstallerUpdate::DownloadingProgressFiles {
+                    downloaded_files,
+                    total_files
+                }) => {
+                    tracing::info!("Downloaded {downloaded_files} files out of {total_files}")
+                }
+                DiffUpdate::Patcher(SophonPatcherUpdate::PatchingProgress {
+                    patched_files,
+                    total_files
+                }) => {
+                    tracing::info!("Patched {patched_files} files out of {total_files}")
+                }
+
+                // explicitly ignored
+                DiffUpdate::Patcher(SophonPatcherUpdate::DeletingProgress {
+                    ..
+                })
+                | DiffUpdate::Patcher(SophonPatcherUpdate::DeletingStarted)
+                | DiffUpdate::Patcher(SophonPatcherUpdate::PatchingStarted) => {}
+            },
 
             ProgressBarMsg::SetVisible(visible) => self.visible = visible
         }

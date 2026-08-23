@@ -2,13 +2,11 @@ use std::path::PathBuf;
 
 use relm4::prelude::*;
 use adw::prelude::*;
-
 use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
 
 use crate::*;
 use crate::ui::components::progress_bar::*;
-
 use super::main::*;
 
 pub struct DefaultPathsApp {
@@ -28,7 +26,6 @@ pub struct DefaultPathsApp {
     game_korea: PathBuf,
     game_japan: PathBuf,
     components: PathBuf,
-    patch: PathBuf,
     temp: PathBuf
 }
 
@@ -45,7 +42,6 @@ pub enum Folders {
     GameKorea,
     GameJapan,
     Components,
-    Patch,
     Temp
 }
 
@@ -266,20 +262,6 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                 },
 
                 adw::ActionRow {
-                    set_title: &tr!("patch-folder"),
-                    set_activatable: true,
-
-                    #[watch]
-                    set_subtitle: model.patch.to_str().unwrap(),
-
-                    connect_activated => DefaultPathsAppMsg::ChoosePath(Folders::Patch),
-
-                    add_prefix = &gtk::Image {
-                        set_icon_name: Some("folder-symbolic")
-                    }
-                },
-
-                adw::ActionRow {
                     set_title: &tr!("temp-folder"),
                     set_activatable: true,
 
@@ -341,7 +323,11 @@ impl SimpleAsyncComponent for DefaultPathsApp {
         }
     }
 
-    async fn init(_init: Self::Init, root: Self::Root, _sender: AsyncComponentSender<Self>) -> AsyncComponentParts<Self> {
+    async fn init(
+        _init: Self::Init,
+        root: Self::Root,
+        _sender: AsyncComponentSender<Self>
+    ) -> AsyncComponentParts<Self> {
         let model = Self {
             progress_bar: ProgressBar::builder()
                 .launch(ProgressBarInit {
@@ -366,83 +352,86 @@ impl SimpleAsyncComponent for DefaultPathsApp {
             game_korea: CONFIG.game.path.korea.clone(),
             game_japan: CONFIG.game.path.japan.clone(),
             components: CONFIG.components.path.clone(),
-            patch: CONFIG.patch.path.clone(),
 
-            temp: CONFIG.launcher.temp.clone()
+            temp: CONFIG
+                .launcher
+                .temp
+                .clone()
                 .unwrap_or_else(std::env::temp_dir)
         };
 
         // Set progress bar width
-        model.progress_bar.widget()
-            .set_width_request(400);
+        model.progress_bar.widget().set_width_request(400);
 
         let widgets = view_output!();
 
-        AsyncComponentParts { model, widgets }
+        AsyncComponentParts {
+            model,
+            widgets
+        }
     }
 
     async fn update(&mut self, msg: Self::Input, sender: AsyncComponentSender<Self>) {
         match msg {
-            DefaultPathsAppMsg::ToggleShowAdditional => self.show_additional = !self.show_additional,
+            DefaultPathsAppMsg::ToggleShowAdditional => {
+                self.show_additional = !self.show_additional
+            }
 
             DefaultPathsAppMsg::ChoosePath(folder) => {
                 let result = rfd::AsyncFileDialog::new()
                     .set_directory(&self.launcher)
-                    .pick_folder().await;
+                    .pick_folder()
+                    .await;
 
                 if let Some(result) = result {
                     let result = result.path().to_path_buf();
 
                     match folder {
                         Folders::Launcher => {
-                            self.runners     = result.join("runners");
-                            self.dxvks       = result.join("dxvks");
-                            self.prefix      = result.join("prefix");
+                            self.runners = result.join("runners");
+                            self.dxvks = result.join("dxvks");
+                            self.prefix = result.join("prefix");
                             self.game_global = result.join("Honkai Impact");
-                            self.game_sea    = result.join("Honkai Impact Sea");
-                            self.game_china  = result.join("Honkai Impact China");
+                            self.game_sea = result.join("Honkai Impact Sea");
+                            self.game_china = result.join("Honkai Impact China");
                             self.game_taiwan = result.join("Honkai Impact Taiwan");
-                            self.game_korea  = result.join("Honkai Impact Korea");
-                            self.game_japan  = result.join("Honkai Impact Japan");
-                            self.components  = result.join("components");
-                            self.patch       = result.join("patch");
+                            self.game_korea = result.join("Honkai Impact Korea");
+                            self.game_japan = result.join("Honkai Impact Japan");
+                            self.components = result.join("components");
 
                             self.temp.clone_from(&result);
 
                             self.launcher = result;
                         }
 
-                        Folders::Runners    => self.runners     = result,
-                        Folders::DXVK       => self.dxvks       = result,
-                        Folders::Prefix     => self.prefix      = result,
+                        Folders::Runners => self.runners = result,
+                        Folders::DXVK => self.dxvks = result,
+                        Folders::Prefix => self.prefix = result,
                         Folders::GameGlobal => self.game_global = result,
-                        Folders::GameSea    => self.game_sea    = result,
-                        Folders::GameChina  => self.game_china  = result,
+                        Folders::GameSea => self.game_sea = result,
+                        Folders::GameChina => self.game_china = result,
                         Folders::GameTaiwan => self.game_taiwan = result,
-                        Folders::GameKorea  => self.game_korea  = result,
-                        Folders::GameJapan  => self.game_japan  = result,
-                        Folders::Components => self.components  = result,
-                        Folders::Patch      => self.patch       = result,
-                        Folders::Temp       => self.temp        = result
+                        Folders::GameKorea => self.game_korea = result,
+                        Folders::GameJapan => self.game_japan = result,
+                        Folders::Components => self.components = result,
+                        Folders::Temp => self.temp = result
                     }
                 }
             }
 
             #[allow(unused_must_use)]
-            DefaultPathsAppMsg::Continue => {
-                match self.update_config() {
-                    Ok(_) => {
-                        sender.output(Self::Output::ScrollToDownloadComponents);
-                    }
-
-                    Err(err) => {
-                        sender.output(Self::Output::Toast {
-                            title: tr!("config-update-error"),
-                            description: Some(err.to_string())
-                        });
-                    }
+            DefaultPathsAppMsg::Continue => match self.update_config() {
+                Ok(_) => {
+                    sender.output(Self::Output::ScrollToDownloadComponents);
                 }
-            }
+
+                Err(err) => {
+                    sender.output(Self::Output::Toast {
+                        title: tr!("config-update-error"),
+                        description: Some(err.to_string())
+                    });
+                }
+            },
 
             DefaultPathsAppMsg::Exit => {
                 relm4::main_application().quit();
@@ -465,7 +454,6 @@ impl DefaultPathsApp {
         config.game.path.korea.clone_from(&self.game_korea);
         config.game.path.japan.clone_from(&self.game_japan);
         config.components.path.clone_from(&self.components);
-        config.patch.path.clone_from(&self.patch);
 
         config.launcher.temp = Some(self.temp.clone());
 

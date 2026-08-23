@@ -33,11 +33,9 @@ loading-data = 正在加载数据
 downloading-background-picture = 正在下载背景图片
 updating-components-index = 正在更新组件索引
 loading-game-version = 正在获取游戏版本号
-loading-patch-status = 正在获取补丁状态
 loading-launcher-state = 正在计算启动器状态
 loading-launcher-state--game = 正在计算启动器状态: 验证游戏版本号
 loading-launcher-state--voice = 正在计算启动器状态: 验证{$locale}语音
-loading-launcher-state--patch = 正在计算启动器状态: 验证已安装补丁
 
 
 checking-free-space = 正在检查剩余空间
@@ -57,22 +55,16 @@ components-index-updated = 组件索引已更新
 launch = 启动
 migrate-folders = 迁移目录
 migrate-folders-tooltip = 更新游戏目录结构
-apply-patch = 安装补丁
 disable-telemetry = 禁用监测
 download-wine = 下载 Wine
 create-prefix = 创建 Wine prefix
 update = 更新
 download = 下载
 predownload-update = 预下载版本更新 {$version} ({$size})
-download-patch = 下载补丁
 
-patch-broken = 补丁已损坏
-patch-unsafe = 补丁不安全
 
 kill-game-process = 中止游戏进程
 
-main-window--patch-unavailable-tooltip = 补丁服务器不可用，启动器无法验证游戏补丁状态。你可以运行游戏，但是有出问题的风险
-main-window--patch-outdated-tooltip = 补丁版本太旧，新版补丁可能还没制作完成，无法使用。请过段时间再回来查看最新状态
 main-window--version-outdated-tooltip = 版本太旧，无法更新
 
 preferences = 选项

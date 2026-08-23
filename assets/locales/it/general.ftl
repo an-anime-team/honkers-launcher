@@ -38,31 +38,6 @@ game-predownload-available = Prescaricamento dell'aggiornamento del gioco dispon
 game-update-available = Aggiornamento del gioco disponibile: {$old} -> {$new}
 game-outdated = La versione del gioco è troppo vecchia e non può essere aggiornata. Ultima versione: {$latest}
 
-player-patch-version = Versione della patch player
-player-patch-version-description = Patch principale che ti permette di giocare al gioco su Linux
-
-mfplat-patch-version = Mfplat patch version
-mfplat-patch-version-description = Additional patch that may fix video playing issues
-
-applied = applied
-not-applied = not applied
-
-patch-not-available = non disponibile
-patch-not-available-tooltip = I server delle patch sono irraggiungibili
-
-patch-outdated = Non aggiornata ({$current})
-patch-outdated-tooltip = La patch non è aggiornata: {$current} -> {$latest}
-
-patch-preparation = preparazione
-patch-preparation-tooltip = La patch è in sviluppo
-
-patch-testing-tooltip = La patch di test è disponibile
-patch-not-applied-tooltip = La patch non è applicata
-patch-broken-tooltip = L'attuale versione della patch è difettosa e non funziona correttamente
-patch-unsafe-tooltip = L'attuale versione della patch non è sicura e non dovrebbe essere usata
-patch-concerning-tooltip = Abbiamo alcuni timori sulla versione attuale della patch
-
-apply-mfplat-patch = Apply mfplat patch
 
 ask-superuser-permissions = Chiedi permessi di amministratore
 ask-superuser-permissions-description = Il launcher li userà per aggiornare automaticamente il tuo file hosts. Questo non è necessario nell'edizione flatpak

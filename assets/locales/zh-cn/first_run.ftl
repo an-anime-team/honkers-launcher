@@ -49,7 +49,6 @@ korean-game-installation-folder = Korean game version installation folder
 japanese-game-installation-folder = Japanese game version installation folder
 fps-unlocker-folder = FPS Unlocker 文件夹
 components-index = 成分指数
-patch-folder = 补丁文件夹
 temp-folder = 临时文件夹
 
 migrate = 迁移

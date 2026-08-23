@@ -50,7 +50,6 @@ korean-game-installation-folder = Korean game version installation folder
 japanese-game-installation-folder = Japanese game version installation folder
 fps-unlocker-folder = FPS Unlocker-mapp
 components-index = Komponenternas index
-patch-folder = Patch-mapp
 temp-folder = Temp-mapp
 
 migrate = Migrera

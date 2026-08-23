@@ -46,7 +46,6 @@ global-game-installation-folder = Instalační složka globální verze hry
 chinese-game-installation-folder = Instalační složka čínské verze hry
 fps-unlocker-folder = Složka odemykače FPS
 components-index = Seznam komponent
-patch-folder = Složka patchů
 temp-folder = Složka dočasných souborů
 
 migrate = Migrovat

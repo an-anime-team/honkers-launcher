@@ -27,7 +27,6 @@ dxvk-install-failed = Помилка встановлення DXVK
 voice-package-deletion-error = Не вдалося видалити мовний пакет
 
 game-diff-finding-error = Не вдалося визначити оновлення гри
-patch-info-fetching-error = Не вдалося отримати інформацію про патч
 launcher-state-updating-error = Не вдалося оновити стан лаунчера
 
 package-not-available = Пакет недоступний: {$package}
@@ -40,8 +39,6 @@ dxvk-apply-error = Не вдалося застосувати DXVK
 
 downloaded-wine-list-failed = Не вдалося отримати список встановлених версій Wine
 
-patch-sync-failed = Помилка синхронізації папки патча
-patch-state-check-failed = Помилка перевірки статусу папки патча
 game-patching-error = Не вдалося встановити патч гри
 
 # Disable telemetry

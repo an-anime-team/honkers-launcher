@@ -27,7 +27,6 @@ dxvk-install-failed = Gagal memasang DXVK
 voice-package-deletion-error = Gagal menghapus berkas suara
 
 game-diff-finding-error = Gagal menemukan diff game
-patch-info-fetching-error = Gagal mendapatkan info patch
 launcher-state-updating-error = Gagal memperbarui kondisi launcher
 
 package-not-available = Paket tidak tersedia: {$package}
@@ -40,13 +39,8 @@ dxvk-apply-error = Gagal menerapkan DXVK
 
 downloaded-wine-list-failed = Gagal menampilkan daftar wine yang sudah diunduh
 
-patch-sync-failed = Gagal mensinkronisasi folder patch
-patch-state-check-failed = Gagal mengecek kondisi folder patch
 game-patching-error = Gagal melakukan patch pada game
 
-# Update main patch
-
-main-patch-update-failed = Gagal mengunduh patch versi terbaru
 
 # Disable telemetry
 

@@ -45,7 +45,6 @@ global-game-installation-folder = โฟลเดอร์การติดต�
 chinese-game-installation-folder = โฟลเดอร์การติดตั้งเวอร์ชันเกมจีน
 fps-unlocker-folder = โฟลเดอร์ FPS Unlocker
 components-index = Index ส่วนประกอบ
-patch-folder = โฟลเดอร์แพทช์
 temp-folder = โฟลเดอร์ชั่วคราว
 
 migrate = ย้าย

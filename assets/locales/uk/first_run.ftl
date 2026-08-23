@@ -47,7 +47,6 @@ global-game-installation-folder = Шлях встановлення глобал
 chinese-game-installation-folder = Шлях встановлення китайської версії гри
 fps-unlocker-folder = Папка FPS Unlocker
 components-index = Індекс компонентів
-patch-folder = Папка завантаження патча
 temp-folder = Тимчасова папка
 
 migrate = Мігрувати

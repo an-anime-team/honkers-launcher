@@ -27,7 +27,6 @@ dxvk-install-failed = Failed to install DXVK
 voice-package-deletion-error = Failed to delete voice package
 
 game-diff-finding-error = Failed to find game diff
-patch-info-fetching-error = Failed to fetch patch info
 launcher-state-updating-error = Failed to update launcher state
 
 package-not-available = Package is not available: {$package}
@@ -40,13 +39,8 @@ dxvk-apply-error = Failed to apply DXVK
 
 downloaded-wine-list-failed = Failed to list downloaded wine versions
 
-patch-sync-failed = Failed to sync patch folder
-patch-state-check-failed = Failed to check patch folder state
 game-patching-error = Failed to patch game
 
-# Update main patch
-
-main-patch-update-failed = Failed to download latest patch version
 
 # Disable telemetry
 

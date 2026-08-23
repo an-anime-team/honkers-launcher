@@ -27,7 +27,6 @@ dxvk-install-failed = DXVKのインストールに失敗しました。
 voice-package-deletion-error = ボイスパッケージの消去に失敗しました。
 
 game-diff-finding-error = ゲームの差異の検索に失敗しました。
-patch-info-fetching-error = パッチ情報のフェチに失敗しました。
 launcher-state-updating-error = ランチャーの状態を更新するのに失敗しました。
 
 package-not-available = パッケージが存在しません: {$package}
@@ -40,13 +39,8 @@ dxvk-apply-error = DXVKの適用に失敗しました。
 
 downloaded-wine-list-failed = ダウンロードされたwineのリストの表示にしっぱいしました。
 
-patch-sync-failed = パッチフォルダの同期に失敗しました
-patch-state-check-failed = パッチフォルダの状態を確認するのに失敗しました
 game-patching-error = ゲームのパッチに失敗しました。
 
-# Update main patch
-
-main-patch-update-failed = 最新のパッチのダウンロードに失敗しました。
 
 # Disable telemetry
 

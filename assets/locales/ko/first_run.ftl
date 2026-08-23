@@ -46,7 +46,6 @@ global-game-installation-folder = 글로벌 게임 설치 폴더
 chinese-game-installation-folder = 중국어 게임 설치 폴더
 fps-unlocker-folder = FPS 잠금 해제 폴더
 components-index = 구성 요소 색인
-patch-folder = 패치 폴더
 temp-folder = 임시 폴더
 
 migrate = 마이그레이션

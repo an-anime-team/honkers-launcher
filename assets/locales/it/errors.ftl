@@ -27,7 +27,6 @@ dxvk-install-failed = Installazione di DXVK non riuscita
 voice-package-deletion-error = Eliminazione del pacchetto delle voci non riuscita
 
 game-diff-finding-error = Non è stato possibile trovare la game diff
-patch-info-fetching-error = Recupero dell'informazioni sulla patch non riuscito
 launcher-state-updating-error = Aggiornamento dello stato del launcher non riuscito
 
 package-not-available = Il pacchetto non è disponibile: {$package}
@@ -40,13 +39,8 @@ dxvk-apply-error = Applicazione di DXVK non riuscita
 
 downloaded-wine-list-failed = Elencazione delle versioni di wine scaricate non riuscita
 
-patch-sync-failed = Sincronizzazione della cartella della patch non riuscita
-patch-state-check-failed = Controllo dello stato della cartella della patch non riuscito
 game-patching-error = Patching del gioco non riuscito
 
-# Update main patch
-
-main-patch-update-failed = Scaricamento dell'ultima patch non riuscito
 
 # Disable telemetry
 

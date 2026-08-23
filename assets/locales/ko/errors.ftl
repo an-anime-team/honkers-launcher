@@ -27,7 +27,6 @@ dxvk-install-failed = DXVK를 설치하지 못했습니다
 voice-package-deletion-error = 음성 패키지를 삭제하지 못했습니다
 
 game-diff-finding-error = 게임의 변경사항을 찾지 못했습니다
-patch-info-fetching-error = 패치 정보를 가져오지 못했습니다
 launcher-state-updating-error = 런처 상태를 업데이트하지 못했습니다
 
 package-not-available = 패키지 {$package}를 사용할 수 없습니다
@@ -40,8 +39,6 @@ dxvk-apply-error = DXVK를 적용하지 못했습니다
 
 downloaded-wine-list-failed = 다운로드한 Wine 버전을 나열하지 못했습니다
 
-patch-sync-failed = 패치 폴더 동기화에 실패했습니다
-patch-state-check-failed = 패치 폴더 상태 확인에 실패했습니다
 game-patching-error = 게임 패치에 실패했습니다
 
 # Disable telemetry

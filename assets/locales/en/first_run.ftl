@@ -50,7 +50,6 @@ korean-game-installation-folder = Korean game version installation folder
 japanese-game-installation-folder = Japanese game version installation folder
 fps-unlocker-folder = FPS Unlocker folder
 components-index = Components index
-patch-folder = Patch folder
 temp-folder = Temp folder
 
 migrate = Migrate
