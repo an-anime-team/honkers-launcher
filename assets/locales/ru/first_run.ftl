@@ -51,7 +51,6 @@ korean-game-installation-folder = Путь установки корейской
 japanese-game-installation-folder = Путь установки японской версии игры
 fps-unlocker-folder = Папка FPS Unlocker
 components-index = Индекс компонентов
-patch-folder = Папка скачивания патча
 temp-folder = Временная папка
 
 migrate = Перенести

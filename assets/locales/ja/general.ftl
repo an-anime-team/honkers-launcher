@@ -38,31 +38,6 @@ game-predownload-available = ゲームの事前アップデートがあります
 game-update-available = ゲームの更新があります: {$old} -> {$new}
 game-outdated = ゲームが非常に古いためアップデートできません. 最新バージョン: {$latest}
 
-player-patch-version = プレイヤーのパッチバージョン
-player-patch-version-description = Linuxでプレイするためのメインのパッチです。
-
-mfplat-patch-version = Mfplat patch version
-mfplat-patch-version-description = Additional patch that may fix video playing issues
-
-applied = applied
-not-applied = not applied
-
-patch-not-available = ありません。
-patch-not-available-tooltip = パッチサーバーに接続できませんでした。
-
-patch-outdated = 期限切れ ({$current})
-patch-outdated-tooltip = パッチは期限切れです: {$current} -> {$latest}
-
-patch-preparation = 準備中
-patch-preparation-tooltip = パッチは開発中
-
-patch-testing-tooltip = テストパッチがあります
-patch-not-applied-tooltip = パッチが適用されませんでした。
-patch-broken-tooltip = 現在のパッチは、壊れているため正しく動作しない場合があります。
-patch-unsafe-tooltip = 現在のパッチは、安全ではないので使わないほうが良いでしょう。
-patch-concerning-tooltip = 現在のパッチバージョンは、いくつかの懸念点があります
-
-apply-mfplat-patch = Apply mfplat patch
 
 ask-superuser-permissions = スーパーユーザーを尋ねる。
 ask-superuser-permissions-description = あなたのホストのファイルを自動更新するために、 これらを利用します。flatpak版では必要ありません。

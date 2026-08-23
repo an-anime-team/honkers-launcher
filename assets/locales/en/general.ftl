@@ -38,31 +38,6 @@ game-predownload-available = Game update pre-downloading available: {$old} -> {$
 game-update-available = Game update available: {$old} -> {$new}
 game-outdated = Game is too outdated and can't be updated. Latest version: {$latest}
 
-player-patch-version = Player patch version
-player-patch-version-description = Main patch that lets you play the game on Linux
-
-mfplat-patch-version = Mfplat patch version
-mfplat-patch-version-description = Additional patch that may fix video playing issues
-
-applied = applied
-not-applied = not applied
-
-patch-not-available = not available
-patch-not-available-tooltip = Patch servers are unreachable
-
-patch-outdated = outdated ({$current})
-patch-outdated-tooltip = Patch is outdated: {$current} -> {$latest}
-
-patch-preparation = preparation
-patch-preparation-tooltip = Patch is in development
-
-patch-testing-tooltip = Test patch is available
-patch-not-applied-tooltip = Patch is not applied
-patch-broken-tooltip = Current patch version is broken and doesn't work properly
-patch-unsafe-tooltip = Current patch version is unsafe and shouldn't be used
-patch-concerning-tooltip = We have some concerns about the current patch version
-
-apply-mfplat-patch = Apply mfplat patch
 
 ask-superuser-permissions = Ask superuser permissions
 ask-superuser-permissions-description = Launcher will use them to automatically update your hosts file. This is not needed in flatpak edition

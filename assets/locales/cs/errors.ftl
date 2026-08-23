@@ -27,7 +27,6 @@ dxvk-install-failed = Nepodařilo se nainstalovat DXVK
 voice-package-deletion-error = Nepodařilo se odstranit Dabing
 
 game-diff-finding-error = Nepodařilo se najít herní diff
-patch-info-fetching-error = Informace o opravě se nepodařilo načíst
 launcher-state-updating-error = Aktualizace stavu spouštěče se nezdařila
 
 package-not-available = Balíček není dostupný: {$package}
@@ -40,8 +39,6 @@ dxvk-apply-error = Nepodařilo se nainstalovat DXVK
 
 downloaded-wine-list-failed = Nepodařilo se zobrazit seznam Wine verzí
 
-patch-sync-failed = Synchronizace složky patchů se nezdařila
-patch-state-check-failed = Nepodařilo se zkontrolovat stav složky patchů
 game-patching-error = Nepodařilo se patchnout hru
 
 # Disable telemetry

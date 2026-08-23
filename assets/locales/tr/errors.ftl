@@ -27,7 +27,6 @@ dxvk-install-failed = DXVK indirilemedi
 voice-package-deletion-error = Ses dosyasını silme başarısız oldu
 
 game-diff-finding-error = Oyun diff'ini bulma başarısız oldu
-patch-info-fetching-error = Yama bilgilerini toplama başarısız oldu
 launcher-state-updating-error = İstemci durumunu güncelleme başarısız oldu
 
 package-not-available = Paket mevcut değil: {$package}
@@ -40,13 +39,8 @@ dxvk-apply-error = DXVK uygulanamadı
 
 downloaded-wine-list-failed = İndirilmiş Wine sürümlerini listeleme başarısız oldu
 
-patch-sync-failed = Yama dosyalarını senkronize etme başarısız oldu
-patch-state-check-failed = Yama dosyalarının durumunu kontrol etme başarısız oldu
 game-patching-error = Yamayı uygulamada sorun çıktı
 
-# Update main patch
-
-main-patch-update-failed = Güncel yama sürümü indirilemedi
 
 # Disable telemetry
 

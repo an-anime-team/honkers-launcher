@@ -33,23 +33,6 @@ game-predownload-available = Pré-baixa da atualização do jogo disponível: {$
 game-update-available = Atualização de jogo disponível: {$old} -> {$new}
 game-outdated = Jogo está muito ultrapassado e não pode ser atualizado. Última versão: {$latest}
 
-player-patch-version = Versão do patch do jogador
-player-patch-version-description = Patch principal que permite jogar no linux
-
-patch-not-available = Não disponível
-patch-not-available-tooltip = Servidores do patch estão inalcançáveis
-
-patch-outdated = Ultrapassado ({$current})
-patch-outdated-tooltip = Patch está ultrapassado: {$current} -> {$latest}
-
-patch-preparation = preparação
-patch-preparation-tooltip = Patch está em desenvolvimento
-
-patch-testing-tooltip = Patch teste está disponível
-patch-not-applied-tooltip = Patch não está aplicado
-patch-broken-tooltip = Current patch version is broken and doesn't work properly
-patch-unsafe-tooltip = Current patch version is unsafe and shouldn't be used
-patch-concerning-tooltip = We have some concerns about the current patch version
 
 apply-main-patch = Aplicar patch principal
 apply-main-patch-description = Experimental. Desativar isso permite jogar o jogo sem aplicar o patch. Isso pode não funcionar, ou requer modificações de arquivo manuais. Use se sabe o que está fazendo

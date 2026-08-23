@@ -45,7 +45,6 @@ global-game-installation-folder = Globale spelversie installatiemap
 chinese-game-installation-folder = Chinese spelversie installatiemap
 fps-unlocker-folder = FPS Unlocker map
 components-index = Componentenindex
-patch-folder = Patch map
 temp-folder = Tijdelijke map
 
 migrate = Migreer

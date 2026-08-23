@@ -27,7 +27,6 @@ dxvk-install-failed = DXVK telepítése sikertelen
 voice-package-deletion-error = Hangcsomag törlése sikertelen
 
 game-diff-finding-error = Játék diff megtalálása sikertelen
-patch-info-fetching-error = Patch info beszerzése sikertelen
 launcher-state-updating-error = Launcherállapot frissítése sikertelen
 
 package-not-available = Ez a csomag nem elérhető: {$package}
@@ -40,13 +39,8 @@ dxvk-apply-error = DXVK alkalmazása sikertelen
 
 downloaded-wine-list-failed = Nem sikerült listázni a letöltött wine verziókat
 
-patch-sync-failed = Patch mappa szinkronizálása sikertelen
-patch-state-check-failed = Patch mappa állapota ellenőrzése sikertelen
 game-patching-error = Sikertelen játék patchelés
 
-# Update main patch
-
-main-patch-update-failed = Failed to download latest patch version
 
 # Disable telemetry
 

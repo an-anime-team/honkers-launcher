@@ -49,7 +49,6 @@ korean-game-installation-folder = Kore sürümü kurulum dizini
 japanese-game-installation-folder = Japonya sürümü kurulum dizini
 fps-unlocker-folder = FPS Unlocker klasörü
 components-index = Bileşenlerin dizini
-patch-folder = Yama klasörü
 temp-folder = "Geçici" klasörü
 
 migrate = Aktarma

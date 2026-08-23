@@ -34,20 +34,6 @@ game-predownload-available = Доступне попереднє заванта�
 game-update-available = Доступне оновлення гри: {$old} -> {$new}
 game-outdated = Версія гри застаріла і не може бути оновлена. Остання версія: {$latest}
 
-player-patch-version = Версія основного патча
-player-patch-version-description = Основний патч, який дозволяє вам грати в гру на Linux
-
-patch-not-available = недоступний
-patch-not-available-tooltip = Сервери патча недоступні
-
-patch-outdated = застарілий ({$current})
-patch-outdated-tooltip = Версія патча застаріла: {$current} -> {$latest}
-
-patch-preparation = підготовка
-patch-preparation-tooltip = Патч у розробці
-
-patch-testing-tooltip = Доступна тестова версія патча
-patch-not-applied-tooltip = Патч не застосовано
 
 apply-main-patch = Застосовувати основний патч
 apply-main-patch-description = Експериментально. Вимкнення опції дозволяє запускати гру без застосування патча. Це може не працювати або вимагати ручної зміни файлів. Використовуйте, якщо знаєте, що робите

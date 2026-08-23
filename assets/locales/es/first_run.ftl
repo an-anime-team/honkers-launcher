@@ -49,7 +49,6 @@ korean-game-installation-folder = Korean game version installation folder
 japanese-game-installation-folder = Japanese game version installation folder
 fps-unlocker-folder = Carpeta del liberador de FPS
 components-index = Índice de componentes
-patch-folder = Carpeta del parche
 temp-folder = Carpeta temporal
 
 migrate = Migrar

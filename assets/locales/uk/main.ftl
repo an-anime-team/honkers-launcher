@@ -40,7 +40,6 @@ loading-data = Завантаження даних
 downloading-background-picture = Завантаження фонового зображення
 updating-components-index = Оновлення індексу компонентів
 loading-game-version = Завантаження версії гри
-loading-patch-status = Завантаження статусу патча
 loading-launcher-state = Завантаження статусу лаунчера
 loading-launcher-state--game = Завантаження статусу лаунчера: перевірка версії гри
 loading-launcher-state--voice = Завантаження статусу лаунчера: перевірка {$locale ->
@@ -50,7 +49,6 @@ loading-launcher-state--voice = Завантаження статусу лаун
     [Chinese] китайської
     *[other] $locale
 } мови пакета
-loading-launcher-state--patch = Завантаження статусу лаунчера: перевірка встановленого патча
 
 
 checking-free-space = Перевірка вільного місця
@@ -68,7 +66,6 @@ components-index-updated = Індекс компонентів було онов
 launch = Запустити
 migrate-folders = Перемістити папки
 migrate-folders-tooltip = Оновити структуру файлів гри
-apply-patch = Застосувати патч
 disable-telemetry = Вимкнути телеметрію
 download-wine = Встановити Wine
 create-prefix = Створити префікс
@@ -78,8 +75,6 @@ predownload-update = Попередньо встановити оновленн�
 
 kill-game-process = Завершити процес гри
 
-main-window--patch-unavailable-tooltip = Сервери патча недоступні, і лаунчер не може перевірити статус патча гри. Ви можете запустити гру на свій страх і ризик
-main-window--patch-outdated-tooltip = Патч застарів або знаходиться в процесі розробки, тому не може бути застосований. Поверніться пізніше, щоб перевірити його статус
 main-window--version-outdated-tooltip = Версія занадто стара і не може бути оновлена
 
 preferences = Налаштування

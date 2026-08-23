@@ -34,23 +34,6 @@ game-predownload-available = Dostępne jest wcześniejsze pobranie aktualizacji 
 game-update-available = Dostępna jest aktualizacja gry: {$old} -> {$new}
 game-outdated = Gra jest zbyt przestarzała i nie można jej zaktualizować. Najnowsza wersja: {$latest}
 
-player-patch-version = Wersja łatki dla gracza
-player-patch-version-description = Główna łatka umożliwiająca grę w grę na systemie Linux
-
-patch-not-available = niedostępna
-patch-not-available-tooltip = Serwery łatek są niedostępne
-
-patch-outdated = przestarzała ({$current})
-patch-outdated-tooltip = Łatka jest przestarzała: {$current} -> {$latest}
-
-patch-preparation = przygotowywanie
-patch-preparation-tooltip = Łatka jest w trakcie opracowywania
-
-patch-testing-tooltip = Dostępna jest łatka testowa
-patch-not-applied-tooltip = Łatka nie jest zastosowana
-patch-broken-tooltip = Current patch version is broken and doesn't work properly
-patch-unsafe-tooltip = Current patch version is unsafe and shouldn't be used
-patch-concerning-tooltip = Mamy pewne wątpliwości co do aktualnej wersji łatki
 
 apply-main-patch = Zastosuj główną łatkę
 apply-main-patch-description = Eksperymentalne. Wyłączenie tej opcji pozwoli uruchomić grę bez stosowania łatki. Może to nie działać lub wymagać ręcznych modyfikacji plików. Użyj tej opcji, jeśli wiesz, co robisz.

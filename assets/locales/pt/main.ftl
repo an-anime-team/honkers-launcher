@@ -33,11 +33,9 @@ loading-data = Carregando dados
 downloading-background-picture = Baixando imagem de fundo
 updating-components-index = Atualizando índice de componentes
 loading-game-version = Carregando versão do jogo
-loading-patch-status = Carregando status do patch
 loading-launcher-state = Carregando status do launcher
 loading-launcher-state--game = Loading launcher state: verificando versão do jogo
 loading-launcher-state--voice = Loading launcher state: verificando pacote de voz {$locale}
-loading-launcher-state--patch = Loading launcher state: verificando patch instalado
 
 
 checking-free-space = Checando espaço livre
@@ -57,7 +55,6 @@ components-index-updated = Índice de componentes foi atualizado
 launch = Iniciar
 migrate-folders = Migrar pastas
 migrate-folders-tooltip = Atualizar estrutura dos arquivos de jogo
-apply-patch = Aplicar patch
 disable-telemetry = Desativar telemetria
 download-wine = Baixar wine
 create-prefix = Criar prefixo
@@ -67,8 +64,6 @@ predownload-update = Pre-baixar {$version} atualização ({$size})
 
 kill-game-process = Terminar processo de jogo
 
-main-window--patch-unavailable-tooltip = Servidores do patch estão indisponíveis e launcher não pode verificar o estado do patch de jogo. Pode jogar o jogo por sua conta e risco
-main-window--patch-outdated-tooltip = Patch é antigo ou em estado de preparação, então indisponível para uso. Volte depois para checar seu estado
 main-window--version-outdated-tooltip = Versão é antiga e não pode ser atualizada
 
 preferences = Preferências

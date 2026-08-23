@@ -27,7 +27,6 @@ dxvk-install-failed = Không thể cài đặt DXVK
 voice-package-deletion-error = Không thể xóa giọng nói
 
 game-diff-finding-error = Không thể tìm thấy game diff
-patch-info-fetching-error = Không thể tìm nạp thông tin bản vá
 launcher-state-updating-error = Không thể cập nhật trạng thái Launcher
 
 package-not-available = Gói không khả dụng: {$package}
@@ -40,13 +39,8 @@ dxvk-apply-error = Không thể áp dụng DXVK
 
 downloaded-wine-list-failed = Không thể hiển thị các phiên bản Wine đã tải
 
-patch-sync-failed = Không thể đồng bộ thư mục bản vá
-patch-state-check-failed = Không thể kiểm tra trạng thái thư mục bản vá
 game-patching-error = Không thể vá trò chơi
 
-# Update main patch
-
-main-patch-update-failed = Không thể tải bản vá mới nhất
 
 # Disable telemetry
 

@@ -27,7 +27,6 @@ dxvk-install-failed = Instalacja DXVK nie powiodła się
 voice-package-deletion-error = Usuwanie pakietu głosowego nie powiodło się
 
 game-diff-finding-error = Nie udało się znaleźć różnic w grze
-patch-info-fetching-error = Pobieranie informacji o łatce nie powiodło się
 launcher-state-updating-error = Aktualizacja stanu uruchamiacza nie powiodła się
 
 package-not-available = Pakiet niedostępny: {$package}
@@ -40,8 +39,6 @@ dxvk-apply-error = Zastosowanie DXVK nie powiodło się
 
 downloaded-wine-list-failed = Nie udało się wylistować pobranych wersji Wine
 
-patch-sync-failed = Nie udało się zsynchronizować folderu z łatkami
-patch-state-check-failed = Nie udało się sprawdzić stanu folderu z łatkami
 game-patching-error = Wprowadzanie łatki do gry nie powiodło się
 
 # Disable telemetry

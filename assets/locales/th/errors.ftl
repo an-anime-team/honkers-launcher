@@ -27,7 +27,6 @@ dxvk-install-failed = ติดตั้ง DXVK ไม่สำเร็จ
 voice-package-deletion-error = ลบแพ็คเกจเสียงไม่สำเร็จ
 
 game-diff-finding-error = ไม่พบความแตกต่างของเกม
-patch-info-fetching-error = ไม่สามารถเรียกข้อมูลแพตช์ได้
 launcher-state-updating-error = อัปเดตสถานะ launcher ไม่สำเร็จ
 
 package-not-available = ไม่พบแพ็คเกจนี้: {$package}
@@ -40,8 +39,6 @@ dxvk-apply-error = ไม่สามารถติดตั้ง DXVK ได�
 
 downloaded-wine-list-failed = ไม่สามารถแสดงเวอร์ชัน Wine ที่ดาวน์โหลดไปแล้วได้
 
-patch-sync-failed = ไม่สามารถซิงค์โฟลเดอร์แพตช์ได้
-patch-state-check-failed = ไม่สามารถตรวจสอบสถานะโฟลเดอร์แพตช์ได้
 game-patching-error = ไม่สามารถแพตช์เกมได้
 
 # Disable telemetry

@@ -49,7 +49,6 @@ korean-game-installation-folder = Installationsorder der koreanischen Spielversi
 japanese-game-installation-folder = Installationsorder der japanischen Spielversion
 fps-unlocker-folder = FPS Unlocker Ordner
 components-index = Komponentenverzeichnis
-patch-folder = Patch-Ordner
 temp-folder = Temp-Ordner
 
 migrate = Migrieren

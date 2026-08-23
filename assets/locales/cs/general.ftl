@@ -34,20 +34,6 @@ game-predownload-available = Je k dispozici předběžné stažení aktualizace 
 game-update-available = Aktualizace hry k dispozici: {$old} -> {$new}
 game-outdated = Hra je příliš zastaralá a nelze ji aktualizovat. Nejnovější verze: {$latest}
 
-player-patch-version = Verze patche
-player-patch-version-description = Hlavní patch, který vám umožní hrát hru na Linuxu
-
-patch-not-available = Patch není dostupný
-patch-not-available-tooltip = Servery s Patchem nejsou dostupné
-
-patch-outdated = Zastaralý ({$current})
-patch-outdated-tooltip = Patch je zastaralý: {$current} -> {$latest}
-
-patch-preparation = Příprava
-patch-preparation-tooltip = Patch je ve vývoji
-
-patch-testing-tooltip = Předběžné vydání patche je dostupné
-patch-not-applied-tooltip = Patch není aplikovaný
 
 apply-main-patch = Aplikovat hlavní patch
 apply-main-patch-description = Experimentální. Vypnutím této možnosti vám umožní spustit hru bez použití patche. To nemusí fungovat nebo vyžaduje ruční úpravy souborů. Použijte, pokud víte, co děláte

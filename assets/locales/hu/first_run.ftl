@@ -50,7 +50,6 @@ korean-game-installation-folder = Korean game version installation folder
 japanese-game-installation-folder = Japanese game version installation folder
 fps-unlocker-folder = FPS Unlocker mappa
 components-index = Components index
-patch-folder = Patch mappa
 temp-folder = Ideiglenes (temp) mappa
 
 migrate = Migráció

@@ -34,23 +34,6 @@ game-predownload-available = 게임 업데이트 사전 다운로드 가능: {$o
 game-update-available = 게임 업데이트 사용 가능: {$old} -> {$new}
 game-outdated = 게임이 너무 오래되어 업데이트할 수 없습니다. 최신 버전: {$latest}
 
-player-patch-version = 플레이어 패치 버전
-player-patch-version-description = Linux에서 게임을 플레이할 수 있는 메인 패치입니다
-
-patch-not-available = 사용할 수 없음
-patch-not-available-tooltip = 패치 서버에 연결할 수 없음
-
-patch-outdated = 오래된 패치({$current})
-patch-outdated-tooltip = 패치가 오래되었습니다. 현재:{$current} 최신:{$latest}
-
-patch-preparation = 준비
-patch-preparation-tooltip = 패치가 개발 중입니다
-
-patch-testing-tooltip = 테스트 패치를 사용할 수 있습니다
-patch-not-applied-tooltip = 패치가 적용되지 않았습니다
-patch-broken-tooltip = Current patch version is broken and doesn't work properly
-patch-unsafe-tooltip = Current patch version is unsafe and shouldn't be used
-patch-concerning-tooltip = We have some concerns about the current patch version
 
 apply-main-patch = 메인 패치 적용
 apply-main-patch-description = 실험적 기능입니다. 이 옵션을 비활성화하면 패치를 적용하지 않고 게임을 실행할 수 있습니다. 작동하지 않거나 수동으로 파일을 수정해야 할 수 있습니다. 사용법을 알고 있는 경우에만 사용하세요.

@@ -38,23 +38,6 @@ game-predownload-available = Förnedladdning av speluppdatering tillgänglig: {$
 game-update-available = Speluppdatering tillgänglig: {$old} -> {$new}
 game-outdated = Spelet är för utdaterat och kan inte uppdateras. Senaste version: {$latest}
 
-player-patch-version = Spelarens patch-version
-player-patch-version-description = Huvudsaklig patch som låter dig spela spelet på Linux
-
-patch-not-available = inte tillgänglig
-patch-not-available-tooltip = Patch-servrar går inte att nå
-
-patch-outdated = utdaterad ({$current})
-patch-outdated-tooltip = Patchen är utdaterad {$current} -> {$latest}
-
-patch-preparation = förberedelse
-patch-preparation-tooltip = Patchen är under utveckling
-
-patch-testing-tooltip = Test-patch är tillgänglig
-patch-not-applied-tooltip = Patchen är inte applicerad
-patch-broken-tooltip = Current patch version is broken and doesn't work properly
-patch-unsafe-tooltip = Current patch version is unsafe and shouldn't be used
-patch-concerning-tooltip = We have some concerns about the current patch version
 
 apply-main-patch = Applicera huvudsaklig patch
 apply-main-patch-description = Experimentellt. Om du inaktiverar detta kan du köra spelet utan att använda patchen. Detta kanske inte fungerar eller kan kräva manuella filändringar. Använd om du vet vad du gör

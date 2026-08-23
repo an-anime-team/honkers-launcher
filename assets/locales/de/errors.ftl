@@ -27,7 +27,6 @@ dxvk-install-failed = DXVK konnte nicht installiert werden
 voice-package-deletion-error = Sprachpaket konnte nicht gelöscht werden
 
 game-diff-finding-error = Spiel-Diff nicht gefunden
-patch-info-fetching-error = Patch-Informationen konnten nicht abgerufen werden
 launcher-state-updating-error = Aktualisierung des Launcher-Status fehlgeschlagen
 
 package-not-available = Paket ist nicht verfügbar: {$package}
@@ -40,13 +39,8 @@ dxvk-apply-error = Anwenden von DXVK fehlgeschlagen
 
 downloaded-wine-list-failed = Auflistung der heruntergeladenen Wine-Versionen fehlgeschlagen
 
-patch-sync-failed = Synchronisierung des Patch-Ordners fehlgeschlagen
-patch-state-check-failed = Status des Patchordners konnte nicht überprüft werden
 game-patching-error = Spiel konnte nicht gepatcht werden
 
-# Update main patch
-
-main-patch-update-failed = Die neuste Version des Patches konnte nicht heruntergeladen werden
 
 # Disable telemetry
 

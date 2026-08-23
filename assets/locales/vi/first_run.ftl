@@ -50,7 +50,6 @@ korean-game-installation-folder = Thư mục cài đặt phiên bản Hàn Quố
 japanese-game-installation-folder = Thư mục cài đặt phiên bản Nhật Bản
 fps-unlocker-folder = Thư mục FPS Unlocker
 components-index = Chỉ mục thành phần
-patch-folder = Thư mục bản vá
 temp-folder = Thư mục tạm thời
 
 migrate = Di chuyển

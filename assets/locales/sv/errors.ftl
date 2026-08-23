@@ -27,7 +27,6 @@ dxvk-install-failed = Det gick inte att installera DXVK
 voice-package-deletion-error = Det gick inte att ta bort röstpaket
 
 game-diff-finding-error = Det gick inte att hitta spel-diff
-patch-info-fetching-error = Det gick inte att hämta patch-info
 launcher-state-updating-error = Det gick inte att uppdatera starthanterarens tillstånd
 
 package-not-available = Paket är inte tillgängligt: {$package}
@@ -40,8 +39,6 @@ dxvk-apply-error = Det gick inte att applicera DXVK
 
 downloaded-wine-list-failed = Det gick inte att lista nedladdade Wine-versioner
 
-patch-sync-failed = Det gick inte att synka patch-mappen
-patch-state-check-failed = Det gick inte att kontrollera patch-mappens tillstånd
 game-patching-error = Det gick inte att patcha spelet
 
 # Disable telemetry

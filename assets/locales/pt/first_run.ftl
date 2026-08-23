@@ -46,7 +46,6 @@ global-game-installation-folder = Pasta de instalação da versão global
 chinese-game-installation-folder = Pasta de instalação da versão chinesa
 fps-unlocker-folder = Pasta do desbloqueador de FPS
 components-index = Índice de componentes
-patch-folder = Pasta do patch
 temp-folder = Pasta do temp
 
 migrate = Migrar

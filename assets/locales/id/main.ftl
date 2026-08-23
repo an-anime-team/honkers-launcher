@@ -40,11 +40,9 @@ loading-data = Memuat data
 downloading-background-picture = Mengunduh gambar latar belakang 
 updating-components-index = Memperbarui indeks komponen
 loading-game-version = Memuat versi game
-loading-patch-status = Memuat status patch 
 loading-launcher-state = Memuat keadaan launcher 
 loading-launcher-state--game = Memuat keadaan launcher: memverifikasi versi game
 loading-launcher-state--voice = Memuat keadaan launcher: memverifikasi {$locale} bahasa suara 
-loading-launcher-state--patch = Memuat keadaan launcher: memverifikasi patch yang ter-install
 
 
 checking-free-space = Mengecek penyimpanan kosong 
@@ -64,22 +62,16 @@ components-index-updated = Index komponen baru saja diperbarui
 launch = Luncurkan
 migrate-folders = Pindahkan folder 
 migrate-folders-tooltip = Perbarui struktur folder game 
-apply-patch = Terapkan patch
 disable-telemetry = Nonaktifkan telemetri
 download-wine = Unduh wine
 create-prefix = Buat prefix
 update = Perbarui
 download = Unduh 
 predownload-update = Pra-unduh pembaruan versi {$version} ({$size})
-download-patch = Unduh patch
 
-patch-broken = Patch rusak
-patch-unsafe = Patch tidak aman
 
 kill-game-process = Hentikan paksa proses game
 
-main-window--patch-unavailable-tooltip = Server patch tidak tersedia dan launcher tidak bisa memverifikasi status patch game. Anda bisa menjalankan game dengan resiko sendiri 
-main-window--patch-outdated-tooltip = Patch kadaluarsa atau sedang dalam persiapan sehingga tidak tersedia. Kembali lagi nanti untuk melihat status patch
 main-window--version-outdated-tooltip = Versi terlalu kadaluarsa dan tidak bisa diperbarui 
 
 preferences = Preferensi

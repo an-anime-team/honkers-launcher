@@ -27,7 +27,6 @@ dxvk-install-failed = Kan DXVK niet installeren
 voice-package-deletion-error = Kan het spraakpakket niet verwijderen
 
 game-diff-finding-error = Kan speldiff niet vinden
-patch-info-fetching-error = Kan patchgegevens niet ophalen
 launcher-state-updating-error = Kan de status van de launcher niet updaten
 
 package-not-available = Pakket niet beschikbaar: {$package}
@@ -40,8 +39,6 @@ dxvk-apply-error = Kan DXVK niet toepassen
 
 downloaded-wine-list-failed = Kan gedownloade Wine versies niet weergeven
 
-patch-sync-failed = Kan de patchmap niet synchroniseren
-patch-state-check-failed = Kan de status van de patchmap niet controleren
 game-patching-error = Kan het spel niet patchen
 
 # Disable telemetry
