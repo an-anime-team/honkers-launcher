@@ -1,9 +1,7 @@
 use relm4::prelude::*;
 use adw::prelude::*;
-
 use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::config::schema_blanks::prelude::*;
-
 use enum_ordinalize::Ordinalize;
 
 use crate::*;
@@ -432,12 +430,19 @@ impl SimpleAsyncComponent for GamescopeApp {
         }
     }
 
-    async fn init(_init: Self::Init, root: Self::Root, _sender: AsyncComponentSender<Self>) -> AsyncComponentParts<Self> {
+    async fn init(
+        _init: Self::Init,
+        root: Self::Root,
+        _sender: AsyncComponentSender<Self>
+    ) -> AsyncComponentParts<Self> {
         tracing::info!("Initializing gamescope settings");
 
         let model = Self;
         let widgets = view_output!();
 
-        AsyncComponentParts { model, widgets }
+        AsyncComponentParts {
+            model,
+            widgets
+        }
     }
 }

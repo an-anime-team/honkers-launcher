@@ -2,7 +2,6 @@ use relm4::prelude::*;
 use adw::prelude::*;
 
 use crate::*;
-
 use super::main::*;
 
 pub struct FinishApp;
@@ -34,7 +33,7 @@ impl SimpleAsyncComponent for FinishApp {
 
                 gtk::Label {
                     set_label: &tr!("finish-message"),
-    
+
                     set_justify: gtk::Justification::Center,
                     set_wrap: true,
                     set_margin_top: 32
@@ -44,12 +43,12 @@ impl SimpleAsyncComponent for FinishApp {
             add = &adw::PreferencesGroup {
                 set_valign: gtk::Align::Center,
                 set_vexpand: true,
-    
+
                 gtk::Box {
                     set_orientation: gtk::Orientation::Horizontal,
                     set_halign: gtk::Align::Center,
                     set_spacing: 8,
-    
+
                     gtk::Button {
                         set_label: &tr!("restart"),
                         set_css_classes: &["suggested-action", "pill"],
@@ -68,17 +67,26 @@ impl SimpleAsyncComponent for FinishApp {
         }
     }
 
-    async fn init(_init: Self::Init, root: Self::Root, _sender: AsyncComponentSender<Self>) -> AsyncComponentParts<Self> {
+    async fn init(
+        _init: Self::Init,
+        root: Self::Root,
+        _sender: AsyncComponentSender<Self>
+    ) -> AsyncComponentParts<Self> {
         let model = Self;
         let widgets = view_output!();
 
-        AsyncComponentParts { model, widgets }
+        AsyncComponentParts {
+            model,
+            widgets
+        }
     }
 
     async fn update(&mut self, msg: Self::Input, _sender: AsyncComponentSender<Self>) {
         match msg {
             FinishAppMsg::Restart => {
-                std::process::Command::new(std::env::current_exe().unwrap()).spawn().unwrap();
+                std::process::Command::new(std::env::current_exe().unwrap())
+                    .spawn()
+                    .unwrap();
 
                 relm4::main_application().quit();
             }

@@ -1,28 +1,25 @@
-use std::{
-    path::PathBuf,
-    sync::atomic::{AtomicBool, Ordering},
-};
+use std::path::PathBuf;
+use std::sync::atomic::{AtomicBool, Ordering};
 
-use anime_launcher_sdk::{
-    anime_game_core::{honkai::prelude::*, prelude::*},
-    config::ConfigExt,
-    honkai::{
-        config::{Config, Schema},
-        consts::*,
-        sessions::Sessions,
-        states::LauncherState,
-    },
-    sessions::SessionsExt,
-};
+use anime_launcher_sdk::anime_game_core::honkai::prelude::*;
+use anime_launcher_sdk::anime_game_core::prelude::*;
+use anime_launcher_sdk::config::ConfigExt;
+use anime_launcher_sdk::honkai::config::{Config, Schema};
+use anime_launcher_sdk::honkai::consts::*;
+use anime_launcher_sdk::honkai::sessions::Sessions;
+use anime_launcher_sdk::honkai::states::LauncherState;
+use anime_launcher_sdk::sessions::SessionsExt;
 use relm4::prelude::*;
-use tracing_subscriber::{filter::*, prelude::*};
+use tracing_subscriber::filter::*;
+use tracing_subscriber::prelude::*;
 
 pub mod background;
 pub mod i18n;
 pub mod move_files;
 pub mod ui;
 
-use ui::{first_run::main::*, main::*};
+use ui::first_run::main::*;
+use ui::main::*;
 
 pub const APP_ID: &str = "moe.launcher.honkers-launcher";
 pub const APP_RESOURCE_PATH: &str = "/moe/launcher/honkers-launcher";
@@ -202,7 +199,7 @@ fn main() -> anyhow::Result<()> {
     }
 
     // Force debug output
-    let mut force_debug = false;
+    let mut force_debug = 0;
 
     // Run the game
     let mut run_game = false;
@@ -219,7 +216,7 @@ fn main() -> anyhow::Result<()> {
     // Parse arguments
     for i in 0..args.len() {
         match args[i].as_str() {
-            "--debug" => force_debug = true,
+            "--debug" => force_debug += 1,
             "--run-game" => run_game = true,
             "--just-run-game" => just_run_game = true,
             "--no-verbose-tracing" => no_verbose_tracing = true,
@@ -231,7 +228,7 @@ fn main() -> anyhow::Result<()> {
                 }
             }
 
-            arg => gtk_args.push(arg.to_string()),
+            arg => gtk_args.push(arg.to_string())
         }
     }
 
@@ -239,14 +236,22 @@ fn main() -> anyhow::Result<()> {
     let stdout = tracing_subscriber::fmt::layer()
         .pretty()
         .with_filter({
-            if APP_DEBUG || force_debug {
+            if force_debug >= 2 {
                 LevelFilter::TRACE
-            } else {
+            }
+            else if APP_DEBUG || force_debug >= 1 {
+                LevelFilter::DEBUG
+            }
+            else {
                 LevelFilter::WARN
             }
         })
         .with_filter(filter_fn(move |metadata| {
-            !metadata.target().contains("rustls") && !no_verbose_tracing
+            !metadata.target().contains("rustls")
+                && !metadata.target().contains("reqwest")
+                && !metadata.target().contains("h2")
+                && !metadata.target().contains("hyper_util")
+                && !no_verbose_tracing
         }));
 
     // Prepare debug file logger
@@ -256,7 +261,20 @@ fn main() -> anyhow::Result<()> {
         .pretty()
         .with_ansi(false)
         .with_writer(std::sync::Arc::new(file))
-        .with_filter(filter_fn(|metadata| !metadata.target().contains("rustls")));
+        .with_filter({
+            if force_debug >= 2 {
+                LevelFilter::TRACE
+            }
+            else {
+                LevelFilter::DEBUG
+            }
+        })
+        .with_filter(filter_fn(|metadata| {
+            !metadata.target().contains("rustls")
+                && !metadata.target().contains("reqwest")
+                && !metadata.target().contains("h2")
+                && !metadata.target().contains("hyper_util")
+        }));
 
     tracing_subscriber::registry()
         .with(stdout)
@@ -307,7 +325,8 @@ fn main() -> anyhow::Result<()> {
         // I don't believe to users to read announcements so better do this
         //
         // There's 2 files which were modified by the old patch, but since the game
-        // was updated those files were updated as well, so no need for additional actions
+        // was updated those files were updated as well, so no need for additional
+        // actions
         //
         // Should be removed in future
         let game_path = CONFIG.game.path.for_edition(CONFIG.launcher.edition);
@@ -334,7 +353,8 @@ fn main() -> anyhow::Result<()> {
             if game_path.join("UnityCrashHandler64.exe").exists() {
                 std::fs::remove_file(game_path.join("UnityCrashHandler64.exe.bak"))
                     .expect("Failed to delete 'UnityCrashHandler64.exe.bak' file");
-            } else {
+            }
+            else {
                 std::fs::rename(game_path.join("UnityCrashHandler64.exe.bak"), game_path.join("UnityCrashHandler64.exe"))
                     .expect("Failed to rename 'UnityCrashHandler64.exe.bak' file to 'UnityCrashHandler64.exe'");
             }
@@ -353,7 +373,11 @@ fn main() -> anyhow::Result<()> {
                     return Ok(());
                 }
 
-                LauncherState::PatchNotVerified | LauncherState::PatchUpdateAvailable => {
+                LauncherState::PatchNotVerified
+                | LauncherState::PatchUpdateAvailable
+                | LauncherState::PredownloadAvailable {
+                    ..
+                } => {
                     if just_run_game {
                         anime_launcher_sdk::honkai::game::run().expect("Failed to run the game");
 
@@ -361,7 +385,7 @@ fn main() -> anyhow::Result<()> {
                     }
                 }
 
-                _ => (),
+                _ => ()
             }
         }
 

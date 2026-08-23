@@ -1,6 +1,5 @@
 use relm4::prelude::*;
 use gtk::prelude::*;
-
 use anime_launcher_sdk::VERSION as SDK_VERSION;
 use anime_launcher_sdk::anime_game_core::VERSION as CORE_VERSION;
 
@@ -123,7 +122,11 @@ impl SimpleComponent for AboutDialog {
         }
     }
 
-    fn init(_init: Self::Init, root: Self::Root, sender: ComponentSender<Self>) -> ComponentParts<Self> {
+    fn init(
+        _init: Self::Init,
+        root: Self::Root,
+        sender: ComponentSender<Self>
+    ) -> ComponentParts<Self> {
         tracing::info!("Initializing about dialog");
 
         let model = Self {
@@ -132,7 +135,10 @@ impl SimpleComponent for AboutDialog {
 
         let widgets = view_output!();
 
-        ComponentParts { model, widgets }
+        ComponentParts {
+            model,
+            widgets
+        }
     }
 
     fn update(&mut self, msg: Self::Input, _sender: ComponentSender<Self>) {

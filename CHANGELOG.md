@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added support for the new download method
+- Added support for predownloads (if they ever appear in the API)
+
 ### Fixed
 
 - Fixed a panic when the launcher folder is a broken symlink, the launcher will exit with an
