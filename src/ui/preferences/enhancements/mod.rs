@@ -109,7 +109,8 @@ impl SimpleAsyncComponent for EnhancementsApp {
                     set_model = &gtk::StringList::new(&[
                         &tr!("none"),
                         "ESync",
-                        "FSync"
+                        "FSync",
+                        "NTSync"
                     ]),
 
                     set_selected: CONFIG.game.wine.sync.ordinal() as u32,
