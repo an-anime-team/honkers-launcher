@@ -49,6 +49,15 @@
   </categories>
   <content_rating type="oars-1.1" />
   <releases>
+   <release version="1.14.0" date="2026-08-23">
+      <description>
+        <p>Added support for the new download and update method</p>
+        <p>Added support for predownloads (if they ever appear in the API)</p>
+        <p>Fixed a panic when the launcher folder is a broken symlink, the launcher will exit with an error message instead</p>
+        <p>Fixed game not launching after version 9.0, please update to latest Wine in the launcher</p>
+        <p>Removed game patching (which wasn't actually patching but was called that in the launcher)</p>
+      </description>
+   </release>
    <release version="1.13.0" date="2025-11-12">
       <description>
         <p>Fixed size of images in the "Appearance" preferences section (most noticeable on flatpak)</p>

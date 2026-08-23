@@ -93,15 +93,27 @@ impl SimpleComponent for AboutDialog {
             ].join("\n"),
 
             set_release_notes_version: &APP_VERSION,
-            set_release_notes: &[
-                "<p>Fixed</p>",
+            set_release_notes: r#"
+                <p>Added</p>
 
-                "<ul>",
-                    "<li>Fixed size of images in the \"Appearance\" preferences section (most noticeable on flatpak)</li>",
-                    "<li>Updated default window size in classic appearance option to match the other launchers</li>",
-                    "<li>Fixed the package name for libwebp-utils on Arch Linux</li>",
-                "</ul>"
-            ].join("\n"),
+                <ul>
+                    <li>Added support for the new download and update method</li>
+                    <li>Added support for predownloads (if they ever appear in the API)</li>
+                </ul>
+
+                <p>Fixed</p>
+
+                <ul>
+                    <li>Fixed a panic when the launcher folder is a broken symlink, the launcher will exit with an error message instead</li>
+                    <li>Fixed game not launching after version 9.0, please update to latest Wine in the launcher</li>
+                </ul>
+
+                <p>Removed</p>
+
+                <ul>
+                    <li>Removed game patching (which wasn't actually patching but was called that in the launcher)</li>
+                </ul>
+            "#,
 
             set_modal: true,
             set_hide_on_close: true,

@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.14.0] - 2026-08-23
+
 ### Added
 
 - Added support for the new download and update method
@@ -379,7 +381,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <br>
 
-[unreleased]: https://github.com/an-anime-team/honkers-launcher/compare/1.13.0...next
+[unreleased]: https://github.com/an-anime-team/honkers-launcher/compare/1.14.0...next
+[1.14.0]: https://github.com/an-anime-team/honkers-launcher/compare/1.13.0...1.14.0
 [1.13.0]: https://github.com/an-anime-team/honkers-launcher/compare/1.12.0...1.13.0
 [1.12.0]: https://github.com/an-anime-team/honkers-launcher/compare/1.11.0...1.12.0
 [1.11.0]: https://github.com/an-anime-team/honkers-launcher/compare/1.10.2...1.11.0
