@@ -1499,7 +1499,7 @@ dependencies = [
 
 [[package]]
 name = "honkers-launcher"
-version = "1.13.0"
+version = "1.14.0"
 dependencies = [
  "anime-launcher-sdk",
  "anyhow",
