@@ -57,8 +57,8 @@ checksum = "683d7910e743518b0e34f1186f92494becacb047c7b6bf616c96772180fef923"
 
 [[package]]
 name = "anime-game-core"
-version = "1.39.1"
-source = "git+https://github.com/an-anime-team/anime-game-core?tag=1.39.1#aa8c5ce41dbbc0ab57b49214e02d54001b83edac"
+version = "1.39.3"
+source = "git+https://github.com/an-anime-team/anime-game-core?tag=1.39.3#f1f0a23a9a6a0d66635796a52f5ef4d1eae18d77"
 dependencies = [
  "anyhow",
  "bzip2 0.4.4",
@@ -83,8 +83,8 @@ dependencies = [
 
 [[package]]
 name = "anime-launcher-sdk"
-version = "1.36.1"
-source = "git+https://github.com/an-anime-team/anime-launcher-sdk?tag=1.36.1#870d883eb48789ede2ca0871e1c3192bd1487628"
+version = "1.36.6"
+source = "git+https://github.com/an-anime-team/anime-launcher-sdk?tag=1.36.6#11d1fce6f592f35ab7b62bae53289943aa99adae"
 dependencies = [
  "anime-game-core",
  "anyhow",
@@ -3159,8 +3159,8 @@ dependencies = [
 
 [[package]]
 name = "sophon-lib"
-version = "0.1.8"
-source = "git+https://github.com/dawn-winery/sophon-tools.git?tag=v0.1.8#58d223a5e1268bb7327bb31fe5c664aff56f6b6f"
+version = "0.1.9"
+source = "git+https://github.com/dawn-winery/sophon-tools.git?tag=v0.1.9#f422286faec0b3e716603bd2c50cb3b38889d0f3"
 dependencies = [
  "bytes",
  "crossbeam-channel",
