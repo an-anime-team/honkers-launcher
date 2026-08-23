@@ -18,6 +18,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   error message instead
 - Fixed game not launching after version 9.0, please update to latest Wine in the launcher
 
+### Removed
+
+- Removed game patching (which wasn't actually patching but was called that in the launcher)
+
 ## [1.13.0] - 12.11.2025
 
 ### Fixed
