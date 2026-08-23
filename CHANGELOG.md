@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Fixed a panic when the launcher folder is a broken symlink, the launcher will exit with an
   error message instead
+- Fixed game not launching after version 9.0, please update to latest Wine in the launcher
 
 ## [1.13.0] - 12.11.2025
 
