@@ -18,7 +18,7 @@ use crate::*;
 pub struct GeneralApp {
     components_page: AsyncController<ComponentsPage>,
 
-    game_diff: Option<VersionDiff>,
+    game_diff: Option<Box<VersionDiff>>,
 
     style: LauncherStyle,
     languages: Vec<String>
@@ -28,7 +28,7 @@ pub struct GeneralApp {
 pub enum GeneralAppMsg {
     /// Supposed to be called automatically on app's run when the latest game
     /// version was retrieved from the API
-    SetGameDiff(Option<VersionDiff>),
+    SetGameDiff(Option<Box<VersionDiff>>),
 
     UpdateDownloadedWine,
     UpdateDownloadedDxvk,
@@ -231,7 +231,7 @@ impl SimpleAsyncComponent for GeneralApp {
                     add_suffix = &gtk::Label {
                         #[watch]
                         set_text: &match model.game_diff.as_ref() {
-                            Some(diff) => match diff {
+                            Some(diff) => match **diff {
                                 VersionDiff::Latest { version: current, .. } |
                                 VersionDiff::Predownload { current, .. } |
                                 VersionDiff::Update { current, .. } |
@@ -246,7 +246,7 @@ impl SimpleAsyncComponent for GeneralApp {
 
                         #[watch]
                         set_css_classes: match model.game_diff.as_ref() {
-                            Some(diff) => match diff {
+                            Some(diff) => match **diff {
                                 VersionDiff::Latest { .. }       => &["success"],
                                 VersionDiff::Predownload { .. }  => &["accent"],
                                 VersionDiff::Update { .. }         => &["warning"],
@@ -259,7 +259,7 @@ impl SimpleAsyncComponent for GeneralApp {
 
                         #[watch]
                         set_tooltip_text: Some(&match model.game_diff.as_ref() {
-                            Some(diff) => match diff {
+                            Some(diff) => match **diff {
                                 VersionDiff::Update { current, latest, .. } => tr!("game-update-available", {
                                     "old" = current.to_string(),
                                     "new" = latest.to_string()
