@@ -49,6 +49,11 @@
   </categories>
   <content_rating type="oars-1.1" />
   <releases>
+   <release version="1.14.1" date="2026-09-11">
+      <description>
+        <p>Fixed %temp% and %game% command keywords being mixed up</p>
+      </description>
+   </release>
    <release version="1.14.0" date="2026-08-23">
       <description>
         <p>Added support for the new download and update method</p>

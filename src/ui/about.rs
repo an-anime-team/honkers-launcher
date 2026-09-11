@@ -94,24 +94,10 @@ impl SimpleComponent for AboutDialog {
 
             set_release_notes_version: &APP_VERSION,
             set_release_notes: r#"
-                <p>Added</p>
-
-                <ul>
-                    <li>Added support for the new download and update method</li>
-                    <li>Added support for predownloads (if they ever appear in the API)</li>
-                </ul>
-
                 <p>Fixed</p>
 
                 <ul>
-                    <li>Fixed a panic when the launcher folder is a broken symlink, the launcher will exit with an error message instead</li>
-                    <li>Fixed game not launching after version 9.0, please update to latest Wine in the launcher</li>
-                </ul>
-
-                <p>Removed</p>
-
-                <ul>
-                    <li>Removed game patching (which wasn't actually patching but was called that in the launcher)</li>
+                    <li>Fixed %temp% and %game% command keywords being mixed up</li>
                 </ul>
             "#,
 

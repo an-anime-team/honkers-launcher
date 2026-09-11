@@ -45,7 +45,7 @@ pub struct App {
 
     loading: Option<Option<String>>,
     style: LauncherStyle,
-    state: Option<LauncherState>,
+    state: Option<Box<LauncherState>>,
 
     downloading: bool,
     disabled_buttons: bool,
@@ -66,11 +66,11 @@ pub enum AppMsg {
 
     /// Supposed to be called automatically on app's run when the latest game
     /// version was retrieved from the API
-    SetGameDiff(Option<VersionDiff>),
+    SetGameDiff(Option<Box<VersionDiff>>),
 
     /// Supposed to be called automatically on app's run when the launcher state
     /// was chosen
-    SetLauncherState(Option<LauncherState>),
+    SetLauncherState(Option<Box<LauncherState>>),
 
     SetLauncherStyle(LauncherStyle),
     SetLoadingStatus(Option<Option<String>>),
@@ -288,12 +288,12 @@ impl SimpleComponent for App {
 
                                         #[watch]
                                         set_tooltip_text: Some(&tr!("predownload-update", {
-                                            "version" = match model.state.as_ref() {
+                                            "version" = match model.state.as_deref() {
                                                 Some(LauncherState::PredownloadAvailable { game, .. }) => game.latest().to_string(),
                                                 _ => String::from("?")
                                             },
 
-                                            "size" = match model.state.as_ref() {
+                                            "size" = match model.state.as_deref() {
                                                 Some(LauncherState::PredownloadAvailable { game, .. }) => {
                                                     let mut size = game.downloaded_size().unwrap_or(0);
 
@@ -305,10 +305,10 @@ impl SimpleComponent for App {
                                         })),
 
                                         #[watch]
-                                        set_visible: matches!(model.state.as_ref(), Some(LauncherState::PredownloadAvailable { .. })),
+                                        set_visible: matches!(model.state.as_deref(), Some(LauncherState::PredownloadAvailable { .. })),
 
                                         #[watch]
-                                        set_sensitive: match model.state.as_ref() {
+                                        set_sensitive: match model.state.as_deref() {
                                             Some(LauncherState::PredownloadAvailable { game, .. }) => {
                                                 let config = Config::get().unwrap();
                                                 let temp = config.launcher.temp.unwrap_or_else(std::env::temp_dir);
@@ -331,7 +331,7 @@ impl SimpleComponent for App {
                                         },
 
                                         #[watch]
-                                        set_css_classes: match model.state.as_ref() {
+                                        set_css_classes: match model.state.as_deref() {
                                             Some(LauncherState::PredownloadAvailable { game, .. }) => {
                                                 let config = Config::get().unwrap();
                                                 let temp = config.launcher.temp.unwrap_or_else(std::env::temp_dir);
@@ -373,7 +373,7 @@ impl SimpleComponent for App {
                                     gtk::Button {
                                         adw::ButtonContent {
                                             #[watch]
-                                            set_icon_name: match &model.state {
+                                            set_icon_name: match &model.state.as_deref() {
                                                 Some(LauncherState::Launch) |
                                                 Some(LauncherState::PredownloadAvailable { .. })
                                                     => "media-playback-start-symbolic",
@@ -395,7 +395,7 @@ impl SimpleComponent for App {
                                             },
 
                                             #[watch]
-                                            set_label: &match &model.state {
+                                            set_label: &match &model.state.as_deref() {
                                                 Some(LauncherState::Launch) |
                                                 Some(LauncherState::PredownloadAvailable { .. })
                                                     => tr!("launch"),
@@ -433,7 +433,7 @@ impl SimpleComponent for App {
                                         },
 
                                         #[watch]
-                                        set_sensitive: !model.disabled_buttons && match &model.state {
+                                        set_sensitive: !model.disabled_buttons && match &model.state.as_deref() {
                                             Some(LauncherState::GameOutdated { .. }) => false,
 
                                             Some(_) => true,
@@ -441,7 +441,7 @@ impl SimpleComponent for App {
                                         },
 
                                         #[watch]
-                                        set_css_classes: match &model.state {
+                                        set_css_classes: match &model.state.as_deref() {
                                             Some(LauncherState::GameOutdated { .. }) => &["warning", "pill"],
 
                                             Some(_) => &["suggested-action", "pill"],
@@ -449,7 +449,7 @@ impl SimpleComponent for App {
                                         },
 
                                         #[watch]
-                                        set_tooltip_text: Some(&match &model.state {
+                                        set_tooltip_text: Some(&match model.state.as_deref() {
                                             Some(LauncherState::GameOutdated { .. }) => tr!("main-window--version-outdated-tooltip"),
 
                                             _ => String::new()
@@ -836,7 +836,7 @@ impl SimpleComponent for App {
                 sender,
                 move || {
                     sender.input(AppMsg::SetGameDiff(match GAME.try_get_diff() {
-                        Ok(diff) => Some(diff),
+                        Ok(diff) => Some(Box::new(diff)),
                         Err(err) => {
                             tracing::error!("Failed to find game diff: {err}");
 
@@ -921,7 +921,7 @@ impl SimpleComponent for App {
                     }
                 };
 
-                sender.input(AppMsg::SetLauncherState(state.clone()));
+                sender.input(AppMsg::SetLauncherState(state.clone().map(Box::new)));
 
                 if show_status_page {
                     sender.input(AppMsg::SetLoadingStatus(None));
@@ -997,7 +997,7 @@ impl SimpleComponent for App {
             AppMsg::PredownloadUpdate => {
                 if let Some(LauncherState::PredownloadAvailable {
                     game, ..
-                }) = self.state.clone()
+                }) = self.state.as_deref().cloned()
                 {
                     let tmp = Config::get()
                         .unwrap()
@@ -1046,7 +1046,7 @@ impl SimpleComponent for App {
             }
 
             AppMsg::PerformAction => unsafe {
-                match self.state.as_ref().unwrap_unchecked() {
+                match self.state.as_deref().unwrap_unchecked() {
                     LauncherState::Launch
                     | LauncherState::PredownloadAvailable {
                         ..
