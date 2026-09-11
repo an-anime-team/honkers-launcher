@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.14.1] - 2026-09-11
+
 ### Fixed
 
 - Fixed %temp% and %game% command keywords being mixed up
@@ -385,7 +387,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 <br>
 
-[unreleased]: https://github.com/an-anime-team/honkers-launcher/compare/1.14.0...next
+[unreleased]: https://github.com/an-anime-team/honkers-launcher/compare/1.14.1...next
+[1.14.1]: https://github.com/an-anime-team/honkers-launcher/compare/1.14.0...1.14.1
 [1.14.0]: https://github.com/an-anime-team/honkers-launcher/compare/1.13.0...1.14.0
 [1.13.0]: https://github.com/an-anime-team/honkers-launcher/compare/1.12.0...1.13.0
 [1.12.0]: https://github.com/an-anime-team/honkers-launcher/compare/1.11.0...1.12.0
