@@ -1,37 +1,48 @@
-use relm4::prelude::*;
-use gtk::prelude::*;
+// SPDX-License-Identifier: GPL-3.0-or-later
+//
+// honkers-launcher
+// Copyright (C) 2021 - 2026  Nikita Podvirnyi <krypt0nn@dawn.wine>
+// Copyright (C) 2025 - 2026  @JohnTheCoolingFan <ivan8215145640@gmail.com>
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+use std::sync::LazyLock;
+
 use anime_launcher_sdk::VERSION as SDK_VERSION;
 use anime_launcher_sdk::anime_game_core::VERSION as CORE_VERSION;
 
 use crate::*;
 
-lazy_static::lazy_static! {
-    pub static ref APP_VERSION: String = if crate::APP_DEBUG && !crate::APP_VERSION.contains('-') {
+pub static APP_VERSION_STRING: LazyLock<String> = LazyLock::new(|| {
+    if crate::APP_DEBUG && !crate::APP_VERSION.contains('-') {
         format!("{}-dev", crate::APP_VERSION)
     } else {
         crate::APP_VERSION.to_string()
-    };
-}
+    }
+});
 
-#[derive(Debug)]
-pub struct AboutDialog {
-    visible: bool
-}
-
-#[derive(Debug)]
-pub enum AboutDialogMsg {
-    Show,
-    Hide
-}
+#[derive(Debug, Clone, Copy)]
+pub struct AboutDialog;
 
 #[relm4::component(pub)]
 impl SimpleComponent for AboutDialog {
     type Init = ();
-    type Input = AboutDialogMsg;
+    type Input = ();
     type Output = ();
 
     view! {
-        dialog = adw::AboutWindow {
+        dialog = adw::AboutDialog {
             set_application_name: "Honkers Launcher",
             set_application_icon: APP_ID,
 
@@ -39,7 +50,7 @@ impl SimpleComponent for AboutDialog {
             set_issue_url: "https://github.com/an-anime-team/honkers-launcher/issues",
 
             set_license_type: gtk::License::Gpl30Only,
-            set_version: &APP_VERSION,
+            set_version: &APP_VERSION_STRING,
 
             set_developers: &[
                 "Nikita Podvirnyi https://github.com/krypt0nn"
@@ -92,57 +103,31 @@ impl SimpleComponent for AboutDialog {
                 format!("cairo: {}", gtk::cairo::version_string())
             ].join("\n"),
 
-            set_release_notes_version: &APP_VERSION,
+            set_release_notes_version: &APP_VERSION_STRING,
             set_release_notes: r#"
                 <p>Fixed</p>
 
                 <ul>
                     <li>Fixed %temp% and %game% command keywords being mixed up</li>
                 </ul>
-            "#,
-
-            set_modal: true,
-            set_hide_on_close: true,
-
-            #[watch]
-            set_visible: model.visible,
-
-            connect_close_request[sender] => move |_| {
-                sender.input(AboutDialogMsg::Hide);
-
-                gtk::glib::Propagation::Proceed
-            }
+            "#
         }
     }
 
     fn init(
         _init: Self::Init,
         root: Self::Root,
-        sender: ComponentSender<Self>
+        _sender: ComponentSender<Self>
     ) -> ComponentParts<Self> {
         tracing::info!("Initializing about dialog");
 
-        let model = Self {
-            visible: false
-        };
+        let model = Self;
 
         let widgets = view_output!();
 
         ComponentParts {
             model,
             widgets
-        }
-    }
-
-    fn update(&mut self, msg: Self::Input, _sender: ComponentSender<Self>) {
-        match msg {
-            AboutDialogMsg::Show => {
-                self.visible = true;
-            }
-
-            AboutDialogMsg::Hide => {
-                self.visible = false;
-            }
         }
     }
 }

@@ -1,12 +1,32 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+//
+// honkers-launcher
+// Copyright (C) 2021 - 2026  Nikita Podvirnyi <krypt0nn@dawn.wine>
+// Copyright (C) 2025 - 2026  @JohnTheCoolingFan <ivan8215145640@gmail.com>
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 use std::path::PathBuf;
 
-use relm4::prelude::*;
 use adw::prelude::*;
+
 use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
 
 use crate::*;
 use crate::ui::components::progress_bar::*;
+
 use super::main::*;
 
 pub struct DefaultPathsApp {
@@ -53,7 +73,7 @@ pub enum DefaultPathsAppMsg {
     Exit
 }
 
-#[relm4::component(async, pub)]
+#[relm4::component(pub, async)]
 impl SimpleAsyncComponent for DefaultPathsApp {
     type Init = ();
     type Input = DefaultPathsAppMsg;
@@ -68,7 +88,7 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                 set_vexpand: true,
 
                 gtk::Label {
-                    set_label: &tr!("choose-default-paths"),
+                    set_label: &i18n!("choose-default-paths"),
                     add_css_class: "title-1"
                 }
             },
@@ -81,7 +101,7 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                 set_sensitive: !model.show_progress,
 
                 adw::ActionRow {
-                    set_title: &tr!("launcher-folder"),
+                    set_title: &i18n!("launcher-folder"),
                     set_activatable: true,
 
                     #[watch]
@@ -100,8 +120,8 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                 set_vexpand: true,
 
                 adw::ActionRow {
-                    set_title: &tr!("show-all-folders"),
-                    set_subtitle: &tr!("show-all-folders-subtitle"),
+                    set_title: &i18n!("show-all-folders"),
+                    set_subtitle: &i18n!("show-all-folders-subtitle"),
 
                     add_suffix = &gtk::Switch {
                         set_valign: gtk::Align::Center,
@@ -122,7 +142,7 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                 set_sensitive: !model.show_progress,
 
                 adw::ActionRow {
-                    set_title: &tr!("runners-folder"),
+                    set_title: &i18n!("runners-folder"),
                     set_activatable: true,
 
                     #[watch]
@@ -136,7 +156,7 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                 },
 
                 adw::ActionRow {
-                    set_title: &tr!("dxvks-folder"),
+                    set_title: &i18n!("dxvks-folder"),
                     set_activatable: true,
 
                     #[watch]
@@ -150,7 +170,7 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                 },
 
                 adw::ActionRow {
-                    set_title: &tr!("wine-prefix-folder"),
+                    set_title: &i18n!("wine-prefix-folder"),
                     set_activatable: true,
 
                     #[watch]
@@ -164,7 +184,7 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                 },
 
                 adw::ActionRow {
-                    set_title: &tr!("global-game-installation-folder"),
+                    set_title: &i18n!("global-game-installation-folder"),
                     set_activatable: true,
 
                     #[watch]
@@ -178,7 +198,7 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                 },
 
                 adw::ActionRow {
-                    set_title: &tr!("sea-game-installation-folder"),
+                    set_title: &i18n!("sea-game-installation-folder"),
                     set_activatable: true,
 
                     #[watch]
@@ -192,7 +212,7 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                 },
 
                 adw::ActionRow {
-                    set_title: &tr!("chinese-game-installation-folder"),
+                    set_title: &i18n!("chinese-game-installation-folder"),
                     set_activatable: true,
 
                     #[watch]
@@ -206,7 +226,7 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                 },
 
                 adw::ActionRow {
-                    set_title: &tr!("taiwanese-game-installation-folder"),
+                    set_title: &i18n!("taiwanese-game-installation-folder"),
                     set_activatable: true,
 
                     #[watch]
@@ -220,7 +240,7 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                 },
 
                 adw::ActionRow {
-                    set_title: &tr!("korean-game-installation-folder"),
+                    set_title: &i18n!("korean-game-installation-folder"),
                     set_activatable: true,
 
                     #[watch]
@@ -234,7 +254,7 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                 },
 
                 adw::ActionRow {
-                    set_title: &tr!("japanese-game-installation-folder"),
+                    set_title: &i18n!("japanese-game-installation-folder"),
                     set_activatable: true,
 
                     #[watch]
@@ -248,7 +268,7 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                 },
 
                 adw::ActionRow {
-                    set_title: &tr!("components-index"),
+                    set_title: &i18n!("components-index"),
                     set_activatable: true,
 
                     #[watch]
@@ -262,7 +282,7 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                 },
 
                 adw::ActionRow {
-                    set_title: &tr!("temp-folder"),
+                    set_title: &i18n!("temp-folder"),
                     set_activatable: true,
 
                     #[watch]
@@ -289,7 +309,7 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                     set_spacing: 8,
 
                     gtk::Button {
-                        set_label: &tr!("continue"),
+                        set_label: &i18n!("continue"),
 
                         set_css_classes: &["suggested-action", "pill"],
 
@@ -297,7 +317,7 @@ impl SimpleAsyncComponent for DefaultPathsApp {
                     },
 
                     gtk::Button {
-                        set_label: &tr!("exit"),
+                        set_label: &i18n!("exit"),
 
                         add_css_class: "pill",
 
@@ -427,7 +447,7 @@ impl SimpleAsyncComponent for DefaultPathsApp {
 
                 Err(err) => {
                     sender.output(Self::Output::Toast {
-                        title: tr!("config-update-error"),
+                        title: i18n!("config-update-error"),
                         description: Some(err.to_string())
                     });
                 }

@@ -1,11 +1,32 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+//
+// honkers-launcher
+// Copyright (C) 2021 - 2026  Nikita Podvirnyi <krypt0nn@dawn.wine>
+// Copyright (C) 2025 - 2026  @JohnTheCoolingFan <ivan8215145640@gmail.com>
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 use std::process::Command;
 
 use anime_launcher_sdk::anime_game_core::honkai::prelude::*;
 use anime_launcher_sdk::anime_game_core::installer::downloader::Downloader;
 use anime_launcher_sdk::anime_game_core::minreq;
-use md5::{Digest, Md5};
-use unic_langid::LanguageIdentifier;
 
+use agl_locale::unic_langid::LanguageIdentifier;
+use md5::{Digest, Md5};
+
+use crate::STARTUP_LANG;
 use crate::i18n::format_lang;
 
 #[derive(Debug, Clone)]
@@ -21,7 +42,7 @@ fn get_expected_edition(lang: &LanguageIdentifier) -> GameEdition {
 
         "zh" => match lang.region {
             Some(region) => {
-                if region.as_str().to_ascii_lowercase() == "tw" {
+                if region.as_str().eq_ignore_ascii_case("tw") {
                     GameEdition::Taiwan
                 }
                 else {
@@ -38,9 +59,9 @@ fn get_expected_edition(lang: &LanguageIdentifier) -> GameEdition {
     }
 }
 
-#[cached::proc_macro::cached(result)]
+#[cached::proc_macro::cached]
 pub fn get_background_info() -> anyhow::Result<Background> {
-    let lang = crate::i18n::get_lang();
+    let lang = &STARTUP_LANG;
 
     let expected_edition = get_expected_edition(lang);
 
@@ -86,7 +107,7 @@ pub fn get_background_info() -> anyhow::Result<Background> {
 
     let hash = uri
         .split('/')
-        .last()
+        .next_back()
         .unwrap_or_default()
         .split('_')
         .next()
@@ -107,9 +128,13 @@ pub fn download_background() -> anyhow::Result<()> {
     let mut download_image = true;
 
     if crate::BACKGROUND_FILE.exists() {
-        let hash = Md5::digest(std::fs::read(crate::BACKGROUND_FILE.as_path())?);
+        let mut hash = [0; 16];
 
-        if format!("{:x}", hash).to_lowercase() == info.hash {
+        hash.copy_from_slice(&Md5::digest(std::fs::read(crate::BACKGROUND_FILE.as_path())?));
+
+        let hash = u128::from_le_bytes(hash);
+
+        if format!("{hash:x}").eq_ignore_ascii_case(&info.hash) {
             tracing::debug!("Background picture is already downloaded. Skipping");
 
             download_image = false;

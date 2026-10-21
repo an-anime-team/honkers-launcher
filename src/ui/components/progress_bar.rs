@@ -1,6 +1,24 @@
-use relm4::prelude::*;
+// SPDX-License-Identifier: GPL-3.0-or-later
+//
+// honkers-launcher
+// Copyright (C) 2021 - 2026  Nikita Podvirnyi <krypt0nn@dawn.wine>
+// Copyright (C) 2025 - 2026  @JohnTheCoolingFan <ivan8215145640@gmail.com>
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 use adw::prelude::*;
-use anime_launcher_sdk::anime_game_core::prelude::*;
+
 use anime_launcher_sdk::anime_game_core::sophon::installer::Update as SophonInstallerUpdate;
 use anime_launcher_sdk::anime_game_core::sophon::updater::Update as SophonPatcherUpdate;
 
@@ -51,7 +69,7 @@ pub enum ProgressBarMsg {
     SetVisible(bool)
 }
 
-#[relm4::component(async, pub)]
+#[relm4::component(pub, async)]
 impl SimpleAsyncComponent for ProgressBar {
     type Init = ProgressBarInit;
     type Input = ProgressBarMsg;
@@ -78,10 +96,8 @@ impl SimpleAsyncComponent for ProgressBar {
                         caption = format!("{caption}: {:.2}%", model.fraction * 100.0);
                     }
 
-                    if model.display_fraction {
-                        if let Some((curr, total)) = &model.downloaded {
-                            caption = format!("{caption} ({curr} of {total})");
-                        }
+                    if model.display_fraction && let Some((curr, total)) = &model.downloaded {
+                        caption = format!("{caption} ({curr} of {total})");
                     }
 
                     caption
@@ -139,13 +155,13 @@ impl SimpleAsyncComponent for ProgressBar {
 
             ProgressBarMsg::UpdateFromState(state) => match state {
                 InstallerUpdate::CheckingFreeSpace(_) => {
-                    self.caption = Some(tr!("checking-free-space"))
+                    self.caption = Some(i18n!("checking-free-space"))
                 }
-                InstallerUpdate::DownloadingStarted(_) => self.caption = Some(tr!("downloading")),
+                InstallerUpdate::DownloadingStarted(_) => self.caption = Some(i18n!("downloading")),
                 InstallerUpdate::UpdatingPermissionsStarted(_) => {
-                    self.caption = Some(tr!("updating-permissions"))
+                    self.caption = Some(i18n!("updating-permissions"))
                 }
-                InstallerUpdate::UnpackingStarted(_) => self.caption = Some(tr!("unpacking")),
+                InstallerUpdate::UnpackingStarted(_) => self.caption = Some(i18n!("unpacking")),
 
                 InstallerUpdate::DownloadingProgress(curr, total)
                 | InstallerUpdate::UpdatingPermissions(curr, total)
@@ -173,7 +189,7 @@ impl SimpleAsyncComponent for ProgressBar {
                 // checking free space
                 DiffUpdate::Installer(SophonInstallerUpdate::CheckingFreeSpace(_))
                 | DiffUpdate::Patcher(SophonPatcherUpdate::CheckingFreeSpace(_)) => {
-                    self.caption = Some(tr!("checking-free-space"))
+                    self.caption = Some(i18n!("checking-free-space"))
                 }
 
                 // checking files
@@ -181,7 +197,7 @@ impl SimpleAsyncComponent for ProgressBar {
                     ..
                 })
                 | DiffUpdate::Patcher(SophonPatcherUpdate::CheckingFilesStarted) => {
-                    self.caption = Some(tr!("verifying-files"));
+                    self.caption = Some(i18n!("verifying-files"));
                     self.display_fraction = false;
                 }
 
@@ -195,7 +211,7 @@ impl SimpleAsyncComponent for ProgressBar {
                     ..
                 })
                 | DiffUpdate::Patcher(SophonPatcherUpdate::DownloadingStarted(_)) => {
-                    self.caption = Some(tr!("downloading"));
+                    self.caption = Some(i18n!("downloading"));
                     self.display_fraction = true;
                 }
 

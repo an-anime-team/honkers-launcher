@@ -1,15 +1,35 @@
-use anime_launcher_sdk::anime_game_core::honkai::version_diff::*;
+// SPDX-License-Identifier: GPL-3.0-or-later
+//
+// honkers-launcher
+// Copyright (C) 2021 - 2026  Nikita Podvirnyi <krypt0nn@dawn.wine>
+// Copyright (C) 2025 - 2026  @JohnTheCoolingFan <ivan8215145640@gmail.com>
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+use relm4::Sender;
+
+use gtk::glib::clone;
+
 use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
-use gtk::glib::clone;
-use relm4::Sender;
-use relm4::prelude::*;
 use anime_launcher_sdk::anime_game_core::sophon::installer::Update as SophonInstallerUpdate;
 use anime_launcher_sdk::anime_game_core::sophon::updater::Update as SophonPatcherUpdate;
 
-use super::{App, AppMsg};
-use crate::ui::components::*;
 use crate::*;
+use crate::ui::components::*;
+
+use super::{App, AppMsg};
 
 pub fn download_diff(
     sender: ComponentSender<App>,
@@ -26,14 +46,13 @@ pub fn download_diff(
             .for_edition(config.launcher.edition)
             .to_path_buf();
 
-        if !game_path.exists() {
-            if let Err(err) = std::fs::create_dir(&game_path) {
-                tracing::error!(?err, "Failed to create game directory");
-                sender.input(AppMsg::Toast {
-                    title: tr!("downloading-failed"),
-                    description: Some(err.to_string())
-                });
-            }
+        if !game_path.exists() && let Err(err) = std::fs::create_dir(&game_path) {
+            tracing::error!(?err, "Failed to create game directory");
+
+            sender.input(AppMsg::Toast {
+                title: i18n!("downloading-failed"),
+                description: Some(err.to_string())
+            });
         }
 
         if let Some(temp) = config.launcher.temp {
@@ -53,7 +72,7 @@ pub fn download_diff(
                             tracing::error!("Downloading failed: {err}");
 
                             sender.input(AppMsg::Toast {
-                                title: tr!("downloading-failed"),
+                                title: i18n!("downloading-failed"),
                                 description: Some(err.to_string())
                             });
                         }
@@ -75,7 +94,7 @@ pub fn download_diff(
             tracing::error!("Downloading failed: {err}");
 
             sender.input(AppMsg::Toast {
-                title: tr!("downloading-failed"),
+                title: i18n!("downloading-failed"),
                 description: Some(err.to_string())
             });
 

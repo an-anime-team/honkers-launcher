@@ -1,12 +1,33 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+//
+// honkers-launcher
+// Copyright (C) 2021 - 2026  Nikita Podvirnyi <krypt0nn@dawn.wine>
+// Copyright (C) 2025 - 2026  @JohnTheCoolingFan <ivan8215145640@gmail.com>
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 use relm4::Sender;
-use relm4::prelude::*;
+
 use gtk::glib::clone;
+
 use anime_launcher_sdk::config::ConfigExt;
 use anime_launcher_sdk::honkai::config::Config;
 use anime_launcher_sdk::components::wine;
 
 use crate::*;
 use crate::ui::components::*;
+
 use super::{App, AppMsg};
 
 pub fn download_wine(sender: ComponentSender<App>, progress_bar_input: Sender<ProgressBarMsg>) {
@@ -65,7 +86,7 @@ pub fn download_wine(sender: ComponentSender<App>, progress_bar_input: Sender<Pr
                                                     tracing::error!("Downloading failed: {err}");
 
                                                     sender.input(AppMsg::Toast {
-                                                        title: tr!("downloading-failed"),
+                                                        title: i18n!("downloading-failed"),
                                                         description: Some(err.to_string())
                                                     });
                                                 }
@@ -74,7 +95,7 @@ pub fn download_wine(sender: ComponentSender<App>, progress_bar_input: Sender<Pr
                                                     tracing::error!("Unpacking failed: {err}");
 
                                                     sender.input(AppMsg::Toast {
-                                                        title: tr!("unpacking-failed"),
+                                                        title: i18n!("unpacking-failed"),
                                                         description: Some(err.clone())
                                                     });
                                                 }
@@ -105,7 +126,7 @@ pub fn download_wine(sender: ComponentSender<App>, progress_bar_input: Sender<Pr
                     }
 
                     Err(err) => sender.input(AppMsg::Toast {
-                        title: tr!("wine-install-failed"),
+                        title: i18n!("wine-install-failed"),
                         description: Some(err.to_string())
                     })
                 }
@@ -113,7 +134,7 @@ pub fn download_wine(sender: ComponentSender<App>, progress_bar_input: Sender<Pr
         }
 
         Err(err) => sender.input(AppMsg::Toast {
-            title: tr!("downloaded-wine-list-failed"),
+            title: i18n!("downloaded-wine-list-failed"),
             description: Some(err.to_string())
         })
     }

@@ -1,4 +1,24 @@
+// SPDX-License-Identifier: GPL-3.0-or-later
+//
+// honkers-launcher
+// Copyright (C) 2021 - 2026  Nikita Podvirnyi <krypt0nn@dawn.wine>
+// Copyright (C) 2025 - 2026  @JohnTheCoolingFan <ivan8215145640@gmail.com>
+//
+// This program is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// This program is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 use std::path::PathBuf;
+use std::sync::LazyLock;
 use std::sync::atomic::{AtomicBool, Ordering};
 
 use anime_launcher_sdk::anime_game_core::honkai::prelude::*;
@@ -37,40 +57,56 @@ pub fn is_ready() -> bool {
     READY.load(Ordering::Relaxed)
 }
 
-lazy_static::lazy_static! {
-    /// Config loaded on the app's start. Use `Config::get()` to get up to date config instead.
-    /// This one is used to prepare some launcher UI components on start
-    pub static ref CONFIG: Schema = Config::get().expect("Failed to load config");
+/// Config loaded on the app's start. Use `Config::get()` to get up to date
+/// config instead. This one is used to prepare some launcher UI components on
+/// startup.
+pub static CONFIG: LazyLock<Schema> = LazyLock::new(|| {
+    Config::get().expect("Failed to load config")
+});
 
-    pub static ref GAME: Game = Game::new(CONFIG.game.path.for_edition(CONFIG.launcher.edition), CONFIG.launcher.edition);
+pub static STARTUP_LANG: LazyLock<agl_locale::unic_langid::LanguageIdentifier> = LazyLock::new(|| {
+    CONFIG.launcher.language.parse()
+        .unwrap_or_else(|_| agl_locale::SYSTEM_LANG.clone())
+});
 
-    /// Path to launcher folder. Standard is `$HOME/.local/share/honkers-launcher`
-    pub static ref LAUNCHER_FOLDER: PathBuf = launcher_dir().expect("Failed to get launcher folder");
+pub static GAME: LazyLock<Game> = LazyLock::new(|| {
+    Game::new(
+        CONFIG.game.path.for_edition(CONFIG.launcher.edition),
+        CONFIG.launcher.edition
+    )
+});
 
-    /// Path to launcher's cache folder. Standard is `$HOME/.cache/honkers-launcher`
-    pub static ref CACHE_FOLDER: PathBuf = cache_dir().expect("Failed to get launcher's cache folder");
+/// Path to launcher folder. Standard is `$HOME/.local/share/honkers-launcher`
+pub static LAUNCHER_FOLDER: LazyLock<PathBuf> = LazyLock::new(|| {
+    launcher_dir().expect("Failed to get launcher folder")
+});
 
-    /// Path to `debug.log` file. Standard is `$HOME/.local/share/honkers-launcher/debug.log`
-    pub static ref DEBUG_FILE: PathBuf = LAUNCHER_FOLDER.join("debug.log");
+/// Path to launcher's cache folder. Standard is `$HOME/.cache/honkers-launcher`
+pub static CACHE_FOLDER: LazyLock<PathBuf> = LazyLock::new(|| {
+    cache_dir().expect("Failed to get launcher's cache folder")
+});
 
-    /// Path to `background` file. Standard is `$HOME/.local/share/honkers-launcher/background`
-    pub static ref BACKGROUND_FILE: PathBuf = LAUNCHER_FOLDER.join("background");
+/// Path to `debug.log` file. Standard is `$HOME/.local/share/honkers-launcher/debug.log`
+pub static DEBUG_FILE: LazyLock<PathBuf> = LazyLock::new(|| LAUNCHER_FOLDER.join("debug.log"));
 
-    /// Path to the processed `background` file. Standard is `$HOME/.cache/anime-game-launcher/background`
-    pub static ref PROCESSED_BACKGROUND_FILE: PathBuf = CACHE_FOLDER.join("background");
+/// Path to `background` file. Standard is `$HOME/.local/share/honkers-launcher/background`
+pub static BACKGROUND_FILE: LazyLock<PathBuf> = LazyLock::new(|| LAUNCHER_FOLDER.join("background"));
 
-    /// Path to `.keep-background` file. Used to mark launcher that it shouldn't update background picture
-    ///
-    /// Standard is `$HOME/.local/share/honkers-launcher/.keep-background`
-    pub static ref KEEP_BACKGROUND_FILE: PathBuf = LAUNCHER_FOLDER.join(".keep-background");
+/// Path to the processed `background` file. Standard is `$HOME/.cache/honkers-launcher/background`
+pub static PROCESSED_BACKGROUND_FILE: LazyLock<PathBuf> = LazyLock::new(|| CACHE_FOLDER.join("background"));
 
-    /// Path to `.first-run` file. Used to mark launcher that it should run FirstRun window
-    ///
-    /// Standard is `$HOME/.local/share/honkers-launcher/.first-run`
-    pub static ref FIRST_RUN_FILE: PathBuf = LAUNCHER_FOLDER.join(".first-run");
+/// Path to `.keep-background` file. Used to mark launcher that it shouldn't update background picture
+///
+/// Standard is `$HOME/.local/share/honkers-launcher/.keep-background`
+pub static KEEP_BACKGROUND_FILE: LazyLock<PathBuf> = LazyLock::new(|| LAUNCHER_FOLDER.join(".keep-background"));
 
-    /// Global app's css
-    static ref GLOBAL_CSS: String = format!("
+/// Path to `.first-run` file. Used to mark launcher that it should run FirstRun window
+///
+/// Standard is `$HOME/.local/share/honkers-launcher/.first-run`
+pub static FIRST_RUN_FILE: LazyLock<PathBuf> = LazyLock::new(|| LAUNCHER_FOLDER.join(".first-run"));
+
+/// Global app's css
+static GLOBAL_CSS: LazyLock<String> = LazyLock::new(|| format!("
         progressbar > text {{
             margin-bottom: 6px;
             font-weight: bold;
@@ -121,8 +157,7 @@ lazy_static::lazy_static! {
         .round-bin {{
             border-radius: 24px;
         }}
-    ", PROCESSED_BACKGROUND_FILE.to_string_lossy());
-}
+    ", PROCESSED_BACKGROUND_FILE.to_string_lossy()));
 
 /// Actually document the launcher's command line options
 fn print_help() {
@@ -147,6 +182,9 @@ GTK options are supported as well. Use --help-all to list them.
 }
 
 fn main() -> anyhow::Result<()> {
+    // Load launcher's translations before any of them is used
+    i18n::init();
+
     // Setup custom panic handler
     human_panic::setup_panic!(human_panic::metadata!());
 
@@ -180,7 +218,7 @@ fn main() -> anyhow::Result<()> {
         // CONFIG is initialized lazily so it will contain following changes as well
         let mut config = Config::get().expect("Failed to get config");
 
-        config.launcher.language = i18n::format_lang(i18n::get_default_lang());
+        config.launcher.language = agl_locale::SYSTEM_LANG.to_string();
 
         Config::update_raw(config).expect("Failed to update config");
     }
@@ -234,7 +272,6 @@ fn main() -> anyhow::Result<()> {
 
     // Prepare stdout logger
     let stdout = tracing_subscriber::fmt::layer()
-        .pretty()
         .with_filter({
             if force_debug >= 2 {
                 LevelFilter::TRACE
@@ -258,7 +295,6 @@ fn main() -> anyhow::Result<()> {
     let file = std::fs::File::create(DEBUG_FILE.as_path())?;
 
     let debug_log = tracing_subscriber::fmt::layer()
-        .pretty()
         .with_ansi(false)
         .with_writer(std::sync::Arc::new(file))
         .with_filter({
@@ -299,17 +335,6 @@ fn main() -> anyhow::Result<()> {
     // Set application's title
     gtk::glib::set_application_name("Honkers Launcher");
     gtk::glib::set_program_name(Some("Honkers Launcher"));
-
-    // Set UI language
-    let lang = CONFIG
-        .launcher
-        .language
-        .parse()
-        .expect("Wrong language format used in config");
-
-    i18n::set_lang(lang).expect("Failed to set launcher language");
-
-    tracing::info!("Set UI language to {}", i18n::get_lang());
 
     // Run FirstRun window if .first-run file persist
     if FIRST_RUN_FILE.exists() {
